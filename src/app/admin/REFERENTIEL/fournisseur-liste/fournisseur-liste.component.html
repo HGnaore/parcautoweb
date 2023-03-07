@@ -1,0 +1,151 @@
+<!-- Content Header (Page header) -->
+<div class="content-header" [@simpleFadeAnimation]="'in'">
+    <header class="page-header page-header-left-inline-breadcrumb" style="margin: 0px; padding-top: 20px;">
+        <h2 class="font-weight-bold text-6">FOURNISSEUR</h2>
+        <div class="right-wrapper">
+            <ol class="breadcrumbs">
+                <li><span><a routerLink="/admin/dashboard">Accueil</a></span></li>
+                <li><span>Type fournisseur</span></li>
+                 <li><span>Liste</span></li>
+            </ol>
+            <button routerLink='/admin/admin/fournisseurEdition/0' class="btn btn-success btn-sm btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1">
+                <i class="fa fa-plus text-4 mr-2"></i> Nouveau</button>
+            <!--a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fas fa-chevron-left"></i></a-->
+        </div>
+    </header>
+
+    <!--div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h2 class="m-0">FOURNISSEUR</h2>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Accueil</a></li>
+                    <li class="breadcrumb-item active">Fournisseur</li>
+                     <li class="breadcrumb-item active">Liste</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                <h2 class="mb-2" style="color:orange"><b>Liste des fournisseurs</b></h2>
+            </div>
+            <div class="col-sm-4">
+                <button routerLink='/admin/admin/fournisseurEdition/0' class="btn btn-success float-sm-right"
+                    style="height: 50px;">
+                    <i class="fas fa-plus"></i>
+                    Nouveau</button>
+            </div>
+        </div>
+    </div-->
+</div>
+<!-- /.content-header -->
+
+
+<section class="content" [@simpleFadeAnimation]="'in'">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+
+                    <mat-form-field style="padding: 30px; margin-top: -20px">
+                        <mat-label>Rechercher un fournisseur</mat-label>
+                        <input matInput (keyup)="applyFilter($event)" placeholder="information du fournisseur , ..."
+                            #input>
+                    </mat-form-field>
+
+
+                    <div class="card-body" style="margin-top: -50px;">
+                        <!-- loader  -->
+                        <div class="spinner4" *ngIf="isLoadingResults">
+                            <div class="bounce1"></div>
+                            <div class="bounce2"></div>
+                            <div class="bounce3"></div>
+                        </div>
+                        <!-- loader end -->
+                        <table class="table table-responsive-md  table-bordered table-striped dataTable fontTable"
+                            mat-table [dataSource]="dataSource" matSort>
+
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="code">
+                                <th *matHeaderCellDef mat-sort-header style="width: 10%;"> Code
+                                </th>
+                                <td *matCellDef="let element" fontTable> {{element.code | uppercase}}</td>
+                            </ng-container>
+
+                            <!-- Progress Column -->
+                            <ng-container matColumnDef="designation">
+                                <th *matHeaderCellDef mat-sort-header style="width: 50%;"> Fournisseur </th>
+                                <td *matCellDef="let element">
+                                    [{{element.code | uppercase}}] - {{element.designation | uppercase}}</td>
+                            </ng-container>
+
+                            <!-- Progress Column -->
+                            <ng-container matColumnDef="typeFournisseurDesignation">
+                                <th *matHeaderCellDef mat-sort-header style="width: 20%;"> Type Fournisseur </th>
+                                <td *matCellDef="let element">
+                                    {{element.typeFournisseurDesignation | uppercase}}</td>
+                            </ng-container>
+
+                            <!-- Color Column -->
+                            <ng-container matColumnDef="action">
+                                <th *matHeaderCellDef mat-sort-header style="width: 20%;"> </th>
+                                <td *matCellDef="let element">
+                                    <button type="button" class="btn btn-secondary btn-sm mr-2"
+                                        routerLink='/admin/admin/fournisseurEdition/{{element.id}}'>
+                                        <i class="nav-icon fas fa-edit"></i> Modifier
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                        (click)="questionSupprime(element.id)" data-toggle="modal"
+                                        data-target="#modal-info">
+                                        <i class="nav-icon fas fa-trash"></i> Supprimer
+                                    </button>
+                                </td>
+                            </ng-container>
+                            <!-- Color Column -->
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+
+                        <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons
+                            aria-label="Select page of periodic elements">
+                        </mat-paginator>
+                    </div>
+
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <!-- /.invoice -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- /.modal -->
+<div class="modal fade" id="modal-info">
+    <div class="modal-dialog">
+        <div class="modal-content bg-default">
+            <div class="modal-header" style="height: 50px;">
+                <h2 class="modal-title">PARC AUTO - RTI </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <p>Voulez-vous supprimer ce fournisseur ?</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-danger" (click)="supprime()"
+                    data-dismiss="modal">Supprimer</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

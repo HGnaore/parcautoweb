@@ -1,0 +1,222 @@
+<!-- Content Header (Page header) -->
+
+<section class="content-header" [@simpleFadeAnimation]="'in'">
+
+ <!-- /.content-header -->
+
+ <div class="row" >
+  <div class="col-lg-12">
+      <section class="card">
+
+              <h2 class="card-title"></h2><!--Liste des Véhicules-->
+     
+       
+              <div class="spinner4" *ngIf="isLoadingResults">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+
+          <section class="card card-primary">
+
+              <header class="card-header bg-secondary" style="padding: 10px">
+                <div class="row">
+                  <div class="col-md-9 text-left">
+                    <h2 class="card-title text-white" style="padding: 0px; margin: 0px;">
+                      <span style="font-weight: 500;" class="text-warning mr-2">CARTE GRISE</span>VEHICULE [{{imatriculation|uppercase}}] - {{marque|uppercase}} {{modele|uppercase}}</h2>
+               
+                  </div>
+              
+                  <div class="col-md-3 text-right">
+                    <button type="button" class="btn btn-warning btn-sm" routerLink="/admin/admin/vehiculeList">
+                      PARC AUTOMOBILE <i class="fa fa-arrow-right"></i></button>
+                    
+                </div>
+            </div>
+                   </header>
+          
+              <div class="card-body">
+               
+          
+
+                
+
+                <div class="row">
+                    <div class="col">
+                      <section class="card card-modern card-big-info">
+                        
+                          <div class="row">
+                            <div class="col-lg-2-5 col-xl-1-5 text-center">
+                               
+                              <div class="thumb-info mb-3">
+                                <a href="{{imagePreview}}" target="_blank"><img  [src]="imagePreview" style="width:200px;" class="image-preview rounded img-fluid"></a>
+                              </div>
+                             <input style="display: none" type="file" (change)="onFileUpload($event)" #selectFile>
+          <button (click)="selectFile.click()">Image carte grise</button>
+                               
+                            </div>
+                            <div class="col-lg-3-5 col-xl-4-5" style="padding-top: 5px;">
+                              <form  [formGroup]="vehiculeForm" (ngSubmit)="onSubmitForm(vehiculeForm.value)"
+                              class="ecommerce-form action-buttons-fixed" action="#" method="post">
+                              <div class="row">
+                               
+                            
+                                <div class="col-md-3 inputSpace">
+                                  <label for="numero" class="form-label inputSpaceText">N° Carte Grise <span class="Oblig">*</span></label>
+                                  <input type="text" class="form-control inputSpaceText" formControlName="numero" id="numero">
+                                </div>
+                                <div class="col-md-3 inputSpace">
+                                  <label for="numchassis" class="form-label inputSpaceText">N° Chassis <span class="Oblig">*</span>
+                                  </label>
+                                  <input type="text" class="form-control" formControlName="numchassis" id="numchassis">
+                                </div>
+                                <div class="col-md-3 inputSpace">
+                                  <label for="datemiseenservice" class="form-label inputSpaceText">1ère mise en circulation <span class="Oblig">*</span></label>
+                                  <input type="date" class="form-control" formControlName="datemiseenservice" id="datemiseenservice">
+                                </div>
+
+                                <div class="col-md-3 inputSpace">
+                                  <label for="dateedition" class="form-label inputSpaceText">Date d'édition <span class="Oblig">*</span></label>
+                                  <input type="date" class="form-control" formControlName="dateedition" id="dateedition">
+                                </div>
+
+                                <div class="col-md-3 inputSpace">
+                                  <label for="codeproprietaire" class="form-label inputSpaceText">Identité du propriétaire <span class="Oblig">*</span></label>
+                                  <input type="text" class="form-control" formControlName="codeproprietaire" id="codeproprietaire">
+                                </div>
+              
+                                <!--ERREUR ICI-->
+                                <div class="col-md-2 inputSpace">
+                                  <label for="genre" class="form-label inputSpaceText">Genre <span class="Oblig">*</span></label>
+                                  <input type="text" class="form-control" formControlName="genre" id="genre">
+                                </div>
+              
+              
+                                <div class="col-md-3 inputSpace">
+                                  <label for="modele" class="form-label inputSpaceText">Type commercial</label>
+                                  <input type="text" class="form-control" formControlName="modele"
+                                    id="modele">
+                                </div>
+                                <div class="col-md-2 inputSpace">
+                                  <label for="couleur" class="form-label inputSpaceText">Couleur <span class="Oblig">*</span></label>
+                                  <input type="text" class="form-control" formControlName="couleur" id="couleur">
+                                </div>
+                                <div class="col-md-2 inputSpace">
+                                  <label for="carrosserie" class="form-label inputSpaceText">Carrosserie</label>
+                                  <input type="text" class="form-control" formControlName="carrosserie"
+                                    id="carrosserie">
+                                </div>
+              
+              
+                                <div class="col-md-3 inputSpace">
+                                  <label for="energie_ID" class="form-label inputSpaceText">Energie <span class="Oblig">*</span></label>
+                                  <select id="energie_ID" class="form-control" formControlName="energie_ID"
+                                    name="energie_ID">
+                                    <option selected value="">------ Choisir ------ </option>
+                                    <option *ngFor="let energie of listeenergies.results" value="{{energie.ID}}">{{energie.designation|uppercase}}
+                                    </option>
+                                  </select>
+                                </div>
+                                <div class="col-md-3 inputSpace">
+                                  <label for="usage_ID" class="form-label inputSpaceText">usage du véhicule <span class="Oblig">*</span></label>
+                                  <select id="usage_ID" class="form-control" formControlName="usage_ID"
+                                    name="usage_ID" >
+                                    <option selected value="">------ Choisir ------ </option>
+                                    <option *ngFor="let usage of listeusages.results" value="{{usage.ID}}">{{usage.designation|uppercase}}</option>
+                                  </select>
+                                </div>
+              
+              
+                                <div class="col-md-2 inputSpace">
+                                  <label for="nbreplace" class="form-label inputSpaceText">Place assises <span class="Oblig">*</span></label>
+                                  <input type="number" class="form-control" formControlName="nbreplace"
+                                    id="nbreplace">
+                                </div>
+              
+                             
+              
+                                <div class="col-md-2 inputSpace">
+                                  <label for="puissance" class="form-label inputSpaceText">Puissance(CV)</label>
+                                  <input type="number" class="form-control" formControlName="puissance"
+                                    id="puissance" placeholder="fiscale">
+                                </div>
+              
+                                <div class="col-md-2 inputSpace">
+                                  <label for="nbreessieux" class="form-label inputSpaceText">Nombre essieux</label>
+                                  <input type="number" class="form-control" formControlName="nbreessieux"
+                                    id="nbreessieux">
+                                </div>
+              
+                                <div class="col-md-2 inputSpace">
+                                  <label for="cylindre" class="form-label inputSpaceText">Cylindrée (CC)</label>
+                                  <input type="number" class="form-control" formControlName="cylindre"
+                                    id="cylindre">
+                                </div>
+              
+                               
+              
+                                <div class="col-md-2 inputSpace">
+                                  <label for="typetechnique" class="form-label inputSpaceText">Type technique <span class="Oblig">*</span></label>
+                                  <input type="text" class="form-control" formControlName="typetechnique"
+                                    id="typetechnique">
+                                </div>
+
+                                <div class="col-md-2 inputSpace">
+                                  <label for="ptac" class="form-label inputSpaceText">P.T.A.C(Kg)</label>
+                                  <input type="number" class="form-control" formControlName="ptac"
+                                    id="ptac">
+                                </div>
+                                <div class="col-md-2 inputSpace">
+                                  <label for="poidsvide" class="form-label inputSpaceText">P.V(Kg)</label>
+                                  <input type="number" class="form-control" formControlName="poidsvide"
+                                    id="poidsvide">
+                                </div>
+
+                                <div class="col-md-2 inputSpace">
+                                  <label for="chargeutile" class="form-label inputSpaceText">C.U(Kg)</label>
+                                  <input type="number" class="form-control" formControlName="chargeutile"
+                                    id="chargeutile">
+                                </div>
+
+                                <div class="col-12 col-md-12 text-center">
+                                    <button style="margin-right: 10px;" type="submit" [disabled]="vehiculeForm.invalid"
+                                      class="submit-button btn btn-success btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                                      data-loading-text="Loading...">
+                                      <i class="fas fa-save text-4 mr-1"></i> Enregister
+                                    </button>
+                              
+                                    <button type="submit"
+                                      class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                                      routerLink="/admin/admin/vehiculeList">
+                                      <i class="fas fa-times text-4 mr-1"></i> Quitter
+                                    </button>
+                              
+                                  </div>
+                
+               
+                           
+                            </div>
+  </form>
+                            </div>
+                          </div>
+                        
+                      </section>
+                    </div>
+                  </div>
+
+              
+              </div>
+  
+  
+          </section>
+          
+          
+    
+      </section>
+  </div>
+
+</div>
+
+    <!-- /.container-fluid -->
+</section>
+

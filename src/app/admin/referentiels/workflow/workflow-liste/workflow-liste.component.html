@@ -1,0 +1,712 @@
+<section class="content-header" [@simpleFadeAnimation]="'in'">
+
+    <!-- /.content-header -->
+   
+    <div class="row" >
+     <div class="col-lg-12">
+         <section class="card">
+   
+                 <h2 class="card-title"></h2><!--Liste des Véhicules-->
+        
+          
+                 <div class="spinner4" *ngIf="isLoadingResults">
+                   <div class="bounce1"></div>
+                   <div class="bounce2"></div>
+                   <div class="bounce3"></div>
+               </div>
+   
+             <section class="card card-primary">
+   
+                 <header class="card-header bg-secondary" style="padding: 10px">
+                  <div class="row">
+                    <div class="col-md-9 text-left">
+                      <h2 class="card-title text-white" style="padding: 0px; margin: 0px;">
+                        <span style="font-weight: 500;" class="text-warning mr-2">REFERENTIEL</span>- WORKFLOW</h2>
+                 
+                    </div>
+                
+                  <div class="col-md-3 text-right">
+                      <button type="button" class="btn btn-success btn-sm" (click)="actionClose(1)" [ngClass]="{'hidden': ActionOpen}">
+                        <i class="fa fa-plus mr-2"></i> NOUVEAU</button>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="actionClose(0)" [ngClass]="{'hidden': ActionClose}">
+                          <i class="fas fa-times mr-2"></i>FERMER</button>
+                  </div>
+              </div>
+                       </header> 
+             
+                 <div class="card-body">
+                 
+           
+                   <div class="row" [ngClass]="{'hidden': hidden}"><!-- -->
+                 
+                    <div class="col-md-12" style="padding-top: 5px;">
+                      <form [formGroup]="vehiculeForm" (ngSubmit)="onSubmitForm(vehiculeForm.value)"
+                              class="ecommerce-form action-buttons-fixed" action="#" method="post">
+                              <input type="text" hidden class="form-control" formControlName="workflow_id" id="workflow_id">
+                   
+                      <div class="row">
+                        <div class="col-md-12 mb-3">
+
+                        <select id="workf_code" class="form-control" formControlName="workf_code" name="workf_code">
+                          <option selected value="">---- Choisir ---- </option>
+                          <option selected *ngFor="let Workf of listeAllWorkflow.results" [value]="Workf.workf_code">[{{Workf.workf_code+' '+ Workf.app_libelle | uppercase}}] - {{Workf.workf_lib | uppercase}}</option>
+                        </select>
+                        </div>
+
+                        <!--div class="col-md-2 mb-3">
+                          <label for="validationCustom01">CODE<span class="oblig">*</span></label>
+                          <input [readonly]="isReadonly" maxlength="10" formControlName="workf_code" type="text" class="form-control" placeholder="code">
+                       
+                        </div>
+                        <div class="col-md-10 inputSpace">
+                          <label for="workf_designation" class="form-label inputSpaceText">Libellé <span class="Oblig">*</span></label>
+                          <input type="text" class="form-control" formControlName="workf_designation" id="workf_designation">
+                        </div-->
+                  
+                        <!--ERREUR ICI-->
+                        <div class="col-12 col-md-12 text-center">
+                            <button style="margin-right: 10px;" type="submit" [disabled]="vehiculeForm.invalid"
+                              class="submit-button btn btn-success btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                              data-loading-text="Loading...">
+                              <i class="fas fa-save text-4 mr-1"></i> Enregister
+                            </button>
+                      
+                            <span class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1" (click)="actionClose(0)">
+                              <i class="fas fa-times text-4 mr-1"></i> Quitter
+                            </span>
+                      
+                          </div>
+                       
+      
+                      </div>
+</form>
+                    </div>
+                  </div>
+   
+              
+
+                   <div class="row">
+                    <div class="spinner4" *ngIf="ModifsLoadingResults">
+                      <div class="bounce1"></div>
+                      <div class="bounce2"></div>
+                      <div class="bounce3"></div>
+                  </div>
+                    
+                    <div class="col-md-12" style="margin-top: 20px;">
+                      <mat-form-field >
+                          <mat-label>Rechercher un Workflow</mat-label>
+                          <input matInput (keyup)="applyFilter($event)" placeholder="Workflow..." #input>
+                      </mat-form-field>
+      
+                      <div>
+
+                        <table class="table table-responsive-md  table-bordered table-striped mb-0 fontTable"
+                        mat-table [dataSource]="dataSource" matSort>
+                        <ng-container matColumnDef="workf_id">
+                            <th *matHeaderCellDef mat-sort-header style="width: 1%;" class="text-center"> # </th>
+                            <td *matCellDef="let element; let i = index" class="text-center"> {{i + 1}} </td>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="app_libelle">
+                          <th *matHeaderCellDef mat-sort-header style="width: 5%;">APPLICATION</th>
+                          <td *matCellDef="let element">
+                              {{element.app_libelle }}
+                          </td>
+                      </ng-container> 
+
+                      <ng-container matColumnDef="workf_code">
+                        <th *matHeaderCellDef mat-sort-header style="width: 20%;">CODE WORKFLOW</th>
+                        <td *matCellDef="let element">
+                            {{element.workf_code }}
+                        </td>
+                    </ng-container> 
+
+                    <ng-container matColumnDef="workf_lib">
+                      <th *matHeaderCellDef mat-sort-header style="width: 20%;">LIBELLE WORKFLOW</th>
+                      <td *matCellDef="let element">
+                          {{element.workf_lib }}
+                      </td>
+                  </ng-container> 
+
+                  
+                        <!-- Color Column -->
+                        <ng-container matColumnDef="action">
+                            <th *matHeaderCellDef mat-sort-header style="width: 15%;"> </th>
+                            <td *matCellDef="let element">
+                             
+                                <!--button type="button" class="btn btn-secondary btn-sm mr-2" (click)="loadOne(element.workf_code)">
+                                    <i class="nav-icon fas fa-edit"></i>
+                                </button-->
+                                <!--button (click)="OpenAddModel(element.workf_id,element.workf_designation)" data-toggle="modal"
+                                data-target="#modal-AddEtape" type="button" class="btn btn-warning btn-sm mr-2">
+                                  <i class="nav-icon fas fa-list text-2"></i> Etapes
+                              </button>
+                              <button (click)="OpenAddModel(element.workf_id,element.workf_designation)" data-toggle="modal"
+                              data-target="#modal-AddModel" type="button" class="btn btn-success btn-sm mr-2">
+                                <i class="nav-icon fas fa-users text-2"></i> Validateurs
+                            </button-->
+                                <button type="button" class="btn btn-danger btn-sm"
+                                    (click)="ItemSupprime(element.workf_code)" data-toggle="modal"
+                                    data-target="#modal-info">
+                                    <i class="nav-icon fas fa-trash"></i>
+                                </button> 
+                               
+                            </td>
+                        </ng-container>
+    
+                        <!-- Color Column -->
+    
+    
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+    
+                    <mat-paginator [pageSizeOptions]="[10, 20, 30, 100]" showFirstLastButtons
+                        aria-label="Select page of periodic elements">
+                    </mat-paginator>
+
+
+
+
+                      
+      
+      
+                        </div>
+                  </div>
+                   </div>
+                 </div>
+     
+     
+             </section>
+             
+             
+       
+         </section>
+     </div>
+   
+   </div>
+   
+       <!-- /.container-fluid -->
+   </section>
+
+
+
+
+   <!---------CIRCUIT DE VALIDATION DES WORKFLOW---------->
+   <section class="content-header" [@simpleFadeAnimation]="'in'">
+
+    <!-- /.content-header -->
+   
+    <div class="row" >
+     <div class="col-lg-12">
+         <section class="card">
+   
+                 <h2 class="card-title"></h2><!--Liste des Véhicules-->
+        
+          
+                 <div class="spinner4" *ngIf="isLoadingResults">
+                   <div class="bounce1"></div>
+                   <div class="bounce2"></div>
+                   <div class="bounce3"></div>
+               </div>
+   
+             <section class="card card-primary">
+   
+                 <header class="card-header bg-success" style="padding: 10px">
+                  <div class="row">
+                    <div class="col-md-9 text-left">
+                      <h2 class="card-title text-white" style="padding: 0px; margin: 0px;">
+                        CONFIGURER UN CIRCUIT DE VALIDATION - WORKFLOW</h2>
+                 
+                    </div>
+                
+                  <!--div class="col-md-3 text-right">
+                      <button type="button" class="btn btn-success btn-sm" (click)="actionClose(1)" [ngClass]="{'hidden': ActionOpen}">
+                        <i class="fa fa-plus mr-2"></i> NOUVEAU</button>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="actionClose(0)" [ngClass]="{'hidden': ActionClose}">
+                          <i class="fas fa-times mr-2"></i>FERMER</button>
+                  </div-->
+              </div>
+                       </header> 
+             
+                 <div class="card-body">
+                 
+           
+                   <div class="row" ><!--[ngClass]="{'hidden': hidden}" -->
+                 
+                    <div class="col-md-12" style="padding-top: 5px;">
+                      <form [formGroup]="CircuitWorkFlowEtapeForm" (ngSubmit)="onSubmitCreatCircuitValidationForm(CircuitWorkFlowEtapeForm.value)"
+                              class="ecommerce-form action-buttons-fixed" action="#" method="post">
+                           
+                   
+                      <div class="row">
+                        <div class="col-md-2 inputSpace">
+                          <label for="wcir_code" class="form-label inputSpaceText">Code circuit <span class="Oblig">*</span></label>
+                          <input type="text" maxlength="10" class="form-control" formControlName="wcir_code" id="wcir_code">
+                        </div>
+                        <div class="col-md-5 inputSpace">
+                          <label for="wcir_libelle" class="form-label inputSpaceText">Libellé circuit <span class="Oblig">*</span></label>
+                          <input type="text" class="form-control" formControlName="wcir_libelle" id="wcir_libelle">
+                        </div>
+                        <div class="col-md-5 mb-3">
+                          <label for="wcir_libelle" class="form-label inputSpaceText">Liste Etape Workflow <span class="Oblig">*</span></label>
+                        <select id="workf_etp_id" class="form-control" formControlName="workf_etp_id" name="workf_etp_id" (change)="onChangeSelectedWorflowEtapeValue($event)">
+                          
+                          <option selected value="">---- Choisir ---- </option>
+                          <option selected *ngFor="let etape of listeAllEtapeWorkflow.results" [value]="etape.workf_etp_id" [attr.workfetpdesignation]="etape.workf_etp_designation">[{{etape.workf_code| uppercase}}] - {{etape.workf_etp_designation | uppercase}}</option>
+                        </select>
+                        <input type="text" class="form-control" formControlName="wcir_etape_libelle" id="wcir_etape_libelle" hidden>
+                        
+                        </div>
+                  
+                        <!--ERREUR ICI-->
+                        <div class="col-12 col-md-12 text-center">
+                            <button style="margin-right: 10px;" type="submit" [disabled]="CircuitWorkFlowEtapeForm.invalid"
+                              class="submit-button btn btn-success btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                              data-loading-text="Loading...">
+                              <i class="fas fa-save text-4 mr-1"></i> Enregister
+                            </button>
+                      
+                            <span class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1" (click)="actionClose(0)">
+                              <i class="fas fa-times text-4 mr-1"></i> Quitter
+                            </span>
+                      
+                          </div>
+                       
+      
+                      </div>
+</form>
+                    </div>
+                  </div>
+   
+              
+
+                   <div class="row">
+                    <div class="spinner4" *ngIf="ModifsLoadingResults">
+                      <div class="bounce1"></div>
+                      <div class="bounce2"></div>
+                      <div class="bounce3"></div>
+                  </div>
+                    
+                    <div class="col-md-12" style="margin-top: 20px;">
+                      <mat-form-field >
+                          <mat-label>Rechercher un circuit Workflow</mat-label>
+                          <input matInput (keyup)="applyFilter($event)" placeholder="Workflow..." #input>
+                      </mat-form-field>
+      
+                      <div>
+
+                        <table class="table table-responsive-md  table-bordered table-striped mb-0 fontTable"
+                        mat-table [dataSource]="dataSourceCircuit" matSort>
+                        <ng-container matColumnDef="wcir_id">
+                            <th *matHeaderCellDef mat-sort-header style="width: 1%;" class="text-center"> # </th>
+                            <td *matCellDef="let element; let i = index" class="text-center"> {{i + 1}} </td>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="wcir_code">
+                          <th *matHeaderCellDef mat-sort-header style="width: 5%;">CODE CIRCUIT<th>
+                          <td *matCellDef="let element">
+                              {{element.wcir_code | uppercase}}
+                          </td>
+                      </ng-container> 
+
+                      <ng-container matColumnDef="wcir_libelle">
+                        <th *matHeaderCellDef mat-sort-header style="width: 20%;">LIBELLE CIRCUIT</th>
+                        <td *matCellDef="let element">
+                            {{element.wcir_libelle | uppercase}}
+                        </td>
+                    </ng-container> 
+
+                    <ng-container matColumnDef="wcir_etape_libelle">
+                      <th *matHeaderCellDef mat-sort-header style="width: 20%;">ETAPE WORKFLOW</th>
+                      <td *matCellDef="let element">
+                          {{element.wcir_etape_libelle | uppercase }}
+                      </td>
+                  </ng-container> 
+
+                  
+                        <!-- Color Column -->
+                        <ng-container matColumnDef="action">
+                            <th *matHeaderCellDef mat-sort-header style="width: 15%;"> </th>
+                            <td *matCellDef="let element">
+                                <button type="button" class="btn btn-danger btn-sm"
+                                    (click)="ItemSupprime(element.workf_code)" data-toggle="modal"
+                                    data-target="#modal-info">
+                                    <i class="nav-icon fas fa-trash"></i>
+                                </button> 
+                               
+                            </td>
+                        </ng-container>
+    
+                        <!-- Color Column -->
+    
+    
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsCircuit"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsCircuit;"></tr>
+                    </table>
+    
+                    <mat-paginator [pageSizeOptions]="[10, 20, 30, 100]" showFirstLastButtons
+                        aria-label="Select page of periodic elements">
+                    </mat-paginator>
+
+
+
+
+                      
+      
+      
+                        </div>
+                  </div>
+                   </div>
+                 </div>
+     
+     
+             </section>
+             
+             
+       
+         </section>
+     </div>
+   
+   </div>
+   
+       <!-- /.container-fluid -->
+   </section>
+   <!---------FIN CIRCUIT DE VALIDATION DES WORKFLOW--------------->
+
+
+   <!-- /.modal -->
+<div class="modal fade" id="modal-info">
+  <div class="modal-dialog">
+      <div class="modal-content bg-default">
+          <div class="modal-header" style="height: 50px;">
+              <h2 class="modal-title">PARC AUTO - RTI </h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+              <p>Voulez-vous supprimer le Workflow ?</p>
+          </div>
+          <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Annuler</button>
+              <button type="button" class="btn btn-danger" (click)="supprime()"
+                  data-dismiss="modal">Supprimer</button>
+          </div>
+      </div>
+      <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- /.modal -->
+<div class="modal fade" id="modal-info">
+  <div class="modal-dialog">
+      <div class="modal-content bg-default">
+          <div class="modal-header" style="height: 50px;">
+              <h2 class="modal-title">PARC AUTO - RTI </h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+              <p>Voulez-vous supprimer la marque ?</p>
+          </div>
+          <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Annuler</button>
+              <button type="button" class="btn btn-danger" (click)="supprime()"
+                  data-dismiss="modal">Supprimer</button>
+          </div>
+      </div>
+      <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+   <!-- /.modal LISTE DES ETAPES -->
+   <div class="modal fade" id="modal-AddEtape">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content bg-default">
+            <div class="modal-header" style="height: 50px;">
+              <h2 class="modal-title">AJOUTER UNE ETAPE - <span style="font-weight: 500;" class="text-danger mr-2">[WORKFLOW - {{this.addMarqueName}}]</span></h2>
+                 
+                
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                 
+                    <div class="col-md-12" style="padding-top: 5px;">
+                      <form [formGroup]="etapeForm" (ngSubmit)="onSubmitFormModele(etapeForm.value)"
+                              class="ecommerce-form action-buttons-fixed" action="#" method="post">
+                              <input hidden type="text" class="form-control" formControlName="Modeleworkflow_id" id="Modeleworkflow_id" placeholder="Modeleworkflow_id">
+                              <input hidden type="text" class="form-control" formControlName="etape_id" id="etape_id" placeholder="etape_id">
+                   
+                      <div class="row">
+                        <div class="col-md-2 inputSpace">
+                          <label for="etap_niveau" class="form-label inputSpaceText">Niveau <span class="Oblig">*</span></label>
+                          <input type="number" class="form-control" formControlName="etap_niveau" id="etap_niveau" placeholder="etap_niveau">
+                        </div>
+                        <div class="col-md-6 inputSpace">
+                          <label for="etap_designation" class="form-label inputSpaceText">Designation <span class="Oblig">*</span></label>
+                          <input type="text" class="form-control" formControlName="etap_designation" id="etap_designation" placeholder="Modele">
+                        </div>
+                        <div class="col-md-2 inputSpace">
+                          <label for="etap_code" class="form-label inputSpaceText">Code <span class="Oblig">*</span></label>
+                          <input type="text" class="form-control" formControlName="etap_code" id="etap_code" placeholder="etap_code">
+                        </div>
+                        <div class="col-md-2 inputSpace">
+                          <label for="etap_fin" class="form-label inputSpaceText">Fin <span class="Oblig">*</span></label>
+                          <select name="etap_fin" id="pet-select" formControlName="etap_fin"  class="form-control">
+                            <option value="">--Choisir--</option>
+                            <option value="0">NON</option>
+                            <option value="1">OUI</option>
+                        </select>
+                        </div>
+                  
+                        <!--ERREUR ICI-->
+                        <div class="col-md-12 text-center">
+                            <button type="submit" [disabled]="etapeForm.invalid"
+                              class="submit-button btn btn-success p-3 align-items-center font-weight-semibold line-height-1"
+                              data-loading-text="Loading...">
+                              <i class="fas fa-save text-4 mr-1"></i> Enregister
+                            </button>
+                      
+                            <!--span class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1" (click)="actionClose(0)">
+                              <i class="fas fa-times text-4 mr-1"></i> Quitter
+                            </span-->
+                      
+                          </div>
+                       
+      
+                      </div>
+</form>
+                    </div>
+                  </div>
+
+                <div class="row">
+                    <div class="spinner4" *ngIf="ModelemodifsLoadingResults">
+                      <div class="bounce1"></div>
+                      <div class="bounce2"></div>
+                      <div class="bounce3"></div>
+                  </div>
+                    
+                    <div class="col-md-12">
+                      <mat-form-field >
+                          <mat-label>Rechercher une étape</mat-label>
+                          <input matInput (keyup)="applyFilter($event)" placeholder="Immatriculation , modèle , direction ..." #input>
+                      </mat-form-field>
+      
+                      <div>
+                       
+                          <table class="table table-responsive-md  table-bordered table-striped mb-0 fontTable"
+                          mat-table [dataSource]="dataSourceModele" matSort>
+                          <ng-container matColumnDef="number">
+                              <th *matHeaderCellDef mat-sort-header style="width: 1%;" class="text-center"> # </th>
+                              <td *matCellDef="let vehicule; let i = index" class="text-center"> {{i + 1}} </td>
+                          </ng-container>
+                          
+                          <ng-container matColumnDef="Model">
+                            <th *matHeaderCellDef mat-sort-header style="width: 10%;">Designation</th>
+                            <td *matCellDef="let vehicule">
+                                {{vehicule.modele|uppercase}}
+                            </td>
+                        </ng-container> 
+                       
+      
+                          <!-- Color Column -->
+                          <ng-container matColumnDef="action">
+                              <th *matHeaderCellDef mat-sort-header style="width: 8%;"> </th>
+                              <td *matCellDef="let vehicule">
+                               
+                                  <button type="button" class="btn btn-secondary btn-sm mr-2" (click)="loadOneModele(vehicule.model_ID,vehicule.modele)">
+                                      <i class="nav-icon fas fa-edit"></i>
+                                  </button>
+                                  
+                                  <button mwlConfirmationPopover type="button"class="btn btn-danger btn-sm" [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left" (confirm)="supprimeModele(vehicule.model_ID,vehicule.marque_ID)" (cancel)="cancelClicked = true"> <i class="nav-icon fas fa-trash"></i> </button>
+                               
+                                 
+                              </td>
+                          </ng-container>
+      
+                          <!-- Color Column -->
+      
+      
+                          <tr mat-header-row *matHeaderRowDef="displayedColumnsModele"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumnsModele;"></tr>
+                      </table>
+      
+                      <mat-paginator [pageSizeOptions]="[10, 20, 30, 100]" showFirstLastButtons
+                          aria-label="Select page of periodic elements">
+                      </mat-paginator>
+      
+      
+                        </div>
+                  </div> 
+                   </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal FIN DES ETAPES -->
+
+
+     <!-- /.modal -->
+     <div class="modal fade" id="modal-AddModel">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content bg-default">
+              <div class="modal-header" style="height: 50px;">
+                <h2 class="modal-title">AJOUTER UN VALIDATEUR - <span style="font-weight: 500;" class="text-danger mr-2">[{{this.addMarqueName}}]</span></h2>
+                   
+                  
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span></button>
+              </div>
+              <div class="modal-body">
+                  <div class="row">
+                   
+                      <div class="col-md-12" style="padding-top: 5px;">
+                        <form [formGroup]="validateurForm" (ngSubmit)="onSubmitFormModele(validateurForm.value)"
+                                class="ecommerce-form action-buttons-fixed" action="#" method="post">
+                                <input hidden type="text" class="form-control" formControlName="ValidModeleworkflow_id" id="ValidModeleworkflow_id" placeholder="Modeleworkflow_id">
+                                <input hidden type="text" class="form-control" formControlName="ValidModeleID" id="ValidModeleID" placeholder="ValidModeleID">
+                     
+                        <div class="row">
+
+                                
+                      <div class="col-md-6 mb-3">
+                        <label for="validationCustom01">LISTE DES ETAPES <span class="oblig">*</span></label>
+                        <select name="etap_fin" id="pet-select" formControlName="Validetap_fin"  class="form-control">
+                          <option value="">--Choisir--</option>
+                          <option value="0">NON</option>
+                          <option value="1">OUI</option>
+                      </select>
+                       </div> 
+
+                       
+                      <div class="col-md-6 mb-3">
+                        <label for="validationCustom01">LISTE DES UTILISATEURS <span class="oblig">*</span></label>
+                        <select name="etap_fin" id="pet-select" formControlName="Validutilisateur"  class="form-control">
+                          <option value="">--Choisir--</option>
+                          <option value="0">NON</option>
+                          <option value="1">OUI</option>
+                      </select>
+                       </div> 
+                       <div class="col-md-12 text-center">
+                        <button type="submit" [disabled]="validateurForm.invalid"
+                          class="submit-button btn btn-success p-3 align-items-center font-weight-semibold line-height-1"
+                          data-loading-text="Loading...">
+                          <i class="fas fa-save text-4 mr-1"></i> Enregister
+                        </button>
+                  
+                        <!--span class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1" (click)="actionClose(0)">
+                          <i class="fas fa-times text-4 mr-1"></i> Quitter
+                        </span-->
+                  
+                      </div>
+          
+                            <!--div class="col-md-12 mb-3">
+                              <label for="validationCustom01" style="padding: 10px;"><span class="oblig"></span></label>
+                              <button class="btn btn-primary form-control" type="submit" [disabled]="!validateurForm.valid"><i class="fas fa-plus"></i> Ajouter</button>
+                           
+                            </div-->
+
+                          <!--div class="col-md-8 inputSpace">
+                            <label for="ValidModeledesignation" class="form-label inputSpaceText">Libellé <span class="Oblig">*</span></label>
+                            <input type="text" class="form-control" formControlName="ValidModeledesignation" id="ValidModeledesignation" placeholder="Modele">
+                          </div>
+                    
+                      
+                          <div class="col-md-4">
+                              <button type="submit" [disabled]="validateurForm.invalid"
+                                class="submit-button btn btn-success mt-3 p-3 align-items-center font-weight-semibold line-height-1"
+                                data-loading-text="Loading...">
+                                <i class="fas fa-save text-4 mr-1"></i> Enregister
+                              </button>
+                        
+                            </div-->
+                         
+        
+                        </div>
+  </form>
+                      </div>
+                    </div>
+  
+                  <div class="row">
+                      <div class="spinner4" *ngIf="ModelemodifsLoadingResults">
+                        <div class="bounce1"></div>
+                        <div class="bounce2"></div>
+                        <div class="bounce3"></div>
+                    </div>
+                      
+                      <div class="col-md-12" style="margin-top: 20px;">
+                        <mat-form-field >
+                            <mat-label>Rechercher un modèle</mat-label>
+                            <input matInput (keyup)="applyFilter($event)" placeholder="Immatriculation , modèle , direction ..." #input>
+                        </mat-form-field>
+        
+                        <div>
+                         
+                            <table class="table table-responsive-md  table-bordered table-striped mb-0 fontTable"
+                            mat-table [dataSource]="dataSourceModele" matSort>
+                            <ng-container matColumnDef="number">
+                                <th *matHeaderCellDef mat-sort-header style="width: 1%;" class="text-center"> # </th>
+                                <td *matCellDef="let vehicule; let i = index" class="text-center"> {{i + 1}} </td>
+                            </ng-container>
+                            
+                            <ng-container matColumnDef="Model">
+                              <th *matHeaderCellDef mat-sort-header style="width: 10%;">Modèle </th>
+                              <td *matCellDef="let vehicule">
+                                  {{vehicule.modele|uppercase}}
+                              </td>
+                          </ng-container> 
+                         
+        
+                            <!-- Color Column -->
+                            <ng-container matColumnDef="action">
+                                <th *matHeaderCellDef mat-sort-header style="width: 8%;"> </th>
+                                <td *matCellDef="let vehicule">
+                                 
+                                    <button type="button" class="btn btn-secondary btn-sm mr-2" (click)="loadOneModele(vehicule.model_ID,vehicule.modele)">
+                                        <i class="nav-icon fas fa-edit"></i>
+                                    </button>
+                                    
+                                    <button mwlConfirmationPopover type="button"class="btn btn-danger btn-sm" [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left" (confirm)="supprimeModele(vehicule.model_ID,vehicule.marque_ID)" (cancel)="cancelClicked = true"> <i class="nav-icon fas fa-trash"></i> </button>
+                                 
+                                   
+                                </td>
+                            </ng-container>
+        
+                            <!-- Color Column -->
+        
+        
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsModele"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsModele;"></tr>
+                        </table>
+        
+                        <mat-paginator [pageSizeOptions]="[10, 20, 30, 100]" showFirstLastButtons
+                            aria-label="Select page of periodic elements">
+                        </mat-paginator>
+        
+        
+                          </div>
+                    </div> 
+                     </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Annuler</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+              </div>
+          </div>
+          <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->

@@ -1,0 +1,443 @@
+<!-- Content Header (Page header) -->
+<section role="main" class="content-header"  [@simpleFadeAnimation]="'in'">
+    <header class="page-header page-header-left-inline-breadcrumb">
+        <h2 class="font-weight-bold text-6">ENTRETIENS</h2>
+        <div class="right-wrapper">
+            <ol class="breadcrumbs">
+                <li><span>Accueil</span></li>
+                <li><span>Entretiens</span></li>
+                <li><span>Edition</span></li>
+            </ol>
+            <button type="button" class="btn btn-danger btn-sm btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1" routerLink="/admin/admin/entretienList">
+                <i class="fa fa-times text-4 mr-2"></i> QUITTER</button>
+             </div>
+    </header>
+
+  
+  <!-- /.content-header -->
+  
+  <!-- start: page -->
+  <div class="row" >
+    <div class="col-lg-12">
+        <section class="card">
+  
+                <h2 class="card-title" style="padding-top: 80px;"></h2>
+       
+         
+            <div class="spinner4" *ngIf="isLoadingResults">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+            <form [formGroup]="EntretienForm" (ngSubmit)="onSubmitForm(EntretienForm.value)"
+            class="ecommerce-form action-buttons-fixed" action="#" method="post">  
+            <section class="card card-primary">
+  
+                <header class="card-header bg-secondary" style="padding: 10px">
+                    <h3 class="card-title text-white" style="padding: 0px; margin: 0px;">EDITION D'UN ENTRETIEN DE VEHICULE</h3>
+                </header>
+                <div class="card-body">
+                   
+
+                    <div class="row g-3 ecommerce-form action-buttons-fixed">
+                        <div class="col-md-5 inputSpace">
+                          <label for="inputEmail4" class="form-label inputSpaceText">Véhicule</label>
+                          <select id="vehiculeId" class="form-control form-control-modern"
+                          formControlName="vehiculeId" name="vehiculeId"
+                          (change)="onChangeVehicule($event.target.value)">
+                          <option selected value="">------ Choisir ------ </option>
+                          <option *ngFor="let vehicule of listevehicule" value="{{vehicule.id}}">
+                            
+                             [{{vehicule.immatriculation | uppercase}}] - {{vehicule.marque}} {{vehicule.modele}}</option>
+                        </select>
+
+                       
+                        </div>
+                        <div class="col-md-5 inputSpace">
+                            <label for="inputEmail4" class="form-label inputSpaceText">Fournisseur</label>
+                            <select formControlName="fournisseurId" id="fournisseurId" class="form-control form-control-modern">
+                            <option selected value="">------ Choisir ------ </option>
+                            <option *ngFor="let fournisseur of listefournisseur" value="{{fournisseur.id}}">
+                              {{fournisseur.designation | uppercase}}</option>
+                          </select>
+
+                          </div>
+                          <div class="col-md-2 inputSpace">
+                            
+                            <button type="button" class="btn btn-dark btn-sm btn-px-4 py-3 align-items-center font-weight-semibold line-height-1" style="margin-top:22px;">
+                                <i class="fa fa-plus text-4 mr-2"></i> Fournisseur</button>
+                          </div>
+                        <div class="col-md-3 inputSpace">
+                          <label for="inputPassword4" class="form-label inputSpaceText">date</label>
+                          <input type="datetime-local" formControlName="dateEntretien" class="form-control form-control-modern" id="inputPassword4">
+                        </div>
+                        <div class="col-md-2 inputSpace">
+                            <label for="inputPassword4" class="form-label inputSpaceText">Kilométrage</label>
+                            <input type="number" formControlName="kilometrage" class="form-control form-control-modern" id="inputPassword4">
+                          </div>
+                        <div class="col-md-7 inputSpace">
+                            <label for="inputPassword4" class="form-label inputSpaceText">Libellé (Object)</label>
+                            <input type="text"  formControlName="objetEntretien" class="form-control form-control-modern" id="inputPassword4">
+                          </div>
+                          <div class="col-md-12 inputSpace">
+                            <label for="inputPassword4" class="form-label inputSpaceText">Description</label>
+                            <textarea id="story" formControlName="comment" name="comment" rows="2" cols="33" class="form-control form-control-modern"> </textarea>
+                          </div>
+                 
+                          <div class="col-md-4 inputSpace">
+                            <label for="inputPassword4" class="form-label inputSpaceText">Facture Proforma <span class="text-danger">(PDF)</span></label>
+                            <input type="file" formControlName="profomaUrl" class="form-control form-control-modern">
+                          </div>
+
+                          <div class="col-md-4 inputSpace">
+                            <label for="inputPassword4" class="form-label inputSpaceText">Bon de Commande <span class="text-danger">(PDF)</span></label>
+                            <input type="file" formControlName="bonCommandeUrl" class="form-control form-control-modern">
+                          </div>
+                          <div class="col-md-4 inputSpace">
+                            <label for="inputPassword4" class="form-label inputSpaceText">Facture <span class="text-danger">(PDF)</span></label>
+                            <input type="file"  formControlName="factureUrl" class="form-control form-control-modern">
+                          </div>
+
+
+                          
+                        </div>
+                    </div>
+    
+            </section>
+         
+
+
+
+
+            <section class="card card-warning">
+  
+              <header class="card-header bg-warning" style="padding: 10px">
+                  <h3 class="card-title text-black" style="padding: 0px; margin: 0px; color: black;">DETATIL DES TRAVAUX EFFECTUES</h3>
+              </header>
+              <div class="card-body">
+                 
+                <div class="row g-3 ecommerce-form action-buttons-fixed">
+                  <div class="col-md-5 inputSpace">
+                    <label for="inputEmail4" class="form-label inputSpaceText">Désignation</label>
+                    <input type="text" class="form-control form-control-modern" formControlName="DetailDesignation" id="inputPassword4">
+                 
+                  </div>
+                  <div class="col-md-1 inputSpace">
+                      <label for="inputEmail4" class="form-label inputSpaceText">Quantité</label>
+                      <input type="number" class="form-control form-control-modern" formControlName="DetailQuantite" id="inputPassword4">
+                 
+                    </div>
+                    <div class="col-md-2 inputSpace">
+                      <label for="inputEmail4" class="form-label inputSpaceText">Prix Unit.</label>
+                      <input type="number" class="form-control form-control-modern" formControlName="DetailPrixUnit" id="inputPassword4">
+                 
+                    </div>
+                    <div class="col-md-2 inputSpace">
+                      <label for="inputEmail4" class="form-label inputSpaceText">TOTAL</label>
+                      <input type="number" readonly class="form-control form-control-modern" formControlName="DetailPrixTotal" id="inputPassword4">
+                 
+                    </div>
+                    <div class="col-md-2 inputSpace">
+                      
+                      <button type="button" (click)="ajouter_detail(EntretienForm.value)" class="btn btn-dark btn-sm btn-px-4 py-3 align-items-center font-weight-semibold line-height-1" style="margin-top:22px;">
+                          <i class="fa fa-plus text-4 mr-2"></i> Ajouter</button>
+                    </div>
+              
+                    <div class="col-md-12">
+                      <table mat-table [dataSource]="dataSourceDetailTravaux" class="table-responsive-md table-striped mb-0">
+                    
+                           <!-- Position Column -->
+                        <ng-container matColumnDef="number">
+                          <th mat-header-cell *matHeaderCellDef> # </th>
+                          <td mat-cell *matCellDef="let element0; let i = index"> {{i + 1}} </td>
+                        </ng-container>
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="designation">
+                          <th mat-header-cell *matHeaderCellDef> Désignation </th>
+                          <td mat-cell *matCellDef="let element0"> {{element0.designation}} </td>
+                        </ng-container>
+                    
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="quantite">
+                          <th mat-header-cell *matHeaderCellDef> Quantité </th>
+                          <td mat-cell *matCellDef="let element0"> {{element0.quantite}} </td>
+                        </ng-container>
+                    
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="prixUnitaire">
+                          <th mat-header-cell *matHeaderCellDef> Prix Unit </th>
+                          <td mat-cell *matCellDef="let element0"> {{element0.prixUnitaire}} </td>
+                        </ng-container>
+                    
+                        <!-- Symbol Column -->
+                        <!--ng-container matColumnDef="prixTotal">
+                          <th mat-header-cell *matHeaderCellDef> TOTAL </th>
+                          <td mat-cell *matCellDef="let element0"> {{element0.prixTotal} </td>
+                        </ng-container-->
+
+                           <!-- Symbol Column 
+                           <ng-container matColumnDef="etat">
+                              <th mat-header-cell *matHeaderCellDef> Etat </th>
+                              <td mat-cell *matCellDef="let element"> 
+                                  <span *ngIf="element.etat=='Parc'" class="badge badge-pill badge-success text-1">{{element.etat}}</span>
+                                  <span *ngIf="element.etat!='Parc'"class="badge badge-pill badge-danger text-1">{{element.etat}}</span>
+                                 </td>
+                            </ng-container>-->
+
+                               <!-- Symbol Column -->
+                             
+
+                        <ng-container matColumnDef="action">
+                          <th mat-header-cell *matHeaderCellDef> Actions </th>
+                          <td mat-cell *matCellDef="let element0"> 
+                              <!--button type="button" class="btn btn-info btn-sm mr-2">
+                                  <i class="bx bx-money" aria-hidden="true"></i> Dépense
+                              </button>
+                              <button type="button" class="btn btn-secondary btn-sm mr-2">
+                                  <i class="bx bxs-edit" aria-hidden="true"></i> Modifier
+                              </button-->
+                              <button type="button" (click)="supTable_DetailEnt(element0.id)" class="btn btn-danger btn-sm">
+                                  <i class="bx bxs-trash"></i> Sup 
+                              </button>
+                              <!--button type="button" class="btn btn-primary btn-sm">Small button</button>
+                              <button type="button" class="btn btn-primary btn-sm">Small button</button-->    
+                          </td>
+                        </ng-container>
+                    
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      </table>
+                    
+                      <mat-paginator [pageSizeOptions]="[10, 20, 30]"
+                                     showFirstLastButtons 
+                                     aria-label="Select page of periodic elements">
+                      </mat-paginator>
+                    </div>
+                    
+                  </div>
+
+                  </div>
+             
+  
+          </section>
+
+
+
+
+
+          <section class="card card-danger">
+  
+            <header class="card-header bg-danger" style="padding: 10px">
+                <h3 class="card-title text-white" style="padding: 0px; margin: 0px;">PROGRAMMER UN ENTRETIEN</h3>
+            </header>
+            <div class="card-body">
+               
+
+              <div class="row g-3 ecommerce-form action-buttons-fixed">
+                <div class="col-md-4 inputSpace">
+                  <label for="inputEmail4" class="form-label inputSpaceText">Véhicule</label>
+                  <select id="vehiculeIdProgram" class="form-control form-control-modern"
+                  formControlName="vehiculeIdProgram" name="vehiculeIdProgram">
+                  <option selected value="">------ Choisir ------ </option>
+                  <option *ngFor="let vehicule of listevehicule" value="{{vehicule.id}}">
+                    
+                     [{{vehicule.immatriculation | uppercase}}] - {{vehicule.marque}} {{vehicule.modele}}</option>
+                     
+                </select>
+
+                  <!--select disabled id="inputState" class="form-control form-control-modern" name="stockStatus">
+                   
+                    <option>[2039 HF 01] - TOYOTA HILUX</option>
+                  </select-->
+                </div>
+                <div class="col-md-6 inputSpace">
+                    <label for="inputEmail4" class="form-label inputSpaceText">Type d'entretiens paramétrés</label>
+                    <select id="typeEnretretienId" class="form-control form-control-modern"
+                    formControlName="typeEnretretienId" name="typeEnretretienId" 
+                    (change)="onChangeTypeEntretien($event.target.value)">
+                    <option selected value="">------ Choisir ------ </option>
+                    <option *ngFor="let type of listeTypeEntretien" [value]="type.id+';'+type.designation">
+                      
+                       [{{type.designation | uppercase}}]</option>
+                   
+                  </select>
+                  </div>
+
+                  <div class="col-md-2 inputSpace">
+                    <label for="inputEmail4" class="form-label inputSpaceText">Répéter tous</label>
+                    <input type="number" formControlName="repetition"  placeholder="1" class="form-control form-control-modern" id="inputPassword4">
+                  </div>
+                 
+                <div class="col-md-2 inputSpace">
+                  <label for="inputPassword4" class="form-label inputSpaceText">Période</label>
+                  <select id="inputState" formControlName="frequenceCode" class="form-control form-control-modern" name="frequenceCode">
+                    <option selected>Mois</option>
+                    <option>Jour(s)</option>
+                    <option>Semaine(s)</option>
+                    <option value="">-- Sélectionner --</option>
+                    <option>An(s)</option>
+                  </select>
+                </div>
+                <div class="col-md-2 inputSpace">
+                    <label for="inputPassword4" class="form-label inputSpaceText">Ou Kilométrage</label>
+                    <input type="number" value="70000" formControlName="kilometrage" class="form-control form-control-modern" id="kilometrage">
+                  </div>
+
+                  <div class="col-md-2 inputSpace">
+                    <label for="inputEmail4" class="form-label inputSpaceText">Rappel avant</label>
+                    <input type="number" placeholder="1" formControlName="rappel" class="form-control form-control-modern" id="rappel">
+                  </div>
+
+                  <div class="col-md-2 inputSpace">
+                    <label for="inputPassword4" class="form-label inputSpaceText">Rappel Période</label>
+                    <select id="inputState" class="form-control form-control-modern" formControlName="rappelPeriodeName" id="rappelPeriodeName">
+                      <option selected>Mois</option>
+                      <option>Jour(s)</option>
+                      <option>Semaine(s)</option>
+                      <option  value="">-- Sélectionner --</option>
+                      <option>An(s)</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2 inputSpace">
+                      <label for="inputPassword4" class="form-label inputSpaceText">Rappel Kilométrage</label>
+                      <input type="number" class="form-control form-control-modern" formControlName="rappelKilometrage" id="rappelKilometrage">
+                    </div>  
+
+                    <div class="col-md-2 inputSpace">
+                        
+                      <button type="button"  (click)="ajouter_detailEntretienProgramm(EntretienForm.value)" class="btn btn-dark btn-sm btn-px-4 py-3 align-items-center font-weight-semibold line-height-1" style="margin-top:22px;">
+                          <i class="fa fa-plus text-4 mr-2"></i> Ajouter</button>
+                    </div>
+                  
+                  </div>
+
+
+                  <div class="col-md-12">
+                  
+                    <div class="col-md-12">
+                      <table mat-table [dataSource]="dataSourceProgramme" class="table-responsive-md table-striped mb-0">
+                    
+                           <!-- Position Column -->
+                        <ng-container matColumnDef="numberMat">
+                          <th mat-header-cell *matHeaderCellDef> # </th>
+                          <td mat-cell *matCellDef="let element0; let i = index"> {{i + 1}} </td>
+                        </ng-container>
+  
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="typeEntretienName">
+                          <th mat-header-cell *matHeaderCellDef> Entretiens paramétrés </th>
+                          <td mat-cell *matCellDef="let element0"> {{element0.typeEntretienName}} </td>
+                        </ng-container>
+                    
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="frequenceCode">
+                          <th mat-header-cell *matHeaderCellDef> Répéter tous </th>
+                          <td mat-cell *matCellDef="let element0"> {{element0.repetition}} {{element0.frequenceCode}} </td>
+                        </ng-container>
+                    
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="kilometrage">
+                          <th mat-header-cell *matHeaderCellDef> Ou Kilométrage </th>
+                          <td mat-cell *matCellDef="let element0"> {{element0.kilometrage}} Km </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="rappel">
+                          <th mat-header-cell *matHeaderCellDef> Rappel avant </th>
+                          <td mat-cell *matCellDef="let element0"> {{element0.rappel}} {{element0.rappelPeriodeName}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="rappelKilometrage">
+                          <th mat-header-cell *matHeaderCellDef> Rappel Kilométrage</th>
+                          <td mat-cell *matCellDef="let element0"> {{element0.rappelKilometrage}} Km</td>
+                        </ng-container>
+                    
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="executeMat">
+                          <th mat-header-cell *matHeaderCellDef> TOTAL </th>
+                          <td mat-cell *matCellDef="let element0"> {{element0.executeMat}} </td>
+                        </ng-container>
+  
+                           <!-- Symbol Column 
+                           <ng-container matColumnDef="etat">
+                              <th mat-header-cell *matHeaderCellDef> Etat </th>
+                              <td mat-cell *matCellDef="let element"> 
+                                  <span *ngIf="element.etat=='Parc'" class="badge badge-pill badge-success text-1">{{element.etat}}</span>
+                                  <span *ngIf="element.etat!='Parc'"class="badge badge-pill badge-danger text-1">{{element.etat}}</span>
+                                 </td>
+                            </ng-container>-->
+  
+                               <!-- Symbol Column -->
+                        <ng-container matColumnDef="actionMat">
+                          <th mat-header-cell *matHeaderCellDef> Actions </th>
+                          <td mat-cell *matCellDef="let element0"> 
+                              <!--button type="button" class="btn btn-info btn-sm mr-2">
+                                  <i class="bx bx-money" aria-hidden="true"></i> Dépense
+                              </button>
+                              <button type="button" class="btn btn-secondary btn-sm mr-2">
+                                  <i class="bx bxs-edit" aria-hidden="true"></i> Modifier
+                              </button-->
+                              <button type="button" (click)="supTable_DetailEntPro(element0.id)" class="btn btn-danger btn-sm">
+                                  <i class="bx bxs-trash"></i> Sup
+                              </button>
+                              <!--button type="button" class="btn btn-primary btn-sm">Small button</button>
+                              <button type="button" class="btn btn-primary btn-sm">Small button</button-->    
+                          </td>
+                        </ng-container>
+                    
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsProgramme"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsProgramme;"></tr>
+                      </table>
+                    
+                      <mat-paginator [pageSizeOptions]="[10, 20, 30]"
+                                     showFirstLastButtons 
+                                     aria-label="Select page of periodic elements">
+                      </mat-paginator>
+                    </div>
+  
+  
+                       </div>  
+
+
+
+
+                </div>
+                  <div class="row action-buttons" style="margin-top: 15px;">
+                    <div class="col-12 col-md-12 text-center">
+                        <button style="margin-right: 10px;" [disabled]="EntretienForm.invalid" type="submit" class="submit-button btn btn-success btn-px-4 py-3 align-items-center font-weight-semibold line-height-1" data-loading-text="Loading...">
+                            <i class="bx bx-save text-4 mr-1"></i> Enregister
+                        </button>
+                
+                        <button type="submit" routerLink="/admin/admin/vehiculeList" class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1" routerLink="/admin/admin/entretienList">
+                          <i class="fa fa-times text-4 mr-1"></i> Quitter
+                      </button>
+                      
+                    </div>
+                    <!--div class="col-12 col-md-auto px-md-0 mt-3 mt-md-0">
+                        <a href="ecommerce-coupons-list.html" class="cancel-button btn btn-light btn-px-4 py-3 border font-weight-semibold text-color-dark text-3">Cancel</a>
+                    </div-->
+                    <!--div class="col-12 col-md-auto ml-md-auto mt-3 mt-md-0">
+                        <a href="#" class="delete-button btn btn-danger btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1">
+                            <i class="bx bx-trash text-4 mr-2"></i> Delete Coupon
+                        </a>
+                    </div-->
+                 
+                  
+
+
+              </div>
+
+        </section>
+  
+
+</form>
+
+        </section>
+
+
+
+
+        
+    </div>
+  
+  </div>

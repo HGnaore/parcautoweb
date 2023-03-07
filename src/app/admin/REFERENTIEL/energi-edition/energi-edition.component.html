@@ -1,0 +1,143 @@
+<section role="main" class="content-header"  [@simpleFadeAnimation]="'in'">
+    <header class="page-header page-header-left-inline-breadcrumb" style="margin: 0px; padding-top: 20px;">
+        <h2 class="font-weight-bold text-6">ENERGIE</h2>
+        <div class="right-wrapper">
+            <ol class="breadcrumbs">
+                <li><span><a routerLink="/admin/dashboard">Accueil</a></span></li>
+                <li><span><a routerLink="/admin/admin/directionList">Energie</a></span></li>
+                <li><span>Edition</span></li>
+            </ol>
+            <button type="button" class="btn btn-danger btn-sm btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1" routerLink='/admin/admin/energiList'>
+                <i class="fa fa-times text-4 mr-2"></i> QUITTER</button>
+             </div>
+    </header> 
+
+
+
+
+<!-- /.content-header -->
+
+<div class="row" >
+    <div class="col-lg-12">
+        <section class="card">
+
+                <h2 class="card-title" style="padding-top: 80px;"></h2>
+       
+         
+            <div class="spinner4" *ngIf="isLoadingResults">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+            
+            <section class="card card-primary">
+
+                <header class="card-header bg-secondary" style="padding: 10px">
+                    <h3 class="card-title text-white" style="padding: 0px; margin: 0px;">EDITION D'UNE ENERGIE</h3>
+                </header>
+             
+                <div class="card-body">
+                    <form [formGroup]="energieForm" (ngSubmit)="onSubmitForm(energieForm.value)"
+                        class="row g-3 ecommerce-form action-buttons-fixed">
+                        <div class="col-md-3 inputSpace">
+                            <label for="inputEmail4" class="form-label inputSpaceText">Code <span
+                                    class="Oblig">*</span></label>
+                            <input type="text" placeholder="code" formControlName="code"
+                                class="form-control form-control-modern" id="inputPassword4" [readonly]="enModif">
+    
+                        </div>
+                        <div class="col-md-9 inputSpace">
+                            <label for="inputEmail4" class="form-label inputSpaceText">Désignation <span
+                                    class="Oblig">*</span></label>
+                            <input type="text" placeholder="Désignation" formControlName="designation" [readonly]="enModif"
+                                class="form-control form-control-modern" id="inputPassword4">
+                        </div>
+    
+                        <div class="row container-fluid" >
+    
+                            <div class="col-md-3 inputSpace">
+                                <label for="inputEmail4" class="form-label inputSpaceText">Date</label>
+                                <input type="date" formControlName="date"
+                                    class="form-control form-control-modern inputSpaceText" id="inputEmail4">
+                            </div>
+    
+                            <div class="col-md-7 inputSpace">
+                                <label for="inputPassword4" class="form-label inputSpaceText">Dernier Prix</label>
+                                <input type="number" formControlName="dernierPrix" class="form-control form-control-modern"
+                                    id="inputPassword4">
+                            </div>
+    
+                            <div class="col-md-2 inputSpace">
+                                <button type="button" (click)="ajouter(energieForm.value)"
+                                    class="btn btn-dark btn-sm btn-px-4 py-3 align-items-center font-weight-semibold line-height-1 float-sm-right"
+                                    style="margin-top:25px;">
+                                    <i class="fa fa-plus text-4 mr-2"></i> Ajouter</button>
+                            </div>
+    
+    
+                            <div class="col-md-12" style="margin-top: 20px;">
+                                <table mat-table [dataSource]="dataSource" class="table-responsive-md table-striped mb-0">
+    
+                                    <!-- Position Column -->
+                                    <ng-container matColumnDef="date">
+                                        <th mat-header-cell *matHeaderCellDef class="tablebg"> Date</th>
+                                        <td mat-cell *matCellDef="let element "> {{element.date | date: 'dd/MM/yyyy'}}
+                                        </td>
+                                    </ng-container>
+    
+                                    <!-- Name Column -->
+                                    <ng-container matColumnDef="prix">
+                                        <th mat-header-cell *matHeaderCellDef class="tablebg"> Dernier Prix </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.prix}} </td>
+                                    </ng-container>
+    
+                                    <!-- Symbol Column -->
+                                    <ng-container matColumnDef="action">
+                                        <th mat-header-cell *matHeaderCellDef class="tablebg" style="width: 11%;"> </th>
+                                        <td mat-cell *matCellDef="let element">
+    
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                (click)="supTable(element.id)">
+                                                <i class="bx bxs-trash"></i> Supprimer
+                                            </button>
+                                        </td>
+                                    </ng-container>
+    
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                </table>
+    
+                                <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons
+                                    aria-label="Select page of periodic elements">
+                                </mat-paginator>
+                            </div>
+                        </div>
+    
+    
+                        <div class="col-12 col-md-12 text-center">
+                            <button style="margin-right: 10px;" type="submit" [disabled]="!energieForm.valid"
+                                class="submit-button btn btn-success btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                                data-loading-text="Loading...">
+                                <i class="bx bx-save text-4 mr-1"></i> Enregister
+                            </button>
+    
+                            <button type="submit"
+                                class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                                routerLink="/admin/admin/energiList">
+                                <i class="fa fa-times text-4 mr-1"></i> Quitter
+                            </button>
+    
+                        </div>
+    
+                    </form>
+                </div>
+    
+            </section>
+         
+
+        </section>
+    </div>
+
+</div>
+
+<!-- start: page -->

@@ -1,0 +1,86 @@
+<div class="content-header" [@simpleFadeAnimation]="'in'">
+    <!-- Content Wrapper. Contains page content -->
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Contacts</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Contacts</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <!-- Default box -->
+        <div class="card card-solid">
+            <mat-form-field style="padding: 30px; margin-top: -20px">
+                <mat-label>Rechercher un agent ici</mat-label>
+                <input matInput name="valRecherche" id="valRecherche" [(ngModel)]="valRecherche" (input)="applyFilter()" placeholder="Saisissez votre recherche ici : Nom, Prénoms, Téléphone, Direction, Fonction etc...">
+            </mat-form-field>
+        </div>
+        <!-- /.card -->
+
+        <!-- Default box -->
+        <div class="card card-solid">
+            <!-- loader  -->
+            <div class="spinner4" *ngIf="isLoadingResults">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+            <!-- loader end -->
+            <div class="card-body pb-0">
+                <div class="row d-flex align-items-stretch">
+                    <div *ngFor="let card of listeEmploye " class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
+                        <div class="card bg-light">
+                            <div class="card-header text-muted border-bottom-0">
+                                {{card.Fonction}}
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="lead"><b>{{card.NomPrenoms}}</b></h2>
+                                        <p class="text-muted text-sm"><b>Service: </b> {{card.LibelleService}} </p>
+                                        <p class="text-muted text-sm"><b>Département: </b> {{card.LibelleDepartement}} </p>
+                                        <p class="text-muted text-sm"><b>Direction: </b> {{card.LibelleDirection}} </p>
+
+                                        <ul class="ml-4 mb-0 fa-ul text-muted">
+                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Email: {{card.Email}}</li>
+                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Tel.: {{card.Mobile}} # Poste: {{card.TelBureau}}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-5 text-center">
+                                        <img src="{{card.Photo}}" alt="" class="img-circle img-fluid" style="height: 200px;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="text-right">
+                                    <h2 class="lead" style="color: brown;"><b>{{card.Matricule}}</b></h2>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+
+    <!-- /.content-wrapper -->
+</div>

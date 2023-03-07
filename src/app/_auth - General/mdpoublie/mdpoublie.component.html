@@ -1,0 +1,60 @@
+<body class="hold-transition register-page" [@simpleFadeAnimation]="'in'"
+    style="background-image: url('assets/dist/img/Technical-Support2.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center;">
+    <div class="register-box">
+
+        <div class="card card-outline card-danger">
+            <div class="card-header" style="background-color: rgb(233, 231, 231);">
+                <div class="login-logo">
+                    <img src="assets/dist/img/RTIlogo.png" alt="RTI Logo" class="brand-image  elevation-3"
+                        height="40px">
+                    <a style="color: black;"> - NEO</a>
+                </div>
+            </div>
+
+            <div class="card-body register-card-body">
+                <h2 style="text-align: center; color:coral">Mot de passe oublié </h2>
+                <!-- loader  -->
+                <div class="spinner4" *ngIf="isLoadingResults">
+                    <div class="bounce1"></div>
+                    <div class="bounce2"></div>
+                    <div class="bounce3"></div>
+                </div>
+                <!-- loader end -->
+
+                <form [formGroup]="mdpoubliFormGroup" (ngSubmit)="envoyer(mdpoubliFormGroup.value)">
+
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control"
+                            placeholder="Entrez votre Email pour recevoir votre mot de passe"
+                            formControlName='Util_Email' required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+
+                        <!-- /.col -->
+                        <div class="col-12">
+                            <button type="submit" [disabled]='!mdpoubliFormGroup.valid'
+                                class="btn btn-primary btn-block btn-flat">Envoyer</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+            </div>
+            <div class="card-footer">
+                <p class="mt-2">
+                    <a routerLink="/auth" class="text-center">J'ai déjà un compte</a>
+                </p>
+            </div>
+            <!-- /.form-box -->
+        </div><!-- /.card -->
+    </div>
+    <!-- /.register-box -->
+
+</body>

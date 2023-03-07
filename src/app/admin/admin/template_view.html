@@ -1,0 +1,104 @@
+<!-- Content Header (Page header) -->
+<section class="content-header" [@simpleFadeAnimation]="'in'">
+   
+     <header class="page-header page-header-left-inline-breadcrumb" style="margin: 0px; padding-top: 20px;">
+        <h2 class="font-weight-bold text-6">TYPE FOURNISSEUR</h2>
+        <div class="right-wrapper">
+            <ol class="breadcrumbs">
+                <li><span><a routerLink="/admin/dashboard">Accueil</a></span></li>
+                <li><span>Type fournisseur</span></li>
+                <li><span>Liste</span></li>
+            </ol>
+            <button routerLink='/admin/admin/typefournisseurEdition/0' class="btn btn-success btn-sm btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1">
+                <i class="fa fa-plus text-4 mr-2"></i> Nouveau</button>
+            <!--a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fas fa-chevron-left"></i></a-->
+        </div>
+    </header>
+
+   
+    
+
+
+
+<!-- /.content-header -->
+
+<div class="row" >
+    <div class="col-lg-12">
+        <section class="card">
+
+                <h2 class="card-title" style="padding-top: 80px;">Liste des Types de fournisseur</h2>
+       
+         
+            <div class="spinner4" *ngIf="isLoadingResults">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+            
+            <div class="card-body">
+
+                <mat-form-field >
+                    <mat-label>Rechercher un type</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="direction ..." #input>
+                </mat-form-field>
+
+                <div>
+                 
+                    <table class="table table-responsive-md  table-bordered table-striped dataTable fontTable"
+                    mat-table [dataSource]="dataSource" matSort>
+
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="code">
+                        <th *matHeaderCellDef mat-sort-header style="width: 10%;"> Code
+                        </th>
+                        <td *matCellDef="let element" fontTable> {{element.code | uppercase}}</td>
+                    </ng-container>
+
+                    <!-- Progress Column -->
+                    <ng-container matColumnDef="designation">
+                        <th *matHeaderCellDef mat-sort-header style="width: 50%;"> Type Fournisseur </th>
+                        <td *matCellDef="let element">
+                            [{{element.code | uppercase}}] - {{element.designation | uppercase}}</td>
+                    </ng-container>
+
+
+                    <!-- Color Column -->
+                    <ng-container matColumnDef="action">
+                        <th *matHeaderCellDef mat-sort-header style="width: 20%;"> </th>
+                        <td *matCellDef="let element">
+                            <button type="button" class="btn btn-secondary btn-sm mr-2"
+                                routerLink='/admin/admin/typefournisseurEdition/{{element.id}}'>
+                                <i class="nav-icon fas fa-edit"></i> Modifier
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm"
+                                (click)="questionSupprime(element.id)" data-toggle="modal"
+                                data-target="#modal-info">
+                                <i class="nav-icon fas fa-trash"></i> Supprimer
+                            </button>
+                        </td>
+                    </ng-container>
+                    <!-- Color Column -->
+
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons
+                    aria-label="Select page of periodic elements">
+                </mat-paginator>
+                  </div>
+                  
+            
+            </div>
+
+        </section>
+    </div>
+
+</div>
+
+</section>
+
+
+
+

@@ -1,0 +1,136 @@
+<div class="content-header" [@simpleFadeAnimation]="'in'">
+
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h2 class="m-0"><b>FOURNISSEUR</b></h2>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Accueil</a></li>
+                    <li class="breadcrumb-item active">Fournisseur</li>
+                    <li class="breadcrumb-item active">Edition</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                <h2 class="mb-2" style="color:orange"><b>Edition d'un fournisseur</b></h2>
+            </div>
+            <div class="col-sm-4">
+                <button routerLink='/admin/admin/fournisseurList' class="btn btn-danger float-sm-right"
+                    style="height: 50px;">
+                    <i class="nav-icon fa fa-times" aria-hidden="true"></i>
+                    QUITTER</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.content-header -->
+
+<!-- start: page -->
+<div class="row container-fluid">
+    <div class="col-lg-12">
+        <section class="card">
+            <header class="card-header bg-secondary " style="height: 50px">
+                <h2 class="card-title text-white">EDITION FOURNISSEUR</h2>
+            </header>
+            <div class="card-body">
+                <form [formGroup]="fournisseurForm" (ngSubmit)="onSubmitForm(fournisseurForm.value)"
+                    class="row g-3 ecommerce-form action-buttons-fixed">
+                    <div class="col-md-4 inputSpace">
+                        <label for="inputEmail4" class="form-label inputSpaceText">Code <span
+                                class="Oblig">*</span></label>
+                        <input type="text" placeholder="code" class="form-control form-control-modern"
+                            formControlName="code" id="inputPassword4">
+                    </div>
+
+                    <div class="col-md-4 inputSpace">
+                        <label for="inputEmail4" class="form-label inputSpaceText">Type <span
+                                class="Oblig">*</span></label>
+                        <select id="inputState" formControlName="typeFournisseurId"
+                            class="form-control form-control-modern" name="stockStatus">
+                            <option selected>------ Choisir ------ </option>
+                            <option *ngFor="let item of listeTypefournisseurs" [value]="item.id">{{item.designation |
+                                uppercase}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 inputSpace">
+                        <label for="inputEmail4" class="form-label inputSpaceText">Libellé <span
+                                class="Oblig">*</span></label>
+                        <input type="text" placeholder="Libellé fournisseur" formControlName="designation"
+                            class="form-control form-control-modern" id="inputPassword4">
+                    </div>
+
+                    <div class="col-md-4 inputSpace">
+                        <label for="inputEmail4" class="form-label inputSpaceText">Localisation société</label>
+                        <input type="text" placeholder="Localisation" formControlName="localisation"
+                            class="form-control form-control-modern" id="inputPassword4">
+
+                    </div>
+
+                    <div class="col-md-4 inputSpace">
+                        <label for="inputEmail4" class="form-label inputSpaceText">Téléphone société</label>
+                        <input type="text" placeholder="00 00 00 00 00 / 00 00 00 00 00" formControlName="telephone"
+                            class="form-control form-control-modern" id="inputPassword4">
+
+                    </div>
+
+                    <div class="col-md-4 inputSpace">
+                        <label for="inputEmail4" class="form-label inputSpaceText">Email société</label>
+                        <input type="text" placeholder="Email de la société" formControlName="email"
+                            class="form-control form-control-modern" id="inputPassword4">
+
+                    </div>
+
+                    <div class="col-md-12">
+                        <hr>
+                    </div>
+
+                    <div class="col-md-3 inputSpace">
+                        <label for="inputEmail4" class="form-label inputSpaceText">Nom et Prénoms (P.Focal)</label>
+                        <input type="text" placeholder="Point Focal" formControlName="contactNomPrenoms"
+                            class="form-control form-control-modern" id="inputPassword4">
+
+                    </div>
+                    <div class="col-md-3 inputSpace">
+                        <label for="inputEmail4" class="form-label inputSpaceText">Fonction (P.Focal)</label>
+                        <input type="text" placeholder="Fonction" formControlName="contactFonction"
+                            class="form-control form-control-modern" id="inputPassword4">
+
+                    </div>
+
+                    <div class="col-md-3 inputSpace">
+                        <label for="inputEmail4" class="form-label inputSpaceText">Contact (P.Focal)</label>
+                        <input type="text" placeholder="Contact" formControlName="contactTelephone"
+                            class="form-control form-control-modern" id="inputPassword4">
+
+                    </div>
+
+                    <div class="col-md-3 inputSpace">
+                        <label for="inputEmail4" class="form-label inputSpaceText">Email (P.Focal)</label>
+                        <input type="text" placeholder="Email" class="form-control form-control-modern"
+                            formControlName="contactEmail" id="inputPassword4">
+                    </div>
+
+                    <div class="col-12 col-md-12 text-center">
+                        <button style="margin-right: 10px;" type="submit" [disabled]="!fournisseurForm.valid"
+                            class="submit-button btn btn-success btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                            data-loading-text="Loading...">
+                            <i class="fas fa-save text-4 mr-1"></i> Enregister
+                        </button>
+
+                        <button type="submit"
+                            class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                            routerLink="/admin/admin/fournisseurList">
+                            <i class="fa fa-times text-4 mr-1"></i> Quitter
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </div>
+</div>

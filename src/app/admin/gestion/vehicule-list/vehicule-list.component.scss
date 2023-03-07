@@ -1,0 +1,72 @@
+/* Structure */
+table {
+    width: 100%;
+   /* font-size: 24px;*/
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  th.mat-sort-header-sorted {
+    color: black;
+  }
+  
+  /**************************************/
+
+  
+   .mat-column-code {
+    Word-wrap: break-Word !important;
+    white-space: unset !important;
+    flex: 0 0 8% !important;
+    width: 5% !important;
+    overflow-wrap: break-Word;
+    Word-wrap: break-Word;
+    Word-break: break-Word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  .mat-column-designation {
+    Word-wrap: break-Word !important;
+    white-space: unset !important;
+    flex: 0 0 8% !important;
+    width: 80% !important;
+    overflow-wrap: break-Word;
+    Word-wrap: break-Word;
+    Word-break: break-Word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+  .mat-column-action {
+    Word-wrap: break-Word !important;
+    white-space: unset !important;
+    flex: 0 0 10% !important;
+    width: 5% !important;
+    overflow-wrap: break-Word;
+    Word-wrap: break-Word;
+  
+    Word-break: break-Word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+  
+  /********************************/
+  .mat-header-cell, .mat-sort-header {
+   /* background-color: #286090;*/
+    color: white;
+    
+  }
+  
+  .mat-row:hover {
+    background-color: #d6d6d6;
+  }
+  

@@ -1,0 +1,166 @@
+<!-- Content Header (Page header) -->
+<section role="main" class="content-header"  [@simpleFadeAnimation]="'in'">
+    <header class="page-header page-header-left-inline-breadcrumb" style="margin: 0px; padding-top: 20px;">
+        <h2 class="font-weight-bold text-6">PROGRAMME D'ENTRETIEN</h2>
+        <div class="right-wrapper">
+            <ol class="breadcrumbs">
+                <li><span><a routerLink="/admin/dashboard">Accueil</a></span></li>
+                <li><span><a routerLink="/admin/admin/entretienProgramList">Programme d'entretien</a></span></li>
+                <li><span>Edition</span></li>
+            </ol>
+            <button type="button" class="btn btn-danger btn-sm btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1" routerLink="/admin/admin/entretienProgramList">
+                <i class="fa fa-times text-4 mr-2"></i> QUITTER</button>
+             </div>
+    </header> 
+  
+  
+  <!-- /.content-header -->
+  
+  <!-- start: page -->
+  <div class="row" >
+    <div class="col-lg-12">
+        <section class="card">
+  
+                <h2 class="card-title" style="padding-top: 80px;"></h2>
+       
+         
+            <div class="spinner4" *ngIf="isLoadingResults">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+            <form [formGroup]="EntretienForm" (ngSubmit)="onSubmitForm(EntretienForm.value)"
+            class="ecommerce-form action-buttons-fixed" action="#" method="post">  
+      
+          <section class="card card-secondary">
+  
+            <header class="card-header bg-secondary" style="padding: 10px">
+                <h3 class="card-title text-white" style="padding: 0px; margin: 0px;">EDITION D'UN PROGRAMME D'ENTRETIEN</h3>
+            </header>
+            <div class="card-body">
+               
+
+              <div class="row g-3 ecommerce-form action-buttons-fixed">
+                <div class="col-md-6 inputSpace">
+                  <label for="inputEmail4" class="form-label inputSpaceText">Véhicule</label>
+                  <select id="vehiculeId" class="form-control form-control-modern"
+                  formControlName="vehiculeId" name="vehiculeId">
+                  <option selected value="">------ Choisir ------ </option>
+                  <option *ngFor="let vehicule of listevehicule" value="{{vehicule.id}}">
+                    
+                     [{{vehicule.immatriculation | uppercase}}] - {{vehicule.marque}} {{vehicule.modele}}</option>
+                     
+                </select>
+                </div>
+                <div class="col-md-6 inputSpace">
+                    <label for="inputEmail4" class="form-label inputSpaceText">Type d'entretiens paramétrés</label>
+                    <select id="typeEntretienId" class="form-control form-control-modern"
+                    formControlName="typeEntretienId" name="typeEntretienId">
+                    <option selected value="">------ Choisir ------ </option>
+                    <option *ngFor="let type of listeTypeEntretien" [value]="type.id">
+                      
+                       [{{type.designation | uppercase}}]</option>
+                   
+                  </select>
+                  </div>
+
+                  <div class="col-md-2 inputSpace">
+                    <label for="inputEmail4" class="form-label inputSpaceText">Répéter tous</label>
+                    <input type="number" formControlName="repetition" placeholder="1" class="form-control form-control-modern" id="inputPassword4">
+                  </div>
+                 
+                <div class="col-md-2 inputSpace">
+                  <label for="inputPassword4" class="form-label inputSpaceText">Période</label>
+                  <select id="inputState" formControlName="frequenceCode" class="form-control form-control-modern" name="frequenceCode">
+                    <option selected>Mois</option>
+                    <option>Jour(s)</option>
+                    <option>Semaine(s)</option>
+                    <option value="">-- Sélectionner --</option>
+                    <option>An(s)</option>
+                  </select>
+                </div>
+                <div class="col-md-2 inputSpace">
+                    <label for="inputPassword4" class="form-label inputSpaceText">Ou Kilométrage</label>
+                    <input type="number" value="70000" formControlName="kilometrage" class="form-control form-control-modern" id="kilometrage">
+                  </div>
+
+                  <div class="col-md-2 inputSpace">
+                    <label for="inputEmail4" class="form-label inputSpaceText">Rappel avant</label>
+                    <input type="number"  placeholder="1" formControlName="rappel" class="form-control form-control-modern" id="rappel">
+                  </div>
+
+                  <div class="col-md-2 inputSpace">
+                    <label for="inputPassword4" class="form-label inputSpaceText">Rappel Période</label>
+                    <select id="inputState" class="form-control form-control-modern" formControlName="rappelPeriodeCode" id="rappelPeriodeName">
+                      <option selected>Mois</option>
+                      <option>Jour(s)</option>
+                      <option>Semaine(s)</option>
+                      <option  value="">-- Sélectionner --</option>
+                      <option>An(s)</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2 inputSpace">
+                      <label for="inputPassword4" class="form-label inputSpaceText">Rappel Kilométrage</label>
+                      <input type="number" class="form-control form-control-modern" formControlName="rappelKilometrage" id="rappelKilometrage">
+                    </div>  
+
+
+                    <div class="col-md-12 inputSpace">
+                      <label for="inputPassword4" class="form-label inputSpaceText">Description</label>
+                      <textarea type="text" formControlName="comment" class="form-control form-control-modern" id="inputPassword4"></textarea>
+                    </div>
+
+                    <!--div class="col-md-2 inputSpace">
+                        
+                      <button type="button"  (click)="ajouter_detailEntretienProgramm(EntretienForm.value)" class="btn btn-dark btn-sm btn-px-4 py-3 align-items-center font-weight-semibold line-height-1" style="margin-top:22px;">
+                          <i class="fa fa-plus text-4 mr-2"></i> Ajouter</button>
+                    </div-->
+                  
+                  </div>
+
+
+    
+
+
+                </div>
+                  <div class="row action-buttons" style="margin-top: 15px;">
+                    <div class="col-12 col-md-12 text-center">
+                        <button style="margin-right: 10px;" [disabled]="EntretienForm.invalid" type="submit" class="submit-button btn btn-success btn-px-4 py-3 align-items-center font-weight-semibold line-height-1" data-loading-text="Loading...">
+                            <i class="bx bx-save text-4 mr-1"></i> Enregister
+                        </button>
+                
+                        <button type="submit" routerLink="/admin/admin/entretienProgramList" class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1">
+                          <i class="fa fa-times text-4 mr-1"></i> Quitter
+                      </button>
+                      
+                    </div>
+                    <!--div class="col-12 col-md-auto px-md-0 mt-3 mt-md-0">
+                        <a href="ecommerce-coupons-list.html" class="cancel-button btn btn-light btn-px-4 py-3 border font-weight-semibold text-color-dark text-3">Cancel</a>
+                    </div-->
+                    <!--div class="col-12 col-md-auto ml-md-auto mt-3 mt-md-0">
+                        <a href="#" class="delete-button btn btn-danger btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1">
+                            <i class="bx bx-trash text-4 mr-2"></i> Delete Coupon
+                        </a>
+                    </div-->
+                 
+                  
+
+
+              </div>
+
+        </section>
+  
+
+</form>
+
+        </section>
+
+
+
+
+        
+    </div>
+  
+  </div>
+  
+  

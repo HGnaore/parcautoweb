@@ -1,0 +1,411 @@
+<!-- Content Header (Page header) -->
+<section role="main" class="content-header"  [@simpleFadeAnimation]="'in'">
+    <header class="page-header page-header-left-inline-breadcrumb" style="margin: 0px; padding-top: 20px;">
+        <h2 class="font-weight-bold text-6">LOCATION DE VEHICULE</h2>
+        <div class="right-wrapper">
+            <ol class="breadcrumbs">
+                <li><span><a routerLink="/admin/dashboard">Accueil</a></span></li>
+                <li><span><a routerLink="/admin/admin/locationList">LOCATION Véhicule</a></span></li>
+                <li><span>Edition</span></li>
+            </ol>
+            <button type="button" class="btn btn-danger btn-sm btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1" routerLink='/admin/admin/locationList'>
+                <i class="fa fa-times text-4 mr-2"></i> QUITTER</button>
+             </div>
+    </header> 
+  
+  
+  <!-- /.content-header -->
+  
+  <!-- start: page -->
+  <div class="row" >
+    <div class="col-lg-12">
+        <section class="card">
+  
+                <h2 class="card-title" style="padding-top: 80px;"></h2>
+       
+         
+            <div class="spinner4" *ngIf="isLoadingResults">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+            
+            <section class="card card-primary">
+  
+                <header class="card-header bg-secondary" style="padding: 10px">
+                    <h3 class="card-title text-white" style="padding: 0px; margin: 0px;">EDITION D'UNE LOCATION</h3>
+                </header>
+                <div class="card-body">
+                    <form [formGroup]="vehiculeLocationForm" (ngSubmit)="onSubmitForm(vehiculeLocationForm.value)"
+                    class="ecommerce-form action-buttons-fixed" action="#" method="post">
+                    <div class="tabs">
+                      <ul class="nav nav-tabs">
+                        <!--li class="nav-item ">
+                          <a class="nav-link active" id="usage-limits-tab" data-toggle="pill" href="#usage-concessionnaire" role="tab" aria-controls="usage-concessionnaire" aria-selected="false"><i class="bx bxs-car mr-2"></i> Concessionnaire</a>
+                        </li-->
+                        <li class="nav-item ">
+                          <a class="nav-link active" id="usage-limits-tab" data-toggle="pill" href="#usage-concessionnaire" role="tab" aria-controls="usage-concessionnaire" aria-selected="false"><i class="bx bxs-car mr-2"></i> Info Location</a>
+                        </li>
+  
+                        <li class="nav-item">
+                          <a class="nav-link" id="general-tab" data-toggle="pill" href="#general" role="tab" aria-controls="general" aria-selected="true"><i class="bx bxs-car mr-2"></i> Carte Grise</a>
+                         
+                        </li>
+                        <li class="nav-item ">
+                          <a class="nav-link" id="usage-restriction-tab" data-toggle="pill" href="#usage-restriction" role="tab" aria-controls="usage-restriction" aria-selected="false"><i class="bx bxs-car mr-2"></i> Assurance</a>
+                            </li>
+                        <li class="nav-item ">
+                          <a class="nav-link" id="usage-limits-tab" data-toggle="pill" href="#usage-limits" role="tab" aria-controls="usage-limits" aria-selected="false"><i class="bx bxs-car mr-2"></i> Visite technique</a>
+                        </li>
+                   
+                    
+ 
+                        <li class="nav-item ">
+                          <a class="nav-link" id="usage-limits-tab" data-toggle="pill" href="#usage-kilométrique" role="tab" aria-controls="usage-limits" aria-selected="false"><i class="bx bxs-car mr-2"></i> Relevé kilométrique</a>
+                        </li>
+                      
+                      </ul>
+                      <div class="tab-content">
+  
+                        <div class="tab-pane fade  show active" id="usage-concessionnaire" role="tabpanel" aria-labelledby="usage-limits-tab">
+                            <div class="row g-3">
+                                <div class="col-md-3 inputSpace">
+                                  <label for="inputEmail4" class="form-label inputSpaceText">Date début <span style="color: red">*</span></label>
+                                  <input type="datetime-local" formControlName="dateDebut" id="dateDebut" class="form-control form-control-modern inputSpaceText" id="inputEmail4">
+                                </div>
+                                <div class="col-md-3 inputSpace">
+                                    <label for="inputEmail4" class="form-label inputSpaceText">Date fin <span style="color: red">*</span></label>
+                                    <input type="datetime-local" formControlName="dateFin" id="dateFin" class="form-control form-control-modern inputSpaceText" id="inputEmail4">
+                                  </div>
+    
+                                  <!--div class="col-md-2 inputSpace">
+                                    <label for="inputEmail4" class="form-label inputSpaceText">Nbr de jour</label>
+                                    <input type="number" formControlName="nombreJour" class="form-control form-control-modern inputSpaceText" id="inputEmail4">
+                                  </div-->
+    
+                                  <div class="col-md-2 inputSpace">
+                                    <label for="inputEmail4" class="form-label inputSpaceText">Montant/Jour <span class="Oblig">*</span></label>
+                                    <input type="number" id="montantJournalier" formControlName="montantJournalier" class="form-control form-control-modern inputSpaceText" id="inputEmail4">
+                                  </div>
+    
+                                  <!--div class="col-md-2 inputSpace">
+                                    <label for="inputEmail4" class="form-label inputSpaceText">Montant Total</label>
+                                    <input type="number" disabled class="form-control form-control-modern inputSpaceText" id="inputEmail4">
+                                  </div-->
+    
+                                  <div class="col-md-12 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Libellé de la location <span class="Oblig">*</span></label>
+                                    <input type="text" id="libelleLocation" formControlName="libelleLocation" class="form-control form-control-modern" id="inputPassword4">
+                                  </div>
+    
+                                  <div class="col-md-12 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Description</label>
+                                    <textarea type="text" formControlName="comment" class="form-control form-control-modern" id="inputPassword4"></textarea>
+                                  </div>
+    
+                                  <div class="col-md-6 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Contrat de location<span class="text-danger">(PDF)</span></label>
+                                    <input type="file" formControlName="contratUrl" class="form-control form-control-modern" multiple>
+                                  </div>
+                              
+                                  
+                                </div>
+    
+                           
+                          </div>
+    
+    
+                          <div class="tab-pane fade" id="general" role="tabpanel" aria-labelledby="general-tab">
+                            <div class="row g-3">
+                                <div class="col-md-3 inputSpace">
+                                  <label for="inputEmail4" class="form-label inputSpaceText">Immatriculation <span class="Oblig">*</span></label>
+                                  <input type="text" formControlName="immatriculation" class="form-control form-control-modern inputSpaceText" id="inputEmail4">
+                                </div>
+                                <div class="col-md-3 inputSpace">
+                                    <label for="inputEmail4" class="form-label inputSpaceText">N° Carte Grise</label>
+                                    <input type="text"  formControlName="numCarteGrise" class="form-control form-control-modern inputSpaceText" id="inputEmail4">
+                                  </div>
+                                  <div class="col-md-3 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Mise en circulation</label>
+                                    <input type="datetime-local" formControlName="dateMiseEnCirculation"  class="form-control form-control-modern" id="inputPassword4">
+                                  </div>
+                                <div class="col-md-3 inputSpace">
+                                  <label for="inputPassword4" class="form-label inputSpaceText">Marque <span class="Oblig">*</span></label>
+                                  <!--ng-select formControlName="marqueId"
+                                  bindLabel="marque"
+                                  appendTo="body"
+                                  [searchable]="true" 
+                                  [clearable]="true"
+                                 
+                                  (change)="changeMarque($event)"
+                                  [loading]="selectLoading">
+                                  <ng-option selected="selected" value="">------- Choisir --------</ng-option> 
+                                  <ng-option *ngFor="let marque of listemarques" [value]="marque.id">
+                                    {{marque.id}} {{marque.designation}}
+                                </ng-option>
+                                </ng-select-->
+
+                                  <select id="marqueId" class="form-control form-control-modern" formControlName="marqueId"
+                              name="marqueId" (change)="changeMarque($event.target.value)">
+                              <option selected value="">------ Choisir ------ </option>
+                              <option *ngFor="let marque of listemarques" [value]="marque.id">{{marque.designation}}</option>
+                            </select>
+                            
+                                </div>
+
+                                <div class="col-md-3 inputSpace">
+                                  <label for="inputPassword4" class="form-label inputSpaceText">Modèle <span class="Oblig">*</span></label>
+                                  <select id="modeleId" class="form-control form-control-modern" formControlName="modeleId"
+                              name="marqueId">
+                              <option selected value="">------ Choisir ------ </option>
+                              <option selected *ngFor="let moelmarque of listemodelebymarques" [value]="moelmarque.id">{{moelmarque.designation}}</option>
+                            </select>
+                                
+                                </div>
+ 
+                                <div class="col-md-3 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Genre</label>
+                                    <input type="text" class="form-control form-control-modern" id="inputPassword4" formControlName="genre">
+                                  </div>
+                                <div class="col-md-3 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Type commercial</label>
+                                    <input type="text" formControlName="typeCommercial" class="form-control form-control-modern" id="inputPassword4">
+                                  </div>
+                                  <div class="col-md-3 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Couleur</label>
+                                    <input type="text" formControlName="couleur" class="form-control form-control-modern" id="inputPassword4">
+                                  </div>
+                                  <div class="col-md-3 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Carrosserie</label>
+                                    <input type="text" formControlName="carroserie" class="form-control form-control-modern" id="inputPassword4">
+                                  </div>
+                               
+                               
+                                  <div class="col-md-3 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Energie</label>
+                                    <select id="energieId" class="form-control form-control-modern" formControlName="energieId"
+                                    name="energieId">
+                                    <option selected value="">------ Choisir ------ </option>
+                                    <option *ngFor="let energie of listeenergies" value="{{energie.id}}">{{energie.designation}}
+                                    </option>
+                                  </select>
+                                  </div>
+    
+                                  <div class="col-md-3 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Place assises</label>
+                                    <input type="number" formControlName="nbPlaceAssise" class="form-control form-control-modern" id="inputPassword4">
+                                  </div>
+    
+                                  <div class="col-md-3 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">usage du véhicule</label>
+                                    
+                                    <select id="usageId" class="form-control form-control-modern" formControlName="usageId"
+                              name="usageId">
+                              <option selected value="">------ Choisir ------ </option>
+                              <option *ngFor="let usage of listeusages" value="{{usage.id}}">{{usage.designation}}</option>
+                            </select>
+                      
+                                  </div>
+    
+                                  <div class="col-md-3 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Puissance fiscale(CV)</label>
+                                    <input type="number" formControlName="puissanceFiscale" class="form-control form-control-modern" id="inputPassword4">
+                                  </div>
+    
+                                  <div class="col-md-3 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Nombre d'essieux</label>
+                                    <input type="number" formControlName="nbEssieux" class="form-control form-control-modern" id="inputPassword4">
+                                  </div>
+    
+                                  <div class="col-md-3 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Cylindrée (CC)</label>
+                                    <input type="number" formControlName="cylindree" class="form-control form-control-modern" id="inputPassword4">
+                                  </div>
+    
+                                  <div class="col-md-3 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">N° Chassis</label>
+                                    <input type="text" formControlName="chassis" class="form-control form-control-modern" id="inputPassword4">
+                                  </div>
+    
+                                  <div class="col-md-3 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Type technique</label>
+                                    <input type="text" formControlName="typeTechnique" class="form-control form-control-modern" id="inputPassword4">
+                                  </div>
+
+                                 
+                               
+    
+                            
+    
+                                  <div class="col-md-6 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Photos du vehicule</label>
+                                    <input type="file" formControlName="vehiculePictureUrl" class="form-control form-control-modern">
+                                  </div>
+    
+                                  <div class="col-md-6 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Carte Grise <span class="text-danger">(PDF)</span></label>
+                                    <input type="file" formControlName="carteGrisePictureUrl" class="form-control form-control-modern">
+                                  </div>
+    
+                                </div>
+                            
+                          </div>
+                          <div class="tab-pane fade" id="usage-restriction" role="tabpanel" aria-labelledby="usage-restriction-tab">
+                            <div class="row g-3">
+                             
+                                <div class="col-md-3 inputSpace">
+                                  <label for="inputPassword4" class="form-label inputSpaceText">Date d'expiration assurance</label>
+                                  <input type="datetime-local" formControlName="dateExpirationAssurance" class="form-control form-control-modern" id="inputPassword4">
+                                </div>
+                               
+                                  <div class="col-md-9 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Observation</label>
+                                    <input type="text" formControlName="assuranceComment" class="form-control form-control-modern" id="inputPassword4">
+                                  </div>
+    
+                                  <div class="col-md-6 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Document assurance <span class="text-danger">(PDF)</span></label>
+                                    <input type="file" formControlName="assuranceUrl" class="form-control form-control-modern">
+                                  </div>
+    
+    
+                                </div>
+    
+    
+    
+                          </div>
+    
+    
+                          <div class="tab-pane fade" id="usage-limits" role="tabpanel" aria-labelledby="usage-limits-tab">
+                            <div class="row g-3">
+                                <div class="col-md-3 inputSpace">
+                                  <label for="inputEmail4" class="form-label inputSpaceText">Date d'expiration visite</label>
+                                  <input type="datetime-local" formControlName="dateExpirationVisiteTechnique" class="form-control form-control-modern inputSpaceText" id="inputEmail4">
+                                </div>
+                           
+                                 
+                                  <div class="col-md-9 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Observation</label>
+                                    <input type="text" formControlName="visiteTechniqueComment" class="form-control form-control-modern" id="inputPassword4">
+                                  </div>
+                                  <div class="col-md-4 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Document visite technique <span class="text-danger">(PDF)</span></label>
+                                    <input type="file" formControlName="visiteTechniqueUrl" class="form-control form-control-modern">
+                                  </div>
+    
+                          
+                                  
+                                </div>
+    
+
+                          </div>
+    
+    
+                          
+    
+    
+                          <div class="tab-pane fade" id="usage-kilométrique" role="tabpanel" aria-labelledby="usage-limits-tab">
+                              <div class="row g-3">
+                                <div class="col-md-3 inputSpace">
+                                  <label for="inputEmail4" class="form-label inputSpaceText">Date</label>
+                                  <input type="datetime-local" formControlName="dateReleve" class="form-control form-control-modern inputSpaceText" id="inputEmail4">
+                                </div>
+                            
+                                <div class="col-md-2 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Kilometrage</label>
+                                    <input type="number"  formControlName="kilometrage" class="form-control form-control-modern" id="inputPassword4">
+                                  </div>
+                              
+                                  <div class="col-md-5 inputSpace">
+                                    <label for="inputPassword4" class="form-label inputSpaceText">Observation</label>
+                                    <input type="text" formControlName="comment_relev" class="form-control form-control-modern" id="inputPassword4">
+                                  </div>
+    
+                                  <div class="col-md-2 inputSpace">
+                                   
+                                      <button type="button"
+                                      class="btn btn-dark btn-sm btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                                      style="margin-top:25px;" (click)="ajouter_rele(vehiculeLocationForm.value)">
+                                      <i class="fa fa-plus text-4 mr-2"></i> Ajouter</button>
+                  
+                                  </div>
+                                  
+                                </div>
+    
+                              <div class="col-md-12" style="margin-top: 20px;">
+                                <table mat-table [dataSource]="dataSource_rele" class="table-responsive-md table-striped mb-0">
+        
+                                    <!-- Position Column -->
+                                    <ng-container matColumnDef="dateReleve">
+                                      <th mat-header-cell *matHeaderCellDef class="tablebg"> Date </th>
+                                      <td mat-cell *matCellDef="let element"> {{element.dateReleve | date:'dd/MM/yyyy'}} </td>
+                                    </ng-container>
+              
+                                    <!-- Name Column -->
+                                    <ng-container matColumnDef="kilometrage">
+                                      <th mat-header-cell *matHeaderCellDef class="tablebg"> Kilometrage </th>
+                                      <td mat-cell *matCellDef="let element"> {{element.kilometrage}} </td>
+                                    </ng-container>
+              
+                                    <!-- Symbol Column -->
+                                    <ng-container matColumnDef="observation">
+                                      <th mat-header-cell *matHeaderCellDef class="tablebg"> </th>
+                                      <td mat-cell *matCellDef="let element"> {{element.comment}} </td>
+                                    </ng-container>
+              
+                                    <ng-container matColumnDef="action">
+                                      <th mat-header-cell *matHeaderCellDef class="tablebg"> Actions </th>
+                                      <td mat-cell *matCellDef="let element">
+                                      
+                                        <button type="button" class="btn btn-danger btn-sm" (click)="supTable_rele(element.id)">
+                                          <i class="fas fa-trash"></i> Supprimer
+                                        </button>
+                                        <!--button type="button" class="btn btn-primary btn-sm">Small button</button>
+                                                  <button type="button" class="btn btn-primary btn-sm">Small button</button-->
+                                      </td>
+                                    </ng-container>
+              
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns_rele"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns_rele;"></tr>
+                                  </table>
+              
+                                  <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons
+                                    aria-label="Select page of periodic elements">
+                                  </mat-paginator>
+                              </div>
+                          </div>
+    
+                     
+  
+                      </div>
+                    </div>
+
+                      
+                  <div class="col-12 col-md-12 text-center">
+                    <button style="margin-right: 10px;" type="submit" [disabled]="vehiculeLocationForm.invalid"
+                      class="submit-button btn btn-success btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                      data-loading-text="Loading...">
+                      <i class="fas fa-save text-4 mr-1"></i> Enregister
+                    </button>
+              
+                    <button type="submit"
+                      class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                      routerLink="/admin/admin/locationList">
+                      <i class="fas fa-times text-4 mr-1"></i> Quitter
+                    </button>
+              
+                  </div>
+
+                    </form>
+                      
+
+  
+                  </div>
+    
+            </section>
+         
+  
+        </section>
+    </div>
+  
+  </div>

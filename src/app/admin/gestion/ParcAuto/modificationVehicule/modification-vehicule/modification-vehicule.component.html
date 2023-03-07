@@ -1,0 +1,2536 @@
+<!-- Content Header (Page header) -->
+<section role="main" class="content-header" [@simpleFadeAnimation]="'in'">
+  <div class="d-flex justify-content-center">
+    <!--(click)="ItemSupprime(vehicule.ID)"-->
+    <!--{{MyUserProfilID}}-->
+    <button
+      data-toggle="modal"
+      data-target="#modal-infoValidator"
+      id="position-5-error"
+      class="mt-3 mb-3 ws-normal btn btn-danger"
+      *ngIf="this.valideVehicule == 0 && MyUserProfilID == 2"
+    >
+      <!-- -->
+      {{
+        "INFORMATION: Cliquez ici pour soumettre les informations saisies à validation !"
+          | uppercase
+      }}
+    </button>
+    <span *ngIf="this.valideVehicule == 0 && MyUserProfilID == 3">
+      <button
+        data-toggle="modal"
+        data-target="#modal-infoConfirmValidator"
+        id="position-5-error"
+        class="mt-3 mb-3 mr-3 ws-normal btn btn-success"
+      >
+        <!-- *ngIf="this.valideVehicule==1"-->
+        {{ "valider les informations saisies !" | uppercase }}
+      </button>
+      <!--button data-toggle="modal" data-target="#modal-infoConfirmValidator" id="position-5-error" class="mt-3 mb-3 ws-normal btn btn-danger">
+    {{'rejeter les informations saisies !' | uppercase}}
+  </button-->
+    </span>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <section class="card">
+        <!--h2 class="card-title"></h2-->
+
+        <div class="spinner4" *ngIf="isLoadingResults">
+          <div class="bounce1"></div>
+          <div class="bounce2"></div>
+          <div class="bounce3"></div>
+        </div>
+
+        <section class="card card-primary">
+          <header class="card-header bg-secondary" style="padding: 10px">
+            <div class="row">
+              <div class="col-md-10 text-center">
+                <h1
+                  class="card-title text-white"
+                  style="padding: 0px; margin: 0px"
+                >
+                  <span style="font-weight: 500" class="text-warning mr-2"
+                    >VEHICULE</span
+                  >[{{ imatriculation | uppercase }}] -
+                  {{ marque | uppercase }} {{ modele | uppercase
+                  }}<span> - {{ fonctionVehicule | uppercase }}</span>
+                </h1>
+              </div>
+
+              <div class="col-md-2 text-right">
+                <button
+                  type="button"
+                  class="btn btn-warning"
+                  routerLink="/admin/admin/vehiculeList"
+                >
+                  PARC AUTOMOBILE <i class="fa fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </header>
+
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-2">
+                <section class="card card-outline card-danger mb-1 pt-2">
+                  <a href="{{ imagePreview }}" target="_blank">
+                    <img
+                      [src]="imagePreview"
+                      style="width: 200px"
+                      class="image-preview rounded img-fluid"
+                  /></a>
+                </section>
+              </div>
+
+              <div class="col-md-4">
+                <section class="card card-info mb-2">
+                  <header class="card-header" style="margin: 0px; padding: 0px">
+                    <h3 class="card-title" style="margin: 2px; padding: 4px">
+                      CARTE GRISE
+                    </h3>
+                  </header>
+                  <div
+                    class="card-body"
+                    style="
+                      padding-top: 2px;
+                      padding-bottom: 0px;
+                      background-color: rgb(239, 248, 243);
+                    "
+                  >
+                    <div class="row">
+                      <div class="col-md-5">
+                        <ul class="list-unstyled">
+                          <li>Immatriculation</li>
+                          <li class="propName">{{ imatriculation }}</li>
+                          <hr class="solid mb-1 mt-1" />
+                          <li>Carte Grise</li>
+                          <li class="propName">{{ numeroCarteGrise }}</li>
+                          <hr class="solid mb-1 mt-1" />
+                          <li>Mise en ciruclation</li>
+                          <li class="propName">
+                            {{
+                              datemiseenserviceCarteGrise | date : "dd/MM/yyyy"
+                            }}
+                          </li>
+                          <hr class="solid mb-1 mt-1" />
+                          <li>Date d'édition</li>
+                          <li class="propName">
+                            {{ dateeditionCarteGrise | date : "dd/MM/yyyy" }}
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-md-7">
+                        <ul class="list-unstyled">
+                          <li>ID Propriétaire</li>
+                          <li></li>
+                          <li class="propName">
+                            {{ codeproprietaireCarteGrise }}
+                          </li>
+                          <hr class="solid mb-1 mt-1" />
+                          <li>
+                            Marque:
+                            <span class="propName">{{
+                              marque | uppercase
+                            }}</span>
+                          </li>
+                          <li>
+                            Genre:
+                            <span class="propName">{{ genreCarteGrise }}</span>
+                          </li>
+                          <hr class="solid mb-1 mt-1" />
+                          <li>
+                            Type commercial:
+                            <span class="propName">{{
+                              modele | uppercase
+                            }}</span>
+                          </li>
+                          <li>
+                            Couleur:
+                            <span class="propName">{{
+                              couleurCarteGrise | uppercase
+                            }}</span>
+                          </li>
+                          <hr class="solid mb-1 mt-1" />
+                          <li>
+                            Energie:
+                            <span class="propName">{{
+                              energieCarteGrise
+                            }}</span>
+                          </li>
+                          <li>
+                            Place:
+                            <span class="propName">{{
+                              nbreplaceCarteGrise
+                            }}</span>
+                          </li>
+                          <li>
+                            Chassis:
+                            <span
+                              style="font-size: 13px"
+                              class="propName text-danger"
+                              >{{ numchassisCarteGrise }}</span
+                            >
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <div class="col-md-3">
+                <section class="card card-info mb-2">
+                  <header class="card-header" style="margin: 0px; padding: 0px">
+                    <h3 class="card-title" style="margin: 2px; padding: 4px">
+                      VISITE TECHNIQUE ET VIGNETTE
+                    </h3>
+                  </header>
+                  <div
+                    class="card-body"
+                    style="
+                      padding-top: 2px;
+                      padding-bottom: 0px;
+                      background-color: rgb(239, 248, 243);
+                    "
+                  >
+                    <div class="row">
+                      <div class="col-md-6">
+                        <ul class="list-unstyled">
+                          <li style="font-weight: 500">
+                            <u class="propName">VISITE</u>
+                          </li>
+                          <li></li>
+                          <li>
+                            CFA:
+                            <span class="propName text-primary"
+                              >{{ Vignettemontantvisite | number }} F</span
+                            >
+                          </li>
+                          <li></li>
+                          <li>
+                            CAT:
+                            <span class="propName">{{
+                              Vignettecat | uppercase
+                            }}</span>
+                          </li>
+                          <hr class="solid mb-1 mt-1" />
+                          <li>
+                            KMS: <span class="propName">{{ Vignettekms }}</span>
+                          </li>
+                          <li>
+                            STAT:
+                            <span class="propName">{{
+                              Vignettestat | uppercase
+                            }}</span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-md-6">
+                        <ul class="list-unstyled">
+                          <li style="font-weight: 500">
+                            <u class="propName">VIGNETTE</u>
+                          </li>
+                          <li></li>
+                          <li>
+                            CFA:
+                            <span class="propName text-primary"
+                              >{{ Vignettemontantvisite | number }} F</span
+                            >
+                          </li>
+                          <li></li>
+                          <li>Vignette N°:</li>
+                          <li>
+                            <span class="propName">{{
+                              Vignettenumerovignette | uppercase
+                            }}</span>
+                          </li>
+                          <hr class="solid mb-1 mt-1" />
+                          <li>
+                            Lieu:
+                            <span class="propName">{{
+                              Vignettelieu | uppercase
+                            }}</span>
+                          </li>
+                          <li>
+                            Date:
+                            <span class="propName">{{
+                              Vignettedatevisite | date : "dd/MM/yyyy"
+                            }}</span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-md-12">
+                        <hr class="solid mb-1 mt-1" />
+                      </div>
+
+                      <div
+                        class="col-md-12"
+                        style="
+                          text-align: center;
+                          font-size: 18px;
+                          font-weight: 500;
+                          padding: 5px;
+                        "
+                      >
+                        Expiration
+                      </div>
+                      <div
+                        class="col-md-12 text-danger"
+                        style="
+                          text-align: center;
+                          font-size: 18px;
+                          font-weight: 500;
+                          padding: 10px;
+                        "
+                      >
+                        {{ Vignettedateexpiration | date : "dd/MM/yyyy" }}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <div class="col-md-3">
+                <section class="card card-info mb-4">
+                  <header class="card-header" style="margin: 0px; padding: 0px">
+                    <h3 class="card-title" style="margin: 2px; padding: 4px">
+                      ASSURANCE
+                    </h3>
+                  </header>
+                  <div
+                    class="card-body"
+                    style="
+                      padding-top: 2px;
+                      padding-bottom: 0px;
+                      background-color: rgb(239, 248, 243);
+                    "
+                  >
+                    <ul class="list-unstyled">
+                      <li>Assureur</li>
+                      <li></li>
+                      <li class="propName text-primary">
+                        {{ Assuranceassueur | uppercase }}
+                      </li>
+                      <li>
+                        <hr class="solid mb-1 mt-1" />
+                      </li>
+
+                      <li>
+                        Assuré:
+                        <span class="propName">{{
+                          Assuranceassure | uppercase
+                        }}</span>
+                      </li>
+
+                      <hr class="solid mb-1 mt-1" />
+                      <li>Police N°:</li>
+                      <li>
+                        <span class="propName text-primary">{{
+                          Assurancenumpolice | uppercase
+                        }}</span>
+                      </li>
+                    </ul>
+                    <div class="col-md-12">
+                      <hr class="solid mb-0 mt-1" />
+                    </div>
+                    <div class="row">
+                      <div
+                        class="col-md-6"
+                        style="
+                          text-align: center;
+                          font-size: 18px;
+                          font-weight: 500;
+                          padding: 5px;
+                        "
+                      >
+                        Date Début
+                      </div>
+                      <div
+                        class="col-md-6"
+                        style="
+                          text-align: center;
+                          font-size: 18px;
+                          font-weight: 500;
+                          padding: 5px;
+                        "
+                      >
+                        Date Fin
+                      </div>
+                      <div
+                        class="col-md-6 text-success"
+                        style="
+                          text-align: center;
+                          font-size: 18px;
+                          font-weight: 500;
+                          padding: 5px;
+                        "
+                      >
+                        {{ Assurancedatedebut | date : "dd/MM/yyyy" }}
+                      </div>
+                      <div
+                        class="col-md-6 text-danger"
+                        style="
+                          text-align: center;
+                          font-size: 18px;
+                          font-weight: 500;
+                          padding: 10px;
+                        "
+                      >
+                        {{ Assurancedatefin | date : "dd/MM/yyyy" }}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="row" [@simpleFadeAnimation]="'in'">
+          <div class="col">
+            <div class="tabs">
+              <ul class="nav nav-tabs">
+                <li class="nav-item" *ngIf="TabModifier">
+                  <a
+                    class="nav-link active"
+                    id="usage-limits-tab"
+                    data-toggle="pill"
+                    href="#modificationVehicule"
+                    role="tab"
+                    aria-controls="modificationVehicule"
+                    aria-selected="false"
+                    ><i class="bx bxs-car mr-2"></i> VEHICULE</a
+                  >
+                </li>
+
+                <li class="nav-item">
+                  <!--*ngIf="TabCarteGrise"-->
+                  <a
+                    class="nav-link"
+                    id="CarteGrise-tab"
+                    data-toggle="pill"
+                    href="#CarteGrise"
+                    role="tab"
+                    aria-controls="CarteGrise"
+                    aria-selected="true"
+                    ><i class="bx bxs-car mr-2"></i> CARTE GRISE</a
+                  >
+                </li>
+                <li class="nav-item" *ngIf="TabVisiteTech">
+                  <a
+                    class="nav-link"
+                    id="usage-limits-tab"
+                    data-toggle="pill"
+                    href="#VisiteTech"
+                    role="tab"
+                    aria-controls="VisiteTech"
+                    aria-selected="false"
+                    ><i class="bx bxs-car mr-2"></i> VISITE TECHNIQUE &
+                    VIGNETTE</a
+                  >
+                </li>
+                <li class="nav-item" *ngIf="TabMAssurance">
+                  <a
+                    class="nav-link"
+                    id="Assurance-tab"
+                    data-toggle="pill"
+                    href="#Assurance"
+                    role="tab"
+                    aria-controls="Assurance"
+                    aria-selected="false"
+                    ><i class="bx bxs-car mr-2"></i> ASSURANCE</a
+                  >
+                </li>
+              </ul>
+              <div class="tab-content">
+                <div
+                  *ngIf="TabModifier"
+                  class="tab-pane fade show active"
+                  id="modificationVehicule"
+                  role="tabpanel"
+                  aria-labelledby="usage-limits-tab"
+                >
+                  <div class="row">
+                    <div class="col-md-2 text-center">
+                      <div class="thumb-info">
+                        <a href="{{ imagePreviewModif }}" target="_blank">
+                          <img
+                            [src]="imagePreviewModif"
+                            style="width: 200px"
+                            class="img-thumbnail mb-4 p-4"
+                        /></a>
+                        <input
+                          style="display: none"
+                          type="file"
+                          (change)="onFileUpload($event)"
+                          #selectFile
+                        />
+                        <button (click)="selectFile.click()">
+                          Image du véhicule
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="col-md-10" style="padding-top: 5px">
+                      <form
+                        [formGroup]="vehiculeForm"
+                        (ngSubmit)="onSubmitForm(vehiculeForm.value)"
+                        class="ecommerce-form action-buttons-fixed"
+                        action="#"
+                        method="post"
+                      >
+                        <div class="row">
+                          <div class="col-md-3 inputSpace">
+                            <label
+                              for="imatriculation"
+                              class="form-label inputSpaceText"
+                              >Immat.<span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="text"
+                              class="form-control inputSpaceText"
+                              formControlName="imatriculation"
+                              id="imatriculation"
+                            />
+                          </div>
+
+                          <div class="col-md-3 inputSpace">
+                            <label
+                              for="marque_ID"
+                              class="form-label inputSpaceText"
+                              >Marque<span class="Oblig">*</span></label
+                            >
+                            <select
+                              id="marque_ID"
+                              class="form-control"
+                              formControlName="marque_ID"
+                              name="marque_ID"
+                              (change)="changeMarque($event.target.value)"
+                            >
+                              <option selected value="">
+                                ---- Choisir ----
+                              </option>
+                              <option
+                                *ngFor="let marque of listemarques.results"
+                                [value]="marque.ID"
+                              >
+                                {{ marque.designation | uppercase }}
+                              </option>
+                            </select>
+                          </div>
+
+                          <div class="col-md-3 inputSpace">
+                            <label
+                              for="inputPassword4"
+                              class="form-label inputSpaceText"
+                              >Modèle<span class="Oblig">*</span></label
+                            >
+                            <select
+                              id="modele_ID"
+                              class="form-control"
+                              formControlName="modele_ID"
+                              name="modele_ID"
+                            >
+                              <option selected value="">
+                                ---- Choisir ----
+                              </option>
+                              <option
+                                selected
+                                *ngFor="
+                                  let moelmarque of listemodelebymarques.results
+                                "
+                                [value]="moelmarque.model_ID"
+                              >
+                                {{ moelmarque.modele | uppercase }}
+                              </option>
+                            </select>
+                          </div>
+
+                          <div class="col-md-3 inputSpace">
+                            <label
+                              for="typeacquisition"
+                              class="form-label inputSpaceText"
+                              >Acquisition<span class="Oblig">*</span></label
+                            >
+                            <select
+                              id="typeacquisition"
+                              class="form-control"
+                              formControlName="typeacquisition"
+                              name="typeacquisition"
+                            >
+                              <option value="">---- Choisir ----</option>
+                              <option value="achat">ACHAT</option>
+                              <option value="location">LOCATION</option>
+                              <option value="don">DON</option>
+                            </select>
+                          </div>
+
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="Kmachat"
+                              class="form-label inputSpaceText"
+                              >Km. achat<span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="number"
+                              class="form-control inputSpaceText"
+                              formControlName="Kmachat"
+                              id="Kmachat"
+                            />
+                          </div>
+
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="capReservoir"
+                              class="form-label inputSpaceText"
+                              >Cap. Réservoir<span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="number"
+                              class="form-control inputSpaceText"
+                              formControlName="capReservoir"
+                              id="capReservoir"
+                            />
+                          </div>
+
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="L100km"
+                              class="form-label inputSpaceText"
+                              >Consommation<span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="number"
+                              class="form-control inputSpaceText"
+                              placeholder="L/100Km"
+                              formControlName="L100km"
+                              id="L100km"
+                            />
+                          </div>
+
+                          <div class="col-md-3 inputSpace">
+                            <label
+                              for="chargeutile"
+                              class="form-label inputSpaceText"
+                              >Transmission</label
+                            >
+                            <select
+                              id="transmission"
+                              class="form-control"
+                              formControlName="transmission"
+                              name="transmission"
+                            >
+                              <option selected value="">
+                                ---- Choisir ----
+                              </option>
+                              <option value="manuelle">MANUELLE</option>
+                              <option value="automatique">AUTOMATIQUE</option>
+                            </select>
+                          </div>
+
+                          <div class="col-md-3 inputSpace">
+                            <label
+                              for="typeFonction"
+                              class="form-label inputSpaceText"
+                              >Groupe de véhicule
+                              <span class="Oblig">*</span></label
+                            >
+                            <select
+                              id="fonction_ID"
+                              class="form-control"
+                              formControlName="fonction_ID"
+                              name="fonction_ID"
+                            >
+                              <option selected value="" selected>
+                                ---- Choisir ----
+                              </option>
+                              <option
+                                selected
+                                *ngFor="let fonction of listeFonction.results"
+                                [value]="fonction.ID"
+                              >
+                                {{ fonction.fonction | uppercase }}
+                              </option>
+                            </select>
+                          </div>
+
+                          <div class="col-md-5 inputSpace">
+                            <label
+                              for="typeacquisition"
+                              class="form-label inputSpaceText"
+                              >Organe</label
+                            >
+                            <select
+                              formControlName="Dir_id"
+                              required
+                              class="form-control"
+                              style="width: 100%"
+                              (change)="changeDirection($event)"
+                            >
+                              <option selected="selected" value="">
+                                ---- Direction -----
+                              </option>
+                              <option
+                                *ngFor="let dir of listDirection"
+                                [value]="dir.Id_direction"
+                                [attr.dir-name]="dir.LibelleDirection"
+                              >
+                                [{{ dir.Initial | uppercase }}] -
+                                {{ dir.LibelleDirection | uppercase }}
+                              </option>
+                            </select>
+                          </div>
+
+                          <div class="col-md-4 inputSpace">
+                            <label
+                              for="typeacquisition"
+                              class="form-label inputSpaceText"
+                              >Affecté à
+                            </label>
+                            <select
+                              formControlName="Agent_id"
+                              (change)="onChangeSelectedPersonnelValue($event)"
+                              class="form-control select2bs4"
+                              style="width: 100%"
+                            >
+                              <option selected="selected" value="" selected>
+                                ---- Agent -----
+                              </option>
+                              <option
+                                *ngFor="let person of listPersonnel"
+                                [value]="person.PersonnelId"
+                                [attr.person-image]="person.Photo"
+                                [attr.person-name]="person.NomPrenoms"
+                              >
+                                {{ person.NomPrenoms }}
+                              </option>
+                            </select>
+                          </div>
+
+                          <div class="col-md-3 inputSpace">
+                            <label
+                              for="dotationCarburant"
+                              class="form-label inputSpaceText"
+                              >Dotation en carburant</label
+                            >
+                            <select
+                              id="dotationCarburant"
+                              class="form-control"
+                              formControlName="dotationCarburant"
+                              name="dotationCarburant"
+                            >
+                              <option value="" selected>
+                                ---- Choisir ----
+                              </option>
+                              <option value="25000">
+                                [45585] - mensuelle 100.000F
+                              </option>
+                              <option value="30000">
+                                [45586] - mensuelle 50.000F
+                              </option>
+                            </select>
+                          </div>
+
+                          <div class="col-md-12 text-center inputSpace">
+                            <img
+                              src="assets/img/!logged-user.jpg"
+                              [ngClass]="{ hidden: hiddenPersone }"
+                              style="width: 150px"
+                              class="img-thumbnail"
+                            />
+                            <img
+                              [src]="PersoneImage"
+                              [ngClass]="{ hidden: AficherImgx }"
+                              style="width: 150px"
+                              class="img-thumbnail"
+                            />
+                            <input
+                              hidden
+                              formControlName="Dir_NomPrenAgent"
+                              name="Dir_NomPrenAgent"
+                              value="{{ PersoneName }}"
+                              type="text"
+                              class="form-control"
+                              id="inputCity"
+                              placeholder="id entree"
+                            />
+                            <input
+                              hidden
+                              formControlName="Ent_PieceJointe"
+                              name="Ent_PieceJointe"
+                              value="{{ PersoneImage }}"
+                              type="text"
+                              class="form-control"
+                              id="inputCity"
+                              placeholder="id entree"
+                            />
+                          </div>
+
+                          <div
+                            class="col-12 col-md-12 text-center"
+                            *ngIf="
+                              this.valideVehicule == 0 && MyUserProfilID == 2
+                            "
+                          >
+                            <!---->
+                            <button
+                              style="margin-right: 10px"
+                              type="submit"
+                              [disabled]="vehiculeForm.invalid"
+                              class="submit-button btn btn-success btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                              data-loading-text="Loading..."
+                            >
+                              <i class="fas fa-save text-4 mr-1"></i> Enregister
+                            </button>
+
+                            <button
+                              type="submit"
+                              class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                              routerLink="/admin/admin/vehiculeList"
+                            >
+                              <i class="fas fa-times text-4 mr-1"></i> Quitter
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <!--////////////AJOUTER/////////-->
+                  <div class="card-body">
+                    <div class="text-left mb-2" *ngIf="MyUserProfilID == 2">
+                      <button
+                        type="button"
+                        class="btn btn-info btn-sm"
+                        data-toggle="modal"
+                        data-target="#modal-AddDocument"
+                      >
+                        <i class="fa fa-plus"></i> Ajouter un média (Document,
+                        Photo....)
+                      </button>
+                    </div>
+
+                    <div class="spinner4" *ngIf="isLoadingResultsModif">
+                      <div class="bounce1"></div>
+                      <div class="bounce2"></div>
+                      <div class="bounce3"></div>
+                    </div>
+                    <mat-form-field>
+                      <mat-label>Rechercher un véhicule</mat-label>
+                      <input
+                        matInput
+                        (keyup)="applyFilter($event)"
+                        placeholder="Immatriculation , modèle , direction ..."
+                        #input
+                      />
+                    </mat-form-field>
+
+                    <div>
+                      <table
+                        class="table table-responsive-md table-bordered table-striped mb-0 fontTable"
+                        mat-table
+                        [dataSource]="dataSource"
+                        matSort
+                      >
+                        <ng-container matColumnDef="number">
+                          <th
+                            *matHeaderCellDef
+                            mat-sort-header
+                            style="width: 1%"
+                            class="text-center"
+                          >
+                            #
+                          </th>
+                          <td
+                            *matCellDef="let vehicule; let i = index"
+                            class="text-center"
+                          >
+                            {{ i + 1 }}
+                          </td>
+                        </ng-container>
+
+                        <!-- ID Column -->
+                        <ng-container matColumnDef="lienPhoto">
+                          <th
+                            *matHeaderCellDef
+                            mat-sort-header
+                            style="width: 5%"
+                            class="text-center"
+                          >
+                            Photo
+                          </th>
+                          <td *matCellDef="let vehicule" class="text-center">
+                            <!--lib-ngx-image-zoom [thumbImage]={{this.urlPhoto}}{{vehicule.lienPhoto}} [fullImage]={{this.urlPhoto}}{{vehicule.lienPhoto}}></lib-ngx-image-zoom-->
+                            <a
+                              href="{{ this.urlPhoto }}{{ vehicule.lienPhoto }}"
+                              target="_blank"
+                              ><img
+                                src="{{ this.urlPhoto }}{{
+                                  vehicule.lienPhoto
+                                }}"
+                                width="100px"
+                            /></a>
+                          </td>
+                        </ng-container>
+
+                        <!-- ID Column -->
+                        <ng-container matColumnDef="description">
+                          <th
+                            *matHeaderCellDef
+                            mat-sort-header
+                            style="width: 20%"
+                          >
+                            Description
+                          </th>
+                          <td *matCellDef="let vehicule">
+                            {{ vehicule.description | uppercase }}
+                          </td>
+                        </ng-container>
+
+                        <!-- Color Column -->
+                        <ng-container matColumnDef="action">
+                          <th
+                            *matHeaderCellDef
+                            mat-sort-header
+                            style="width: 11%"
+                          ></th>
+                          <td *matCellDef="let vehicule">
+                            <!--button type="button" class="btn btn-secondary btn-sm mr-2"
+                    routerLink='/admin/admin/vehiculeEdition/{{vehicule.ID}}/8999'>
+                    <i class="nav-icon fas fa-edit"></i>
+                </button-->
+                            <button
+                              type="button"
+                              class="btn btn-danger btn-sm"
+                              (click)="ItemSupprime(vehicule.ID, 'media')"
+                              data-toggle="modal"
+                              data-target="#modal-info"
+                            >
+                              <i class="nav-icon fas fa-trash"></i>
+                            </button>
+                          </td>
+                        </ng-container>
+
+                        <!-- Color Column -->
+
+                        <tr
+                          mat-header-row
+                          *matHeaderRowDef="displayedColumns"
+                        ></tr>
+                        <tr
+                          mat-row
+                          *matRowDef="let row; columns: displayedColumns"
+                        ></tr>
+                      </table>
+
+                      <mat-paginator
+                        [pageSizeOptions]="[10, 20, 30, 100]"
+                        showFirstLastButtons
+                        aria-label="Select page of periodic elements"
+                      >
+                      </mat-paginator>
+                    </div>
+                  </div>
+                  <!------FIN-------->
+                </div>
+
+                <div
+                  class="tab-pane fade"
+                  id="CarteGrise"
+                  role="tabpanel"
+                  aria-labelledby="CarteGrise-tab"
+                >
+                  <!--*ngIf="TabCarteGrise"-->
+                  <div class="row">
+                    <!--div class="col-md-12 text-right" *ngIf="MyUserProfilID==2">
+                              <button type="button" class="btn btn-success" (click)="actionCloseCarteGrise(1)" [ngClass]="{'hidden': ActionOpenCarteGrise}">
+                                <i class="fa fa-plus mr-2"></i>AJOUTER UNE CARTE GRISE</button>
+                                <button type="button" class="btn btn-danger" (click)="actionCloseCarteGrise(0)" [ngClass]="{'hidden': ActionCloseCarteGrise}">
+                                  <i class="fas fa-times mr-2"></i>FERMER</button>
+                        </div-->
+                  </div>
+                  <div class="row">
+                    <!-- [ngClass]="{'hidden': hiddenCarteGrise}"-->
+                    <div class="col-lg-2-5 col-xl-1-5 text-center">
+                      <div class="thumb-info mb-3">
+                        <a href="{{ imagePreviewCarteGrise }}" target="_blank"
+                          ><img
+                            [src]="imagePreviewCarteGrise"
+                            style="width: 200px"
+                            class="image-preview rounded img-fluid"
+                        /></a>
+                      </div>
+                      <input
+                        style="display: none"
+                        type="file"
+                        (change)="onFileUploadCarteGrise($event)"
+                        #selectFile
+                      />
+                      <button (click)="selectFile.click()">
+                        Image carte grise
+                      </button>
+                    </div>
+                    <div class="col-lg-3-5 col-xl-4-5" style="padding-top: 5px">
+                      <form
+                        [formGroup]="vehiculeFormCarteGrise"
+                        (ngSubmit)="
+                          onSubmitFormCarteGrise(vehiculeFormCarteGrise.value)
+                        "
+                        class="ecommerce-form action-buttons-fixed"
+                        action="#"
+                        method="post"
+                      >
+                        <div class="row">
+                          <div class="col-md-3 inputSpace">
+                            <label
+                              for="numero"
+                              class="form-label inputSpaceText"
+                              >N° Carte Grise
+                              <span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="text"
+                              class="form-control inputSpaceText"
+                              formControlName="numero"
+                              id="numero"
+                            />
+                          </div>
+                          <div class="col-md-3 inputSpace">
+                            <label
+                              for="numchassis"
+                              class="form-label inputSpaceText"
+                              >N° Chassis <span class="Oblig">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="numchassis"
+                              id="numchassis"
+                            />
+                          </div>
+                          <div class="col-md-3 inputSpace">
+                            <label
+                              for="datemiseenservice"
+                              class="form-label inputSpaceText"
+                              >1ère mise en circulation
+                              <span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="date"
+                              class="form-control"
+                              formControlName="datemiseenservice"
+                              id="datemiseenservice"
+                            />
+                          </div>
+
+                          <div class="col-md-3 inputSpace">
+                            <label
+                              for="dateedition"
+                              class="form-label inputSpaceText"
+                              >Date d'édition
+                              <span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="date"
+                              class="form-control"
+                              formControlName="dateedition"
+                              id="dateedition"
+                            />
+                          </div>
+
+                          <div class="col-md-3 inputSpace">
+                            <label
+                              for="codeproprietaire"
+                              class="form-label inputSpaceText"
+                              >Identité du propriétaire
+                              <span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="codeproprietaire"
+                              id="codeproprietaire"
+                            />
+                          </div>
+
+                          <!--ERREUR ICI-->
+                          <div class="col-md-2 inputSpace">
+                            <label for="genre" class="form-label inputSpaceText"
+                              >Genre <span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="genre"
+                              id="genre"
+                            />
+                          </div>
+
+                          <div class="col-md-3 inputSpace">
+                            <label
+                              for="modele"
+                              class="form-label inputSpaceText"
+                              >Type commercial</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="modele"
+                              id="modele"
+                            />
+                          </div>
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="couleur"
+                              class="form-label inputSpaceText"
+                              >Couleur <span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="couleur"
+                              id="couleur"
+                            />
+                          </div>
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="carrosserie"
+                              class="form-label inputSpaceText"
+                              >Carrosserie</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="carrosserie"
+                              id="carrosserie"
+                            />
+                          </div>
+
+                          <div class="col-md-3 inputSpace">
+                            <label
+                              for="energie_ID"
+                              class="form-label inputSpaceText"
+                              >Energie <span class="Oblig">*</span></label
+                            >
+                            <select
+                              id="energie_ID"
+                              class="form-control"
+                              formControlName="energie_ID"
+                              name="energie_ID"
+                            >
+                              <option selected value="">
+                                ------ Choisir ------
+                              </option>
+                              <option
+                                *ngFor="let energie of listeenergies.results"
+                                value="{{ energie.ID }}"
+                              >
+                                {{ energie.designation | uppercase }}
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-md-3 inputSpace">
+                            <label
+                              for="usage_ID"
+                              class="form-label inputSpaceText"
+                              >usage du véhicule
+                              <span class="Oblig">*</span></label
+                            >
+                            <select
+                              id="usage_ID"
+                              class="form-control"
+                              formControlName="usage_ID"
+                              name="usage_ID"
+                            >
+                              <option selected value="">
+                                ------ Choisir ------
+                              </option>
+                              <option
+                                *ngFor="let usage of listeusages.results"
+                                value="{{ usage.ID }}"
+                              >
+                                {{ usage.designation | uppercase }}
+                              </option>
+                            </select>
+                          </div>
+
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="nbreplace"
+                              class="form-label inputSpaceText"
+                              >Place assises <span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="number"
+                              class="form-control"
+                              formControlName="nbreplace"
+                              id="nbreplace"
+                            />
+                          </div>
+
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="puissance"
+                              class="form-label inputSpaceText"
+                              >Puissance(CV)</label
+                            >
+                            <input
+                              type="number"
+                              class="form-control"
+                              formControlName="puissance"
+                              id="puissance"
+                              placeholder="fiscale"
+                            />
+                          </div>
+
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="nbreessieux"
+                              class="form-label inputSpaceText"
+                              >Nombre essieux</label
+                            >
+                            <input
+                              type="number"
+                              class="form-control"
+                              formControlName="nbreessieux"
+                              id="nbreessieux"
+                            />
+                          </div>
+
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="cylindre"
+                              class="form-label inputSpaceText"
+                              >Cylindrée (CC)</label
+                            >
+                            <input
+                              type="number"
+                              class="form-control"
+                              formControlName="cylindre"
+                              id="cylindre"
+                            />
+                          </div>
+
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="typetechnique"
+                              class="form-label inputSpaceText"
+                              >Type technique
+                              <span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="typetechnique"
+                              id="typetechnique"
+                            />
+                          </div>
+
+                          <div class="col-md-2 inputSpace">
+                            <label for="ptac" class="form-label inputSpaceText"
+                              >P.T.A.C(Kg)</label
+                            >
+                            <input
+                              type="number"
+                              class="form-control"
+                              formControlName="ptac"
+                              id="ptac"
+                            />
+                          </div>
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="poidsvide"
+                              class="form-label inputSpaceText"
+                              >P.V(Kg)</label
+                            >
+                            <input
+                              type="number"
+                              class="form-control"
+                              formControlName="poidsvide"
+                              id="poidsvide"
+                            />
+                          </div>
+
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="chargeutile"
+                              class="form-label inputSpaceText"
+                              >C.U(Kg)</label
+                            >
+                            <input
+                              type="number"
+                              class="form-control"
+                              formControlName="chargeutile"
+                              id="chargeutile"
+                            />
+                          </div>
+
+                          <div
+                            class="col-12 col-md-12 text-center"
+                            *ngIf="this.valideVehicule == 0"
+                          >
+                            <button
+                              style="margin-right: 10px"
+                              type="submit"
+                              [disabled]="vehiculeFormCarteGrise.invalid"
+                              class="submit-button btn btn-success btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                              data-loading-text="Loading..."
+                            >
+                              <i class="fas fa-save text-4 mr-1"></i> Enregister
+                            </button>
+
+                            <button
+                              type="submit"
+                              class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                              routerLink="/admin/admin/vehiculeList"
+                            >
+                              <i class="fas fa-times text-4 mr-1"></i> Quitter
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                  <!--div class="row">
+                            <div class="spinner4" *ngIf="ModifsVisiteLoadingResults">
+                              <div class="bounce1"></div>
+                              <div class="bounce2"></div>
+                              <div class="bounce3"></div>
+                          </div>
+                            
+                          <div class="col-md-12" style="margin-top: 20px;">
+                            <mat-form-field >
+                                <mat-label>Rechercher une carte grise</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" placeholder="Immatriculation , modèle , direction ..." #input>
+                            </mat-form-field>
+            
+                            <div>
+                             
+                                <table class="table table-responsive-md  table-bordered table-striped mb-0 fontTable"
+                                mat-table [dataSource]="dataSourceVisiteTech" matSort>
+                                <ng-container matColumnDef="number">
+                                    <th *matHeaderCellDef mat-sort-header style="width: 1%;" class="text-center"> # </th>
+                                    <td *matCellDef="let vehicule; let i = index" class="text-center"> {{i + 1}} </td>
+                                </ng-container>
+                                
+                                <ng-container matColumnDef="lieu">
+                                  <th *matHeaderCellDef mat-sort-header style="width: 10%;">N° Carte Grise </th>
+                                  <td *matCellDef="let vehicule">
+                                    CG10260065 ee
+                                  </td>
+                              </ng-container> 
+                               
+                               <ng-container matColumnDef="datevisite">
+                                <th *matHeaderCellDef mat-sort-header style="width: 8%;">N° Chassis</th>
+                                <td *matCellDef="let vehicule">
+                                  JTMZD9EV50J124411
+                                </td>
+                            </ng-container>
+            
+                               
+                                <ng-container matColumnDef="montantvisite">
+                                    <th *matHeaderCellDef mat-sort-header style="width: 9%;">Mise en circulation</th>
+                                    <td *matCellDef="let vehicule">  19/01/2018</td>
+                                </ng-container> 
+            
+                               
+                                <ng-container matColumnDef="montantvignette">
+                                  <th *matHeaderCellDef mat-sort-header style="width: 10%;" class="text-center">Place assises</th>
+                                  <td *matCellDef="let vehicule">
+                                   5
+                                  </td>
+                              </ng-container> 
+      
+                              
+                               <ng-container matColumnDef="numerovignette">
+                                <th *matHeaderCellDef mat-sort-header style="width: 15%;" class="text-center">Propriétaire</th>
+                                <td *matCellDef="let vehicule">
+                                  RTI RDC 770495
+                                </td>
+                            </ng-container> 
+            
+                               
+                                <ng-container matColumnDef="dateexpiration">
+                                    <th *matHeaderCellDef mat-sort-header style="width: 10%;">usage</th>
+                                    <td *matCellDef="let vehicule">
+                                        PRIVE
+                                    </td>
+                                </ng-container> 
+      
+                                 
+                                 <ng-container matColumnDef="rappel">
+                                  <th *matHeaderCellDef mat-sort-header style="width: 8%;">Genre</th>
+                                  <td *matCellDef="let vehicule">
+                                    Voiture
+                              </ng-container> 
+            
+                              
+            
+            
+                               
+                                <ng-container matColumnDef="action">
+                                    <th *matHeaderCellDef mat-sort-header style="width: 8%;"> </th>
+                                    <td *matCellDef="let vehicule">
+                                        <button type="button" class="btn btn-secondary btn-sm mr-2" (click)="loadOneVisiteVignette(vehicule.ID)">
+                                            <i class="nav-icon fas fa-edit"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                            (click)="ItemSupprime(vehicule.ID,'visite')" data-toggle="modal"
+                                            data-target="#modal-info">
+                                            <i class="nav-icon fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </ng-container>
+            
+                                
+            
+            
+                                <tr mat-header-row *matHeaderRowDef="displayedColumnsVisiteTech"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumnsVisiteTech;"></tr>
+                            </table>
+            
+                            <mat-paginator [pageSizeOptions]="[10, 20, 30, 100]" showFirstLastButtons
+                                aria-label="Select page of periodic elements">
+                            </mat-paginator>
+            
+            
+                              </div>
+                        </div>
+                           </div-->
+                </div>
+
+                <div
+                  *ngIf="TabVisiteTech"
+                  class="tab-pane fade"
+                  id="VisiteTech"
+                  role="tabpanel"
+                  aria-labelledby="VisiteTech-tab"
+                >
+                  <div class="row" *ngIf="MyUserProfilID == 2">
+                    <div class="col-md-12 text-right">
+                      <button
+                        type="button"
+                        class="btn btn-success"
+                        (click)="actionCloseVisiteTech(1)"
+                        [ngClass]="{ hidden: ActionOpenVisiteTech }"
+                      >
+                        <i class="fa fa-plus mr-2"></i>AJOUTER UNE VISITE
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        (click)="actionCloseVisiteTech(0)"
+                        [ngClass]="{ hidden: ActionCloseVisiteTech }"
+                      >
+                        <i class="fas fa-times mr-2"></i>FERMER
+                      </button>
+                    </div>
+                  </div>
+                  <div class="row" [ngClass]="{ hidden: hiddenVisiteTech }">
+                    <div class="col-lg-2-5 col-xl-1-5">
+                      <div class="thumb-info mb-3">
+                        <a href="{{ imagePreviewVisiteTech }}" target="_blank">
+                          <img
+                            [src]="imagePreviewVisiteTech"
+                            width="200"
+                            class="image-preview rounded img-fluid"
+                        /></a>
+                      </div>
+
+                      <input
+                        style="display: none"
+                        type="file"
+                        (change)="onFileUpload($event)"
+                        #selectFile
+                      />
+                      <button (click)="selectFile.click()">
+                        Image Visite Technique et Vignette
+                      </button>
+                    </div>
+                    <div class="col-lg-3-5 col-xl-4-5" style="padding-top: 5px">
+                      <form
+                        [formGroup]="vehiculeFormVisiteTech"
+                        (ngSubmit)="
+                          onSubmitFormVisiteTech(vehiculeFormVisiteTech.value)
+                        "
+                        class="ecommerce-form action-buttons-fixed"
+                        action="#"
+                        method="post"
+                      >
+                        <input
+                          hidden
+                          type="text"
+                          class="form-control"
+                          formControlName="VehiculeVignetteID"
+                          id="VehiculeVignetteID"
+                        />
+
+                        <div
+                          style="padding: 5px; font-weight: 600"
+                          class="bg-info mb-3 pl-3"
+                        >
+                          VISITE TECHNIQUE
+                        </div>
+                        <div class="row">
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="montantvisite"
+                              class="form-label inputSpaceText"
+                              >Montant CFA <span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="number"
+                              class="form-control"
+                              formControlName="montantvisite"
+                              id="Montantvisi"
+                            />
+                          </div>
+
+                          <div class="col-md-2 inputSpace">
+                            <label for="cat" class="form-label inputSpaceText"
+                              >CAT <span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="cat"
+                              id="Montantvisi"
+                            />
+                          </div>
+
+                          <div class="col-md-2 inputSpace">
+                            <label for="kms" class="form-label inputSpaceText"
+                              >KMS <span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="number"
+                              class="form-control"
+                              formControlName="kms"
+                              id="Montantvisi"
+                            />
+                          </div>
+
+                          <div class="col-md-2 inputSpace">
+                            <label for="stat" class="form-label inputSpaceText"
+                              >STAT <span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="stat"
+                              id="Montantvisi"
+                            />
+                          </div>
+
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="datevisite"
+                              class="form-label inputSpaceText"
+                              >Date de visite
+                              <span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="date"
+                              class="form-control inputSpaceText"
+                              formControlName="datevisite"
+                              id="datevisite"
+                            />
+                          </div>
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="dateexpiration"
+                              class="form-label inputSpaceText"
+                              >Date expiration
+                              <span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="date"
+                              class="form-control"
+                              formControlName="dateexpiration"
+                              id="dateexpiration"
+                            />
+                          </div>
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="rappel"
+                              class="form-label inputSpaceText"
+                              >Rappel (Jour) <span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="number"
+                              class="form-control"
+                              placeholder="Nbr de jour"
+                              formControlName="rappel"
+                              id="rappel"
+                            />
+                          </div>
+                          <div class="col-md-5 inputSpace">
+                            <label for="lieu" class="form-label inputSpaceText"
+                              >LIEU <span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="lieu"
+                              id="lieu"
+                            />
+                          </div>
+                          <div class="col-md-5 inputSpace">
+                            <label
+                              for="observation"
+                              class="form-label inputSpaceText"
+                              >Observation</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="observation"
+                              id="observation"
+                            />
+                          </div>
+
+                          <div class="col-md-12">
+                            <div
+                              style="padding: 5px; font-weight: 600"
+                              class="bg-info mb-3 pl-3"
+                            >
+                              VIGNETTE
+                            </div>
+                            <div class="row">
+                              <div class="col-md-2 inputSpace">
+                                <label
+                                  for="montantvignette"
+                                  class="form-label inputSpaceText"
+                                  >Montant CFA
+                                  <span class="Oblig">*</span></label
+                                >
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  formControlName="montantvignette"
+                                  id="montantvignette"
+                                />
+                              </div>
+
+                              <div class="col-md-3 inputSpace">
+                                <label
+                                  for="numerovignette"
+                                  class="form-label inputSpaceText"
+                                  >N° Vignette
+                                  <span class="Oblig">*</span></label
+                                >
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  formControlName="numerovignette"
+                                  id="numerovignette"
+                                />
+                              </div>
+
+                              <div class="col-md-2 inputSpace">
+                                <label
+                                  for="ncc"
+                                  class="form-label inputSpaceText"
+                                  >NCC</label
+                                >
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  formControlName="ncc"
+                                  id="ncc"
+                                />
+                              </div>
+                              <div class="col-md-3 inputSpace">
+                                <label
+                                  for="ncc"
+                                  class="form-label inputSpaceText"
+                                  >Montant des infractions<span class="Oblig"
+                                    >*</span
+                                  ></label
+                                >
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  formControlName="ncc"
+                                  id="ncc"
+                                />
+                              </div>
+                              <div class="col-md-2 inputSpace">
+                                <button
+                                  type="button"
+                                  class="btn btn-dark btn-sm btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                                  style="margin-top: 25px"
+                                  type="submit"
+                                  [disabled]="vehiculeFormVisiteTech.invalid"
+                                >
+                                  <div
+                                    *ngIf="
+                                      addOrUpdate;
+                                      then Ajouter;
+                                      else Modifier
+                                    "
+                                  ></div>
+                                  <ng-template #Ajouter
+                                    ><i class="fa fa-plus text-4 mr-2"></i>
+                                    Ajouter</ng-template
+                                  >
+                                  <ng-template #Modifier
+                                    ><i class="fa fa-plus text-4 mr-2"></i>
+                                    Modifier
+                                  </ng-template>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <!--ERREUR ICI-->
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="spinner4" *ngIf="ModifsVisiteLoadingResults">
+                      <div class="bounce1"></div>
+                      <div class="bounce2"></div>
+                      <div class="bounce3"></div>
+                    </div>
+
+                    <div class="col-md-12" style="margin-top: 20px">
+                      <mat-form-field>
+                        <mat-label>Rechercher une visite technique</mat-label>
+                        <input
+                          matInput
+                          (keyup)="applyFilter($event)"
+                          placeholder="Immatriculation , modèle , direction ..."
+                          #input
+                        />
+                      </mat-form-field>
+
+                      <div>
+                        <table
+                          class="table table-responsive-md table-bordered table-striped mb-0 fontTable"
+                          mat-table
+                          [dataSource]="dataSourceVisiteTech"
+                          matSort
+                        >
+                          <ng-container matColumnDef="number">
+                            <th
+                              *matHeaderCellDef
+                              mat-sort-header
+                              style="width: 1%"
+                              class="text-center"
+                            >
+                              #
+                            </th>
+                            <td
+                              *matCellDef="let vehicule; let i = index"
+                              class="text-center"
+                            >
+                              {{ i + 1 }}
+                            </td>
+                          </ng-container>
+
+                          <ng-container matColumnDef="lieu">
+                            <th
+                              *matHeaderCellDef
+                              mat-sort-header
+                              style="width: 10%"
+                            >
+                              Lieu Visite
+                            </th>
+                            <td *matCellDef="let vehicule">
+                              {{ vehicule.lieu | uppercase }}
+                            </td>
+                          </ng-container>
+                          <!-- Name Column -->
+                          <ng-container matColumnDef="datevisite">
+                            <th
+                              *matHeaderCellDef
+                              mat-sort-header
+                              style="width: 8%"
+                            >
+                              Date Visite
+                            </th>
+                            <td *matCellDef="let vehicule">
+                              {{ vehicule.datevisite | date : "dd/MM/yyyy" }}
+                            </td>
+                          </ng-container>
+
+                          <!-- ID Column -->
+                          <ng-container matColumnDef="montantvisite">
+                            <th
+                              *matHeaderCellDef
+                              mat-sort-header
+                              style="width: 9%"
+                            >
+                              Montant Visite
+                            </th>
+                            <td *matCellDef="let vehicule">
+                              {{ vehicule.montantvisite | number }} Fcfa
+                            </td>
+                          </ng-container>
+
+                          <!-- ID Column -->
+                          <ng-container matColumnDef="montantvignette">
+                            <th
+                              *matHeaderCellDef
+                              mat-sort-header
+                              style="width: 10%"
+                              class="text-center"
+                            >
+                              Montant Vignette
+                            </th>
+                            <td *matCellDef="let vehicule">
+                              {{ vehicule.montantvignette | number }} Fcfa
+                            </td>
+                          </ng-container>
+
+                          <!-- ID Column -->
+                          <ng-container matColumnDef="numerovignette">
+                            <th
+                              *matHeaderCellDef
+                              mat-sort-header
+                              style="width: 15%"
+                              class="text-center"
+                            >
+                              Numéro Vignette
+                            </th>
+                            <td *matCellDef="let vehicule">
+                              {{ vehicule.numerovignette | uppercase }}
+                            </td>
+                          </ng-container>
+
+                          <!-- Name Column -->
+                          <ng-container matColumnDef="dateexpiration">
+                            <th
+                              *matHeaderCellDef
+                              mat-sort-header
+                              style="width: 10%"
+                            >
+                              Date Expiration
+                            </th>
+                            <td *matCellDef="let vehicule">
+                              {{
+                                vehicule.dateexpiration | date : "dd/MM/yyyy"
+                              }}
+                            </td>
+                          </ng-container>
+
+                          <!-- Name Column -->
+                          <ng-container matColumnDef="rappel">
+                            <th
+                              *matHeaderCellDef
+                              mat-sort-header
+                              style="width: 8%"
+                            >
+                              Rappel
+                            </th>
+                            <td *matCellDef="let vehicule">
+                              {{ vehicule.rappel }} Jour(s)
+                            </td></ng-container
+                          >
+
+                          <!-- Color Column -->
+                          <ng-container matColumnDef="action">
+                            <th
+                              *matHeaderCellDef
+                              mat-sort-header
+                              style="width: 8%"
+                            ></th>
+                            <td *matCellDef="let vehicule">
+                              <button
+                                type="button"
+                                class="btn btn-secondary btn-sm mr-2"
+                                (click)="loadOneVisiteVignette(vehicule.ID)"
+                              >
+                                <i class="nav-icon fas fa-edit"></i>
+                              </button>
+                              <button 
+                                type="button"
+                                class="btn btn-danger btn-sm"
+                                (click)="ItemSupprime(vehicule.ID, 'visite')"
+                                data-toggle="modal"
+                                data-target="#modal-info"
+                              >
+                                <i class="nav-icon fas fa-trash"></i>
+                              </button>
+                            </td>
+                          </ng-container>
+
+                          <!-- Color Column -->
+
+                          <tr
+                            mat-header-row
+                            *matHeaderRowDef="displayedColumnsVisiteTech"
+                          ></tr>
+                          <tr
+                            mat-row
+                            *matRowDef="
+                              let row;
+                              columns: displayedColumnsVisiteTech
+                            "
+                          ></tr>
+                        </table>
+
+                        <mat-paginator
+                          [pageSizeOptions]="[10, 20, 30, 100]"
+                          showFirstLastButtons
+                          aria-label="Select page of periodic elements"
+                        >
+                        </mat-paginator>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  *ngIf="TabMAssurance"
+                  class="tab-pane fade"
+                  id="Assurance"
+                  role="tabpanel"
+                  aria-labelledby="Assurance-tab"
+                >
+                  <div class="row" *ngIf="MyUserProfilID == 2">
+                    <div class="col-md-12 text-right">
+                      <button
+                        type="button"
+                        class="btn btn-success"
+                        (click)="actionCloseAssur(1)"
+                        [ngClass]="{ hidden: ActionOpenAssur }"
+                      >
+                        <i class="fa fa-plus mr-2"></i>AJOUTER UNE ASSURANCE
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        (click)="actionCloseAssur(0)"
+                        [ngClass]="{ hidden: ActionCloseAssur }"
+                      >
+                        <i class="fas fa-times mr-2"></i>FERMER
+                      </button>
+                    </div>
+                  </div>
+                  <div class="row" [ngClass]="{ hidden: hiddenAssurance }">
+                    <div class="col-lg-2-5 col-xl-1-5 text-center">
+                      <div class="thumb-info mb-3">
+                        <a href="{{ imagePreviewAssurance }}" target="_blank">
+                          <img
+                            [src]="imagePreviewAssurance"
+                            width="200"
+                            class="image-preview rounded img-fluid"
+                        /></a>
+                      </div>
+
+                      <input
+                        style="display: none"
+                        type="file"
+                        (change)="onFileUploadAssurnace($event)"
+                        #selectFile
+                      />
+                      <button (click)="selectFile.click()">
+                        Image Assurance
+                      </button>
+                    </div>
+                    <div class="col-lg-3-5 col-xl-4-5" style="padding-top: 5px">
+                      <form
+                        [formGroup]="vehiculeFormAssurance"
+                        (ngSubmit)="
+                          onSubmitFormAssurance(vehiculeFormAssurance.value)
+                        "
+                        class="ecommerce-form action-buttons-fixed"
+                        action="#"
+                        method="post"
+                      >
+                        <input
+                          hidden
+                          type="text"
+                          class="form-control"
+                          formControlName="assure_ID"
+                          id="assure_ID"
+                        />
+                        <div class="row">
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="assure"
+                              class="form-label inputSpaceText"
+                              >Assuré<span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="assure"
+                              id="assure"
+                            />
+                          </div>
+
+                          <div class="col-md-3 inputSpace">
+                            <label
+                              for="adresse"
+                              class="form-label inputSpaceText"
+                              >Adresse<span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="adresse"
+                              id="Montantvisi"
+                            />
+                          </div>
+
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="profession"
+                              class="form-label inputSpaceText"
+                              >Profession</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="profession"
+                              id="Montantvisi"
+                            />
+                          </div>
+
+                          <div class="col-md-3 inputSpace">
+                            <label
+                              for="assureur_ID"
+                              class="form-label inputSpaceText"
+                              >Assureur<span class="Oblig">*</span></label
+                            >
+                            <select
+                              id="assureur_ID"
+                              class="form-control"
+                              formControlName="assureur_ID"
+                              name="assureur_ID"
+                            >
+                              <option selected value="">
+                                ------ Choisir ------
+                              </option>
+                              <option
+                                *ngFor="let assureur of listeassureur.results"
+                                value="{{ assureur.ID }}"
+                              >
+                                {{ assureur.assueur | uppercase }}
+                              </option>
+                            </select>
+                          </div>
+
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="numpolice"
+                              class="form-label inputSpaceText"
+                              >Police N° <span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="numpolice"
+                              id="Montantvisi"
+                            />
+                          </div>
+
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="datedebut"
+                              class="form-label inputSpaceText"
+                              >Date Début <span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="date"
+                              class="form-control inputSpaceText"
+                              formControlName="datedebut"
+                              id="datedebut"
+                            />
+                          </div>
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="datefin"
+                              class="form-label inputSpaceText"
+                              >Date FIn <span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="date"
+                              class="form-control"
+                              formControlName="datefin"
+                              id="datefin"
+                            />
+                          </div>
+                          <div class="col-md-2 inputSpace">
+                            <label
+                              for="rappel"
+                              class="form-label inputSpaceText"
+                              >Rappel (Jour) <span class="Oblig">*</span></label
+                            >
+                            <input
+                              type="number"
+                              class="form-control"
+                              placeholder="Nbr de jour"
+                              formControlName="rappel"
+                              id="rappel"
+                            />
+                          </div>
+                          <div class="col-md-4 inputSpace">
+                            <label
+                              for="numpolice"
+                              class="form-label inputSpaceText"
+                              >CEDEAO Bureau Emetteur</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="numpolice"
+                              id="Montantvisi"
+                            />
+                          </div>
+                          <div class="col-md-2 inputSpace">
+                            <button
+                              type="button"
+                              class="btn btn-dark btn-sm btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                              style="margin-top: 25px"
+                              type="submit"
+                              [disabled]="vehiculeFormAssurance.invalid"
+                            >
+                              <div
+                                *ngIf="
+                                  addOrUpdateAssur;
+                                  then Ajouter;
+                                  else Modifier
+                                "
+                              ></div>
+                              <ng-template #Ajouter
+                                ><i class="fa fa-plus text-4 mr-2"></i>
+                                Ajouter</ng-template
+                              >
+                              <ng-template #Modifier
+                                ><i class="fa fa-plus text-4 mr-2"></i> Modifier
+                              </ng-template>
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="spinner4" *ngIf="ModifsLoadingResults">
+                      <div class="bounce1"></div>
+                      <div class="bounce2"></div>
+                      <div class="bounce3"></div>
+                    </div>
+
+                    <div class="col-md-12" style="margin-top: 20px">
+                      <mat-form-field>
+                        <mat-label>Rechercher une assurance</mat-label>
+                        <input
+                          matInput
+                          (keyup)="applyFilter($event)"
+                          placeholder="Immatriculation , modèle , direction ..."
+                          #input
+                        />
+                      </mat-form-field>
+
+                      <div>
+                        <table
+                          class="table table-responsive-md table-bordered table-striped mb-0 fontTable"
+                          mat-table
+                          [dataSource]="dataSourceAssur"
+                          matSort
+                        >
+                          <ng-container matColumnDef="number">
+                            <th
+                              *matHeaderCellDef
+                              mat-sort-header
+                              style="width: 1%"
+                              class="text-center"
+                            >
+                              #
+                            </th>
+                            <td
+                              *matCellDef="let vehicule; let i = index"
+                              class="text-center"
+                            >
+                              {{ i + 1 }}
+                            </td>
+                          </ng-container>
+
+                          <!-- ID Column -->
+                          <ng-container matColumnDef="assure">
+                            <th
+                              *matHeaderCellDef
+                              mat-sort-header
+                              style="width: 15%"
+                              class="text-center"
+                            >
+                              Assuré
+                            </th>
+                            <td *matCellDef="let vehicule">
+                              {{ vehicule.assure | uppercase }}
+                            </td>
+                          </ng-container>
+
+                          <!-- ID Column -->
+                          <ng-container matColumnDef="assueur">
+                            <th
+                              *matHeaderCellDef
+                              mat-sort-header
+                              style="width: 15%"
+                            >
+                              Assurance
+                            </th>
+                            <td *matCellDef="let vehicule">
+                              {{ vehicule.assueur | uppercase }}
+                            </td>
+                          </ng-container>
+
+                          <!-- ID Column -->
+                          <ng-container matColumnDef="numpolice">
+                            <th
+                              *matHeaderCellDef
+                              mat-sort-header
+                              style="width: 15%"
+                            >
+                              Numéro Police
+                            </th>
+                            <td *matCellDef="let vehicule">
+                              {{ vehicule.numpolice | uppercase }}
+                            </td>
+                          </ng-container>
+
+                          <!-- Name Column -->
+                          <ng-container matColumnDef="datedebut">
+                            <th
+                              *matHeaderCellDef
+                              mat-sort-header
+                              style="width: 10%"
+                            >
+                              Date Début
+                            </th>
+                            <td *matCellDef="let vehicule">
+                              {{ vehicule.datedebut | date : "dd/MM/yyyy" }}
+                            </td>
+                          </ng-container>
+
+                          <!-- Name Column -->
+                          <ng-container matColumnDef="datefin">
+                            <th
+                              *matHeaderCellDef
+                              mat-sort-header
+                              style="width: 10%"
+                            >
+                              Date Fin
+                            </th>
+                            <td *matCellDef="let vehicule">
+                              {{ vehicule.datefin | date : "dd/MM/yyyy" }}
+                            </td>
+                          </ng-container>
+
+                          <!-- Name Column -->
+                          <ng-container matColumnDef="rappel">
+                            <th
+                              *matHeaderCellDef
+                              mat-sort-header
+                              style="width: 10%"
+                            >
+                              Rappel
+                            </th>
+                            <td *matCellDef="let vehicule">
+                              {{ vehicule.rappel }} jour(s)
+                            </td>
+                          </ng-container>
+
+                          <!-- Color Column -->
+                          <ng-container matColumnDef="action">
+                            <th
+                              *matHeaderCellDef
+                              mat-sort-header
+                              style="width: 11%"
+                            ></th>
+                            <td *matCellDef="let vehicule">
+                              <button
+                                type="button"
+                                class="btn btn-secondary btn-sm mr-2"
+                                (click)="loadOneAssurance(vehicule.AssuranceID)"
+                              >
+                                <i class="nav-icon fas fa-edit"></i>
+                              </button>
+                              <button
+                                type="button"
+                                class="btn btn-danger btn-sm"
+                                (click)="
+                                  ItemSupprime(
+                                    vehicule.AssuranceID,
+                                    'assurance'
+                                  )
+                                "
+                                data-toggle="modal"
+                                data-target="#modal-info"
+                              >
+                                <i class="nav-icon fas fa-trash"></i>
+                              </button>
+                            </td>
+                          </ng-container>
+
+                          <!-- Color Column -->
+
+                          <tr
+                            mat-header-row
+                            *matHeaderRowDef="displayedColumnsAssur"
+                          ></tr>
+                          <tr
+                            mat-row
+                            *matRowDef="let row; columns: displayedColumnsAssur"
+                          ></tr>
+                        </table>
+
+                        <mat-paginator
+                          [pageSizeOptions]="[10, 20, 30, 100]"
+                          showFirstLastButtons
+                          aria-label="Select page of periodic elements"
+                        >
+                        </mat-paginator>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
+
+<!-- /.modal -->
+<div class="modal fade" id="modal-AddDocument">
+  <div class="modal-dialog">
+    <form
+      [formGroup]="documentForm"
+      (ngSubmit)="onSubmitFormDocument(documentForm.value)"
+      class="ecommerce-form action-buttons-fixed"
+      action="#"
+      method="post"
+    >
+      <div class="modal-content bg-default">
+        <div class="modal-header" style="height: 50px">
+          <h2 class="modal-title">AJOUTER UN MEDIA AU VEHICULE</h2>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12 inputSpace">
+              <label for="Description" class="form-label inputSpaceText"
+                >Description<span class="Oblig">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control inputSpaceText"
+                formControlName="Description"
+                id="Description"
+              />
+            </div>
+            <div class="col-md-12 inputSpace">
+              <!--label for="MediaFIle" class="form-label inputSpaceText">Media<span class="Oblig">*</span></label-->
+              <!--input type="file" class="form-control inputSpaceText" formControlName="MediaFIle" id="MediaFIle"-->
+              <img
+                [src]="MediaFIlePreview"
+                style="width: 200px"
+                class="image-preview rounded img-fluid"
+              />
+              <input
+                style="display: none"
+                type="file"
+                (change)="onFileUploadDocument($event)"
+                #selectFileDocuemnt
+              />
+              <label (click)="selectFileDocuemnt.click()"
+                >Selectionner un média du véhicule
+                <span class="Oblig">*</span></label
+              >
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button
+            type="button"
+            class="btn btn-outline-dark"
+            data-dismiss="modal"
+          >
+            Annuler
+          </button>
+          <button
+            type="submit"
+            class="btn btn-danger"
+            [disabled]="documentForm.invalid"
+          >
+            <i class="fa fa-plus"></i> Ajouer
+          </button>
+        </div>
+      </div>
+    </form>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- /.modal -->
+<div class="modal fade" id="modal-info">
+  <div class="modal-dialog">
+    <div class="modal-content bg-default">
+      <div class="modal-header" style="height: 50px">
+        <h2 class="modal-title">PARC AUTO - RTI</h2>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Voulez-vous supprimer le véhichule ?</p>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">
+          Annuler
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="supprime()"
+          data-dismiss="modal"
+        >
+          Supprimer
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!----------MODAL ENVOI VALIDATION VEHICULE----------->
+<!-- /.modal -->
+<div class="modal fade" id="modal-infoValidator">
+  <div class="modal-dialog">
+    <div class="modal-content bg-default">
+      <div class="modal-header" style="height: 50px">
+        <h2 class="modal-title">PARC AUTO - RTI</h2>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <p>
+          {{
+            "voulez-vous vraiment soumettre les informations saisies à validation"
+              | uppercase
+          }}
+          ?
+        </p>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">
+          Annuler
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="SendToValideVhecule()"
+          data-dismiss="modal"
+        >
+          Envoyer
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!----------MODAL ENVOI VALIDATION VEHICULE----------->
+
+<!----------MODAL VALIDATION VEHICULE----------->
+<!-- /.modal -->
+<!--form [formGroup]="vehiculeFormValidation" (ngSubmit)="onSubmitvalideVehicule(vehiculeFormValidation.value)"
+    class="ecommerce-form action-buttons-fixed" action="#" method="post"-->
+<div class="modal fade" id="modal-infoConfirmValidator">
+  <div class="modal-dialog">
+    <div class="modal-content bg-default">
+      <div class="modal-header" style="height: 50px">
+        <h2 class="modal-title">PARC AUTO - RTI</h2>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <input
+        type="text"
+        class="form-control"
+        formControlName="Valetapcode"
+        id="Valetapcode"
+      />
+      <input
+        type="text"
+        class="form-control"
+        formControlName="ValvehiculeID"
+        id="ValvehiculeID"
+      />
+      <input
+        type="text"
+        class="form-control"
+        formControlName="ValvehiculeStaut"
+        id="ValvehiculeStaut"
+      />
+      <div class="modal-body text-center">
+        <p>
+          {{
+            "voulez-vous vraiment soumettre les informations saisies à validation"
+              | uppercase
+          }}
+          ?
+        </p>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">
+          Annuler
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          type="submit"
+          class="btn btn-danger"
+          (click)="onSubmitvalideVehicule()"
+          data-dismiss="modal"
+        >
+          Envoyer
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!--/form-->
+<!----------MODAL ENVOI VALIDATION VEHICULE----------->

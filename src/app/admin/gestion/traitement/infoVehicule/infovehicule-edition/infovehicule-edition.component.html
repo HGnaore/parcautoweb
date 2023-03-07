@@ -1,0 +1,331 @@
+<!-- Content Header (Page header) -->
+
+<section class="content-header" [@simpleFadeAnimation]="'in'">
+   
+    <!--header class="page-header page-header-left-inline-breadcrumb" style="margin: 0px; padding-top: 20px;">
+       <h2 class="font-weight-bold text-6">VEHICULES</h2>
+       <div class="right-wrapper">
+           <ol class="breadcrumbs">
+               <li><span><a routerLink="/admin/dashboard">Accueil</a></span></li>
+               <li><span>Véhicules</span></li>
+               <li><span>Liste</span></li>
+           </ol>
+           <button routerLink='/admin/admin/vehiculeEdition/0' class="btn btn-success btn-sm btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1">
+               <i class="fa fa-plus text-4 mr-2"></i> Nouveau</button>
+           </div>
+   </header-->
+
+
+<!-- /.content-header -->
+
+<div class="row" >
+  <div class="col-lg-12">
+      <section class="card">
+
+              <h2 class="card-title"></h2><!--Liste des Véhicules-->
+     
+              <div class="spinner4" *ngIf="isLoadingResults">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+        
+
+          <section class="card card-primary">
+
+              <header class="card-header bg-secondary" style="padding: 10px">
+                <div class="row">
+                  <div class="col-md-9 text-left">
+                    <h2 class="card-title text-white" style="padding: 0px; margin: 0px;">
+                      <span style="font-weight: 500;" class="text-warning mr-2">MODIFICATION</span>VEHICULE [{{imatriculation|uppercase}}] - {{marque|uppercase}} {{modele|uppercase}}</h2>
+               
+                  </div>
+              
+                <div class="col-md-3 text-right">
+                    <button type="button" class="btn btn-warning btn-sm" routerLink="/admin/admin/vehiculeList">
+                      PARC AUTOMOBILE <i class="fa fa-arrow-right"></i></button>
+                    
+                </div>
+            </div>
+               </header>
+          
+              <div class="card-body">
+              
+                <div class="row">
+                  <div class="col-md-2 text-center" style="background-color: rgba(204, 204, 204, 0.116);">
+                     
+                    <div class="thumb-info mb-3">
+                      <a href="{{imagePreview}}" target="_blank"> <img  [src]="imagePreview" style="width:200px;" class="image-preview rounded img-fluid"></a>
+                     
+                    </div>
+                    
+
+                      <input style="display: none" type="file" (change)="onFileUpload($event)" #selectFile>
+<button (click)="selectFile.click()">Image du véhicule</button>
+
+                  </div>
+
+                  <div class="col-md-10" style="padding-top: 5px;">
+                    <form [formGroup]="vehiculeForm" (ngSubmit)="onSubmitForm(vehiculeForm.value)"
+                    class="ecommerce-form action-buttons-fixed" action="#" method="post">
+                    <div class="row">
+                    <div class="col-md-3 inputSpace">
+                      <label for="imatriculation" class="form-label inputSpaceText">Immat.<span class="Oblig">*</span></label>
+                      <input type="text" class="form-control inputSpaceText"
+                        formControlName="imatriculation" id="imatriculation">
+                    </div>
+
+                    
+                    <div class="col-md-3 inputSpace">
+                      <label for="marque_ID" class="form-label inputSpaceText">Marque<span class="Oblig">*</span></label>
+                      <select id="marque_ID" class="form-control" formControlName="marque_ID"
+                      name="marque_ID" (change)="changeMarque($event.target.value)">
+                      <option selected value="">---- Choisir ---- </option>
+                      <option *ngFor="let marque of listemarques.results" [value]="marque.ID">{{marque.designation | uppercase}}</option>
+                    </select>
+                    </div>
+
+                    <div class="col-md-3 inputSpace">
+                      <label for="inputPassword4" class="form-label inputSpaceText">Modèle<span class="Oblig">*</span></label>
+                      <select id="modele_ID" class="form-control" formControlName="modele_ID" name="modele_ID">
+                  <option selected value="">---- Choisir ---- </option>
+                  <option selected *ngFor="let moelmarque of listemodelebymarques.results" [value]="moelmarque.model_ID">{{moelmarque.modele | uppercase}}</option>
+                </select>
+                    
+                    </div>
+  
+
+                    <div class="col-md-3 inputSpace">
+                      <label for="typeacquisition" class="form-label inputSpaceText">Acquisition<span class="Oblig">*</span></label>
+                      <select id="typeacquisition" class="form-control" formControlName="typeacquisition"
+                      name="typeacquisition">
+                      <option value="">---- Choisir ---- </option>
+                      <option value="achat">ACHAT</option>
+                      <option value="location">LOCATION</option>
+                      <option value="don">DON</option>
+                    </select>
+                    </div>
+
+                 
+                      <div class="col-md-3 inputSpace">
+                        <label for="typeFonction" class="form-label inputSpaceText">Libellé (Fonction) <span class="Oblig">*</span></label>
+                        <select id="fonction_ID" class="form-control" formControlName="fonction_ID" name="fonction_ID">
+                          <option selected value="">---- Choisir ---- </option>
+                          <option selected *ngFor="let fonction of listeFonction.results" [value]="fonction.ID">{{fonction.fonction | uppercase}}</option>
+                        </select>
+                     
+                      </div>
+                 
+
+                    <div class="col-md-3 inputSpace">
+                      <label for="typeacquisition" class="form-label inputSpaceText">Affectation</label>
+                      <select formControlName="Dir_id" required class="form-control" style="width: 100%;" (change)="changeDirection($event)">
+                        <option selected="selected" value="">---- Direction -----</option> 
+                        <option *ngFor="let dir of listDirection;" [value]="dir.Id_direction" [attr.dir-name]="dir.LibelleDirection">
+                                 {{dir.LibelleDirection}}
+                        </option></select> 
+                    </div>
+
+                    
+
+                    <div class="col-md-3 inputSpace">
+                      <label for="typeacquisition" class="form-label inputSpaceText">Affecté à </label>
+                      <select formControlName="Agent_id"  (change)="onChangeSelectedPersonnelValue($event)" class="form-control select2bs4" style="width: 100%;">
+                        <option selected="selected" value="">---- Agent -----</option> 
+                        <option *ngFor="let person of listPersonnel;" [value]="person.PersonnelId" [attr.person-image]="person.Photo" [attr.person-name]="person.NomPrenoms">
+                                {{person.NomPrenoms}}
+                        </option></select>
+                    </div>
+
+                   
+
+
+                    <div class="col-md-3 inputSpace">
+                      <img src="assets/img/!logged-user.jpg" [ngClass]="{'hidden': hidden}"  style="width: 80px;" class="image-preview rounded img-fluid">
+                      <img [src]="PersoneImage" [ngClass]="{'hidden': AficherImgx}" style="width: 80px;" class="image-preview rounded img-fluid">
+                      <input hidden formControlName="Dir_NomPrenAgent" name="Dir_NomPrenAgent"  value="{{PersoneName}}" type="text" class="form-control" id="inputCity" placeholder="id entree">
+                      <input hidden formControlName="Ent_PieceJointe" name="Ent_PieceJointe"  value="{{PersoneImage}}" type="text" class="form-control" id="inputCity" placeholder="id entree">
+
+                      
+                              </div>
+
+                          
+                    <div class="col-12 col-md-12 text-center">
+                        <button style="margin-right: 10px;" type="submit" [disabled]="vehiculeForm.invalid"
+                          class="submit-button btn btn-success btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                          data-loading-text="Loading...">
+                          <i class="fas fa-save text-4 mr-1"></i> Enregister
+                        </button>
+                  
+                        <button type="submit"
+                          class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                          routerLink="/admin/admin/vehiculeList">
+                          <i class="fas fa-times text-4 mr-1"></i> Quitter
+                        </button>
+                  
+                      </div>
+
+                  </div>
+
+
+</form>
+                  </div>
+
+                </div>
+              
+              </div>
+  
+  
+          </section>
+          
+          
+          <div class="card-body">
+
+            <div class="text-left mb-2">
+              <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+              data-target="#modal-AddDocument"><i class="fa fa-plus"></i> Ajouter un média (Document, Photo....) </button>
+              
+          </div>
+
+            <div class="spinner4" *ngIf="isLoadingResults">
+              <div class="bounce1"></div>
+              <div class="bounce2"></div>
+              <div class="bounce3"></div>
+          </div>
+            <mat-form-field >
+                <mat-label>Rechercher un véhicule</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Immatriculation , modèle , direction ..." #input>
+            </mat-form-field>
+
+            <div>
+             
+                <table class="table table-responsive-md  table-bordered table-striped mb-0 fontTable"
+                mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="number">
+                    <th *matHeaderCellDef mat-sort-header style="width: 1%;" class="text-center"> # </th>
+                    <td *matCellDef="let vehicule; let i = index" class="text-center"> {{i + 1}} </td>
+                </ng-container>
+                
+                 <!-- ID Column -->
+                 <ng-container matColumnDef="lienPhoto">
+                  <th *matHeaderCellDef mat-sort-header style="width: 5%;" class="text-center"> Photo </th>
+                  <td *matCellDef="let vehicule" class="text-center">
+                    <!--lib-ngx-image-zoom [thumbImage]={{this.urlPhoto}}{{vehicule.lienPhoto}} [fullImage]={{this.urlPhoto}}{{vehicule.lienPhoto}}></lib-ngx-image-zoom-->
+                   <a href="{{this.urlPhoto}}{{vehicule.lienPhoto}}" target="_blank"><img src="{{this.urlPhoto}}{{vehicule.lienPhoto}}" width="100px"></a> 
+                  </td>
+              </ng-container> 
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="description">
+                    <th *matHeaderCellDef mat-sort-header style="width: 20%;"> Description </th>
+                    <td *matCellDef="let vehicule"> {{vehicule.description|uppercase}}</td>
+                </ng-container> 
+
+                <!-- Color Column -->
+                <ng-container matColumnDef="action">
+                    <th *matHeaderCellDef mat-sort-header style="width: 11%;"> </th>
+                    <td *matCellDef="let vehicule">
+                        <!--button type="button" class="btn btn-secondary btn-sm mr-2"
+                            routerLink='/admin/admin/vehiculeEdition/{{vehicule.ID}}/8999'>
+                            <i class="nav-icon fas fa-edit"></i>
+                        </button-->
+                        <button type="button" class="btn btn-danger btn-sm"
+                            (click)="ItemSupprime(vehicule.ID)" data-toggle="modal"
+                            data-target="#modal-info">
+                            <i class="nav-icon fas fa-trash"></i>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <!-- Color Column -->
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[10, 20, 30, 100]" showFirstLastButtons
+                aria-label="Select page of periodic elements">
+            </mat-paginator>
+
+
+              </div>
+              
+        
+        </div>
+    
+      </section>
+  </div>
+
+</div>
+
+    <!-- /.container-fluid -->
+  </section>
+
+
+  <!-- /.modal -->
+  <div class="modal fade" id="modal-AddDocument">
+    <div class="modal-dialog">
+        <form [formGroup]="documentForm" (ngSubmit)="onSubmitFormDocument(documentForm.value)"
+              class="ecommerce-form action-buttons-fixed" action="#" method="post">
+        <div class="modal-content bg-default">
+            <div class="modal-header" style="height: 50px;">
+                <h2 class="modal-title">AJOUTER UN MEDIA AU VEHICULE </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+            
+              <div class="row">
+              <div class="col-md-12 inputSpace">
+                <label for="Description" class="form-label inputSpaceText">Description<span class="Oblig">*</span></label>
+                <input type="text" class="form-control inputSpaceText"
+                  formControlName="Description" id="Description">
+              </div>
+              <div class="col-md-12 inputSpace">
+                <!--label for="MediaFIle" class="form-label inputSpaceText">Media<span class="Oblig">*</span></label-->
+                <!--input type="file" class="form-control inputSpaceText" formControlName="MediaFIle" id="MediaFIle"-->
+                <img  [src]="MediaFIlePreview" style="width:200px;" class="image-preview rounded img-fluid">
+                <input style="display: none" type="file" (change)="onFileUploadDocument($event)" #selectFileDocuemnt>
+                <label (click)="selectFileDocuemnt.click()">Selectionner un média du véhicule <span class="Oblig">*</span></label>
+                     
+              </div>
+              </div>
+             
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Annuler</button>
+                <button type="submit" class="btn btn-danger" [disabled]="documentForm.invalid"><i class="fa fa-plus"></i> Ajouer</button>
+            </div>
+        </div>
+        </form>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+
+<!-- /.modal -->
+<div class="modal fade" id="modal-info">
+  <div class="modal-dialog">
+      <div class="modal-content bg-default">
+          <div class="modal-header" style="height: 50px;">
+              <h2 class="modal-title">PARC AUTO - RTI </h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+              <p>Voulez-vous supprimer le véhichule ?</p>
+          </div>
+          <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Annuler</button>
+              <button type="button" class="btn btn-danger" (click)="supprime()"
+                  data-dismiss="modal">Supprimer</button>
+          </div>
+      </div>
+      <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

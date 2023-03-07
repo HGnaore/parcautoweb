@@ -1,0 +1,74 @@
+<body class="hold-transition login-page " [@simpleFadeAnimation]="'in'"
+    style="background-image: url('assets/dist/img/Technical-Support2.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center;">
+    <div class="login-box">
+
+        <!-- /.login-logo -->
+        <div class="card  card-outline card-primary">
+            <div class="card-header" style="background-color: rgb(233, 231, 231);">
+                <div class="login-logo">
+                    <img src="assets/dist/img/RTIlogo.png" alt="RTI Logo" class="brand-image  elevation-3"
+                        height="40px">
+                    <a style="color: black;"> - NEO</a>
+                </div>
+            </div>
+            <div class="card-body login-card-body">
+                <h2 style="text-align: center; color:coral">Identifiez-vous ! </h2>
+                <!-- loader  -->
+                <div class="spinner4" *ngIf="isLoadingResults">
+                    <div class="bounce1"></div>
+                    <div class="bounce2"></div>
+                    <div class="bounce3"></div>
+                </div>
+                <!-- loader end -->
+
+                <p *ngIf='afficheErreur == true' style="color: red;">
+                    Le email ou le mot de passe que vous avez saisi est incorrect.
+                    Veuillez réessayer (vérifiez le verrouillage des majuscules).
+                </p>
+
+                <form [formGroup]="loginFormGroup" (ngSubmit)="connexion(loginFormGroup.value)">
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Email" formControlName="Util_Email">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Password" formControlName="Util_Mdp">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-7">
+
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-5">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat"
+                                [disabled]="!loginFormGroup.valid">Connexion</button>
+                        </div>
+
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+            </div>
+            <div class="card-footer">
+                <p class="mt-2">
+                    <a routerLink='/mdpoublie' routerLinkActive="active">J'ai oublié mon mot de passe</a>
+                </p>
+                <p class="mb-0">
+                    <a routerLink='/register' routerLinkActive="active" class="text-center">Creer mon compte</a>
+                </p>
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+    <!-- /.login-box -->
+
+</body>

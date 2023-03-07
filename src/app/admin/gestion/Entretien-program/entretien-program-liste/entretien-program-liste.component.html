@@ -1,0 +1,143 @@
+<section class="content-header" [@simpleFadeAnimation]="'in'">
+    <header class="page-header page-header-left-inline-breadcrumb">
+        <h2 class="font-weight-bold text-6">PROGRAMME D'ENTRETIEN</h2>
+        <div class="right-wrapper">
+            <ol class="breadcrumbs">
+                <li><span>Accueil</span></li>
+                <li><span>Programme d'entretien</span></li>
+                <li><span>Liste</span></li>
+            </ol>
+            <button routerLink='/admin/admin/entretienProgramEdition/0' class="btn btn-success btn-sm btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1">
+                <i class="fa fa-plus text-4 mr-2"></i> Nouveau</button>
+
+            </div>
+    </header>
+
+    <!-- start: page -->
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="card">
+              
+                <h2 class="card-title" style="padding-top: 80px;">Liste des programmes entretiens</h2>
+                  
+                <div class="spinner4" *ngIf="isLoadingResults">
+                    <div class="bounce1"></div>
+                    <div class="bounce2"></div>
+                    <div class="bounce3"></div>
+                </div>
+                
+                <div class="card-body">
+    
+                    <mat-form-field >
+                        <mat-label>Rechercher un véhicule</mat-label>
+                        <input matInput (keyup)="applyFilter($event)" placeholder="Immatriculation , modèle , direction ..." #input>
+                    </mat-form-field>
+    
+                    <div>
+                        <table mat-table [dataSource]="dataSource" class="table-responsive-md table-bordered table-striped mb-0">
+                          
+                            <ng-container matColumnDef="number">
+                                <th mat-header-cell *matHeaderCellDef style="padding-left:10px;"> # </th>
+                                <td *matCellDef="let element; let i = index" style="width: 5%;"><span style="padding-left:10px;">{{i + 1}}</span>  </td>
+                            </ng-container>
+        
+                          <!-- Position Column -->
+                          <ng-container matColumnDef="immatriculation">
+                            <th mat-header-cell *matHeaderCellDef style="padding-left:10px;"> Matricule </th>
+                            <td mat-cell *matCellDef="let element" style="width: 15%;"> <span style="padding-left:10px;">[{{element.immatriculation |uppercase}}] - {{element.marque|uppercase}} {{element.modele|uppercase}}</span> </td>
+                          </ng-container>
+                      
+                          <!-- Name Column -->
+                          <ng-container matColumnDef="typeEnretretienName">
+                            <th mat-header-cell *matHeaderCellDef style="padding-left:10px;"> Type d'entretiens </th>
+                            <td mat-cell *matCellDef="let element" style="width: 20%;"><span style="padding-left:10px;">{{element.typeEnretretienName |uppercase}}</span>  </td>
+                          </ng-container>
+                      
+                          <!-- Weight Column -->
+                          <ng-container matColumnDef="Repetertous">
+                            <th mat-header-cell *matHeaderCellDef style="padding-left:10px;"> 	Répéter tous </th>
+                            <td mat-cell *matCellDef="let element" style="width: 10%;"><span style="padding-left:10px;">{{element.repetition}} {{element.frequenceCode}} ou {{element.kilometrage}} Km</span> </td>
+                          </ng-container>
+                      
+                          <ng-container matColumnDef="objetEntretien">
+                            <th mat-header-cell *matHeaderCellDef style="padding-left:10px;"> Rappel </th>
+                            <td mat-cell *matCellDef="let element" style="width: 10%;"><span style="padding-left:10px;">{{element.rappel}} {{element.rappelPeriodeCode}} ou {{element.rappelKilometrage}} Km</span>  </td>
+                          </ng-container>
+
+                          <!-- Symbol Column -->
+                          <ng-container matColumnDef="Description">
+                            <th mat-header-cell *matHeaderCellDef style="padding-left:10px;"> Description</th>
+                            <td mat-cell *matCellDef="let element" style="width: 30%;"> <span style="padding-left:10px;">{{element.comment|uppercase}} </span></td>
+                          </ng-container>
+
+                         
+
+                                 <!-- Symbol Column -->
+                                 <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef> </th>
+                                    <td mat-cell *matCellDef="let element" style="width: 10%;"> 
+                                        <!--button type="button" class="btn btn-info btn-sm mr-2">
+                                            <i class="bx bx-money" aria-hidden="true"></i> Dépense
+                                        </button-->
+                                        <button type="button" class="btn btn-secondary btn-sm mr-2"
+                                                    routerLink='/admin/admin/entretienProgramEdition/{{element.id}}'>
+                                                    <i class="nav-icon fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm"
+                                                    (click)="questionSupprime(element.id)" data-toggle="modal"
+                                                    data-target="#modal-info">
+                                                    <i class="nav-icon fas fa-trash"></i>
+                                                </button>
+                                        <!--button type="button" class="btn btn-primary btn-sm">Small button</button>
+                                        <button type="button" class="btn btn-primary btn-sm">Small button</button-->    
+                                    </td>
+                                  </ng-container>
+                      
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                      
+                        <mat-paginator [pageSizeOptions]="[10, 20, 30]"
+                                       showFirstLastButtons 
+                                       aria-label="Select page of periodic elements">
+                        </mat-paginator>
+                      </div>
+                      
+                
+                </div>
+
+                
+                
+            
+            </section>
+        </div>
+   
+    </div>
+    <!-- end: page -->
+</section>
+
+
+
+<!-- /.modal -->
+<div class="modal fade" id="modal-info">
+    <div class="modal-dialog">
+        <div class="modal-content bg-default">
+            <div class="modal-header" style="height: 50px;">
+                <h2 class="modal-title">PARC AUTO - RTI </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <p>Voulez-vous supprimer l'entretien programmé?</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-danger" (click)="supprime()"
+                    data-dismiss="modal">Supprimer</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

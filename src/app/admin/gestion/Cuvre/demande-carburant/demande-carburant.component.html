@@ -1,0 +1,343 @@
+<section class="content-header" [@simpleFadeAnimation]="'in'">
+
+    <!-- /.content-header -->
+   
+    <div class="row" >
+     <div class="col-lg-12">
+         <section class="card">
+   
+                 <h2 class="card-title"></h2><!--Liste des Véhicules-->
+        
+          
+                 <div class="spinner4" *ngIf="isLoadingResults">
+                   <div class="bounce1"></div>
+                   <div class="bounce2"></div>
+                   <div class="bounce3"></div>
+               </div>
+   
+             <section class="card card-primary">
+   
+                 <header class="card-header bg-secondary" style="padding: 10px">
+                  <div class="row">
+                    <div class="col-md-9 text-left">
+                      <h2 class="card-title text-white" style="padding: 0px; margin: 0px;">
+                        <span style="font-weight: 500;" class="text-warning mr-2">GESTION</span>- DEMANDE DE CARBURANT</h2>
+                 
+                    </div>
+                
+                  <div class="col-md-3 text-right">
+                      <button type="button" class="btn btn-success" (click)="actionClose(1)" [ngClass]="{'hidden': ActionOpen}">
+                        <i class="fa fa-plus"></i> NOUVEAU</button>
+                        <button type="button" class="btn btn-danger" (click)="actionClose(0)" [ngClass]="{'hidden': ActionClose}">
+                          <i class="fas fa-times"></i> FERMER</button>
+                  </div>
+              </div>
+                       </header>
+             
+                 <div class="card-body">
+                 
+           
+                   <div class="row" [ngClass]="{'hidden': hidden}"><!--  -->
+                 
+                    <div class="col-md-12" style="padding-top: 5px;">
+                      <form [formGroup]="vehiculeForm" (ngSubmit)="onSubmitForm(vehiculeForm.value)"
+                              class="ecommerce-form action-buttons-fixed" action="#" method="post">
+                              <input type="text" hidden class="form-control" formControlName="EnergieID" id="EnergieID">
+                   
+                      <div class="row">
+                          <div class="col-md-3 inputSpace">
+                            <label for="inputEmail4" class="form-label inputSpaceText">Date <span class="Oblig">*</span></label>
+                            <input type="date" value="1" placeholder="1" class="form-control form-control-modern" id="inputPassword4">
+                            
+                          </div>
+  
+                          <div class="col-md-3 inputSpace">
+                              <label for="inputEmail4" class="form-label inputSpaceText">Véhicule</label>
+                              <select id="inputState" class="form-control form-control-modern" name="stockStatus">
+                                  <option selected>------ Choisir ------ </option>
+                                  <option>{{'14088 ww CI 01' | uppercase}}</option>
+                                  <option>{{'4513 KC 01' | uppercase}}</option>
+                                  <option>{{'EH-710-ML' | uppercase}}</option>
+                                  <!--option>{{'Chaîne de distribution Citadine' | uppercase}}</option-->
+                                </select>
+                            </div>
+  
+                            <div class="col-md-3 inputSpace">
+                              <label for="inputEmail4" class="form-label inputSpaceText">Direction Démandeuse <span class="Oblig">*</span></label>
+                              <select id="inputState" class="form-control form-control-modern" name="stockStatus">
+                                  <option selected>------ Choisir ------ </option>
+                                  <option>{{'RTI_BOUAKE' | uppercase}}</option>
+                                  <option>{{'FREQUENCE_2' | uppercase}}</option>
+                                  <option>{{'D_TECHNIQUE' | uppercase}}</option>
+                                  <!--option>{{'Chaîne de distribution Citadine' | uppercase}}</option-->
+                                </select>
+                            </div>
+  
+                            <div class="col-md-3 inputSpace">
+                              <label for="inputEmail4" class="form-label inputSpaceText">Direction Bénéficiaire</label>
+                              <select id="inputState" class="form-control form-control-modern" name="stockStatus">
+                                  <option selected>------ Choisir ------ </option>
+                                  <option>{{'RTI_BOUAKE' | uppercase}}</option>
+                                  <option>{{'FREQUENCE_2' | uppercase}}</option>
+                                  <option>{{'D_TECHNIQUE' | uppercase}}</option>
+                                  <!--option>{{'Chaîne de distribution Citadine' | uppercase}}</option-->
+                                </select>
+                            </div>
+  
+                            <div class="col-md-3 inputSpace">
+                              <label for="inputEmail4" class="form-label inputSpaceText">Activité <span class="Oblig">*</span></label>
+                              <select id="inputState" class="form-control form-control-modern" name="stockStatus">
+                                  <option selected>------ Choisir ------ </option>
+                                  <option>{{'FRAIS GENERAUX' | uppercase}}</option>
+                                  <option>{{'REPORTAGES' | uppercase}}</option>
+                                  <option>{{'CO-PRODUCTION' | uppercase}}</option>
+                                  <option>{{'DIFFUSION (A)' | uppercase}}</option>
+                                  <option>{{'FORMATION' | uppercase}}</option>
+                                  <option>{{'PRODUCTION' | uppercase}}</option>
+                                  <option>{{'REPORTAGES INSTITUTIONNELS' | uppercase}}</option>
+                                  <option>{{'REPORTAGES SPORTIFS' | uppercase}}</option>
+                                  <!--option>{{'Chaîne de distribution Citadine' | uppercase}}</option-->
+                                </select>
+                            </div>
+  
+                            <div class="col-md-3 inputSpace">
+                              <label for="inputEmail4" class="form-label inputSpaceText">Emission</label>
+                              <input type="text" placeholder="FAUT PAS FÂCHER" class="form-control form-control-modern" id="inputPassword4">
+                            </div>
+  
+                            <div class="col-md-3 inputSpace">
+                              <label for="inputEmail4" class="form-label inputSpaceText">Type de carburant <span class="Oblig">*</span></label>
+                              <select id="inputState" class="form-control form-control-modern" name="stockStatus">
+                                  <option selected>------ Choisir ------ </option>
+                                  <option>{{' Gasoil' | uppercase}}</option>
+                                  <option>{{'essence' | uppercase}}</option>
+                                  <!--option>{{'Chaîne de distribution Citadine' | uppercase}}</option-->
+                                </select>
+                                <!--small class="text-danger">Restant: 1500L</small-->
+                            </div>
+                            <div class="col-md-2 inputSpace">
+                              <label for="inputEmail4" class="form-label inputSpaceText">Plein <span class="Oblig">*</span></label>
+                              <select id="inputState" class="form-control form-control-modern" name="stockStatus">
+                                  <option >------ Choisir ------ </option>
+                                  <option>{{' OUI' | uppercase}}</option>
+                                  <option selected>{{'NON' | uppercase}}</option>
+                                  <!--option>{{'Chaîne de distribution Citadine' | uppercase}}</option-->
+                                </select>
+                            </div>
+                            <div class="col-md-1 inputSpace">
+                              <label for="inputEmail4" class="form-label inputSpaceText">Nb. Litre <span class="Oblig">*</span></label>
+                              <input type="number" value="1" placeholder="1" class="form-control form-control-modern" id="inputPassword4">
+                            </div>
+                            <div class="col-md-3 inputSpace">
+                              <label for="inputEmail4" class="form-label inputSpaceText">Coût/séjour</label>
+                              <input type="number" value="3000" placeholder="1" class="form-control form-control-modern" id="inputPassword4">
+                            </div>
+  
+                            <div class="col-md-3 inputSpace">
+                              <label for="inputEmail4" class="form-label inputSpaceText">Nbr/séjour <span class="Oblig">*</span></label>
+                              <input type="number" value="1" placeholder="1" class="form-control form-control-modern" id="inputPassword4">
+                            </div>
+  
+                            <div class="col-md-2 inputSpace">
+                              <label for="inputEmail4" class="form-label inputSpaceText">Prix Unit/Litre</label>
+                              <input readonly type="number" value="615" placeholder="1" class="form-control form-control-modern" id="inputPassword4">
+                            </div>
+                            <div class="col-md-2 inputSpace">
+                              <label for="inputEmail4" class="form-label inputSpaceText">Prix Total</label>
+                              <input readonly type="number" value="0" placeholder="1" class="form-control form-control-modern" id="inputPassword4">
+                            </div>
+                           
+                            <div class="col-md-12 inputSpace">
+                              <label for="inputPassword4" class="form-label inputSpaceText">Observations</label>
+                              <textarea id="story" name="story" rows="2" cols="33" class="form-control form-control-modern"> </textarea>
+                            </div>
+                        <!--ERREUR ICI-->
+                        <div class="col-12 col-md-12 text-center">
+                            <button style="margin-right: 10px;" type="submit" [disabled]="vehiculeForm.invalid"
+                              class="submit-button btn btn-success btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                              data-loading-text="Loading...">
+                              <i class="fas fa-save text-4 mr-1"></i> Enregister
+                            </button>
+                      
+                            <span class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1" (click)="actionClose(0)">
+                              <i class="fas fa-times text-4 mr-1"></i> Quitter
+                            </span>
+                      
+                          </div>
+                       
+      
+                      </div>
+</form>
+                    </div>
+                  </div>
+   
+              
+
+                   <div class="row">
+                    <div class="spinner4" *ngIf="ModifsLoadingResults">
+                      <div class="bounce1"></div>
+                      <div class="bounce2"></div>
+                      <div class="bounce3"></div>
+                  </div>
+                    
+                    <div class="col-md-12" style="margin-top: 20px;">
+                      <mat-form-field >
+                          <mat-label>Rechercher</mat-label>
+                          <input matInput (keyup)="applyFilter($event)" placeholder="Immatriculation , modèle , direction ..." #input>
+                      </mat-form-field>
+      
+                      <div>
+                       
+                          <table class="table table-responsive-md  table-bordered table-striped mb-0 fontTable"
+                          mat-table [dataSource]="dataSource" matSort>
+                          <ng-container matColumnDef="number">
+                              <th *matHeaderCellDef mat-sort-header style="width: 1%;" class="text-center"> # </th>
+                              <td *matCellDef="let vehicule; let i = index" class="text-center"> {{i + 1}} </td>
+                          </ng-container>
+                          
+
+                         
+                        <ng-container matColumnDef="datecreation">
+                            <th *matHeaderCellDef mat-sort-header style="width: 3%;">Date Création</th>
+                            <td *matCellDef="let vehicule">
+                                {{vehicule.dateprix| date: 'dd/MM/yyyy'}}
+                            </td>
+                        </ng-container> 
+                       
+
+                         
+                        <ng-container matColumnDef="DirectionDemandeuse">
+                            <th *matHeaderCellDef mat-sort-header style="width: 10%;">Véhicule</th>
+                            <td *matCellDef="let vehicule">
+                              [2039 HF 01] - TOYOTA HILUX
+                            </td>
+                        </ng-container> 
+
+                        <ng-container matColumnDef="activité">
+                            <th *matHeaderCellDef mat-sort-header style="width: 5%;">Type Carburant</th>
+                            <td *matCellDef="let vehicule">
+                              Gasoil
+                            </td>
+                        </ng-container> 
+
+                        <ng-container matColumnDef="NbLitre">
+                          <th *matHeaderCellDef mat-sort-header style="width: 5%;">Nb. Litre</th>
+                          <td *matCellDef="let vehicule">
+                            30,000
+                          </td>
+                      </ng-container> 
+
+                        <ng-container matColumnDef="objet">
+                            <th *matHeaderCellDef mat-sort-header style="width: 5%;">Coût/Litre</th>
+                            <td *matCellDef="let vehicule">
+                                650
+                            </td>
+                        </ng-container> 
+
+                        <ng-container matColumnDef="Datedebut">
+                            <th *matHeaderCellDef mat-sort-header style="width: 3%;">Prix Total</th>
+                            <td *matCellDef="let vehicule">
+                                <span class="text-success" style="font-weight: 500;"> 19,500,000</span>
+                            </td>
+                        </ng-container> 
+
+                       
+                       
+                       
+      
+                          <!-- Color Column -->
+                          <ng-container matColumnDef="action">
+                              <th *matHeaderCellDef mat-sort-header style="width: 5%;"> </th>
+                              <td *matCellDef="let vehicule">
+                               
+                                  <button type="button" class="btn btn-secondary btn-sm mr-2" (click)="loadOne(vehicule.ID)">
+                                      <i class="nav-icon fas fa-edit"></i>
+                                  </button>
+                                  <button type="button" class="btn btn-danger btn-sm"
+                                      (click)="ItemSupprime(vehicule.ID)" data-toggle="modal"
+                                      data-target="#modal-info">
+                                      <i class="nav-icon fas fa-trash"></i>
+                                  </button> 
+                              
+                              </td> 
+                          </ng-container>
+      
+                          <!-- Color Column -->
+      
+      
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      </table>
+      
+                      <mat-paginator [pageSizeOptions]="[10, 20, 30, 100]" showFirstLastButtons
+                          aria-label="Select page of periodic elements">
+                      </mat-paginator>
+      
+      
+                        </div>
+                  </div>
+                   </div>
+                 </div>
+     
+     
+             </section>
+             
+             
+       
+         </section>
+     </div>
+   
+   </div>
+   
+       <!-- /.container-fluid -->
+   </section>
+
+
+   <!-- /.modal -->
+<div class="modal fade" id="modal-info">
+  <div class="modal-dialog">
+      <div class="modal-content bg-default">
+          <div class="modal-header" style="height: 50px;">
+              <h2 class="modal-title">PARC AUTO - RTI </h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+              <p>Voulez-vous supprimer une energie ?</p>
+          </div>
+          <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Annuler</button>
+              <button type="button" class="btn btn-danger" (click)="supprime()"
+                  data-dismiss="modal">Supprimer</button>
+          </div>
+      </div>
+      <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- /.modal -->
+<div class="modal fade" id="modal-info">
+  <div class="modal-dialog">
+      <div class="modal-content bg-default">
+          <div class="modal-header" style="height: 50px;">
+              <h2 class="modal-title">PARC AUTO - RTI </h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+              <p>Voulez-vous supprimer la marque ?</p>
+          </div>
+          <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Annuler</button>
+              <button type="button" class="btn btn-danger" (click)="supprime()"
+                  data-dismiss="modal">Supprimer</button>
+          </div>
+      </div>
+      <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+

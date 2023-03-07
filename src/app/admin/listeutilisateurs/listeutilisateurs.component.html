@@ -1,0 +1,189 @@
+<!-- Content Header (Page header) -->
+<div class="content-header" [@simpleFadeAnimation]="'in'">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Utilisateurs</h1>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">Utilisateurs</li>
+                </ol>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<section class="content" [@simpleFadeAnimation]="'in'">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!--    <div class="callout callout-info">
+                    <h5><i class="fas fa-info"></i> Note:</h5>
+                    Selectionnez dans la liste l'agent que vous voulez activer !!!
+                </div>
+
+
+                 Main content -->
+                <!-- /.card -->
+
+                <div class="card">
+                    <div class="card-header" style="background-color: #086A87; color: #FFFF; height: 50px  ">
+                        <h3 class="card-title">Liste des utilisateurs de l'application</h3>
+                        <button routerLink='/admin/admin/utilisateur/0' class="btn btn-info float-sm-right" style="margin-top: -5px;">Nouveau</button>
+
+                    </div>
+                    <!-- /.card-header -->
+
+                    <mat-form-field style="padding: 30px; margin-top: -20px">
+                        <mat-label>Rechercher un compte utilisateur</mat-label>
+                        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Gnaoré" #input>
+                    </mat-form-field>
+
+
+                    <div class="card-body" style="margin-top: -50px;">
+                        <!-- loader  -->
+                        <div class="spinner4" *ngIf="isLoadingResults">
+                            <div class="bounce1"></div>
+                            <div class="bounce2"></div>
+                            <div class="bounce3"></div>
+                        </div>
+                        <!-- loader end -->
+                        <table class="table table-bordered table-striped dataTable" mat-table [dataSource]="dataSource" matSort>
+
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="Util_Nomprenoms">
+                                <th *matHeaderCellDef mat-sort-header> <b>Nom et Prénoms</b>
+                                </th>
+                                <td *matCellDef="let Utilisateurs"> {{Utilisateurs.Util_Nomprenoms}} </td>
+                            </ng-container>
+
+                            <!-- Progress Column -->
+                            <ng-container matColumnDef="Util_Email">
+                                <th *matHeaderCellDef mat-sort-header> Email </th>
+                                <td *matCellDef="let listeUsers">
+                                    {{listeUsers.Util_Email}} </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="Util_Direction">
+                                <th *matHeaderCellDef mat-sort-header style="width: 100px; text-align: center">
+                                    Direction</th>
+                                <td *matCellDef="let listeUsers">
+                                    {{listeUsers.Util_Direction}}
+                                </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="Util_telephone">
+                                <th *matHeaderCellDef mat-sort-header style="width: 100px; text-align: center">
+                                    Téléphone</th>
+                                <td *matCellDef="let listeUsers">
+                                    {{listeUsers.Util_telephone}}
+                                </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="Util_Poste">
+                                <th *matHeaderCellDef mat-sort-header style="width: 100px; text-align: center"> Poste
+                                </th>
+                                <td *matCellDef="let listeUsers">
+                                    {{listeUsers.Util_Poste}}
+                                </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="Util_tech">
+                                <th *matHeaderCellDef mat-sort-header style="width: 100px; text-align: center">Technicien</th>
+                                <td *matCellDef="let listeUsers" style="text-align: center; color:green">
+                                    <i *ngIf="listeUsers.Util_tech == 'true'" class="fas fa-check"></i>
+
+                                </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="Util_Admin">
+                                <th *matHeaderCellDef mat-sort-header style="width: 100px; text-align: center">Administrateur</th>
+                                <td *matCellDef="let listeUsers" style="text-align: center; color:green">
+                                    <i *ngIf="listeUsers.Util_Admin == 'true'" class="fas fa-check"></i>
+
+                                </td>
+                            </ng-container>
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="Util_BP">
+                                <th *matHeaderCellDef mat-sort-header style="width: 100px; text-align: center">Bonpour</th>
+                                <td *matCellDef="let listeUsers" style="text-align: center; color:green">
+                                    <i *ngIf="listeUsers.Util_BP == 'true'" class="fas fa-check"></i>
+
+                                </td>
+                            </ng-container>
+
+
+                            <!-- Color Column -->
+                            <ng-container matColumnDef="boutons">
+                                <th *matHeaderCellDef mat-sort-header style="width: 5px;"> </th>
+                                <td *matCellDef="let listeUsers">
+                                    <div class="btn-group"> <button routerLink='/admin/admin/utilisateur/{{listeUsers.Id_Utilisateur}}' type="button" class="btn  btn-primary btn-xs">
+                                            <i class="fas fa-edit"></i></button>
+                                        <button (click)="questionSupprime(listeUsers.Id_Utilisateur)" type="button" class="btn  btn-danger btn-xs" style="margin-left: 5px;" data-toggle="modal" data-target="#modal-info">
+                                            <i class="fas fa-trash"></i></button>
+
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <!-- Color Column -->
+
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let listeUsers; columns: displayedColumns;"></tr>
+
+                            <!-- Row shown when there is no matching data. -->
+                            <tr class="mat-row" *matNoDataRow>
+                                <td class="mat-cell" colspan="4">Aucune données "{{input.value}}"
+                                </td>
+                            </tr>
+                        </table>
+
+                        <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+                    </div>
+
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <!-- /.invoice -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- /.modal -->
+<div class="modal fade" id="modal-info">
+    <div class="modal-dialog">
+        <div class="modal-content bg-info">
+            <div class="modal-header" style="height: 50px;">
+                <h2 class="modal-title">NEO </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <p>Voulez-vous supprimer l'enregistrement ?</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-danger" (click)="supprime()" data-dismiss="modal">Supprimer</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

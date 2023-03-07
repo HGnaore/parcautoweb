@@ -1,0 +1,244 @@
+<!-- Content Header (Page header) -->
+<section role="main" class="content-header"  [@simpleFadeAnimation]="'in'">
+  <!--header class="page-header page-header-left-inline-breadcrumb" style="margin: 0px; padding-top: 20px;">
+      <h2 class="font-weight-bold text-6">VEHICULE RTI</h2>
+      <div class="right-wrapper">
+          <ol class="breadcrumbs">
+              <li><span><a routerLink="/admin/dashboard">Accueil</a></span></li>
+              <li><span><a routerLink="/admin/admin/directionList">Véhicule RTI</a></span></li>
+              <li><span>Edition</span></li>
+          </ol>
+          <button type="button" class="btn btn-danger btn-sm btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1" routerLink='/admin/admin/vehiculeList'>
+              <i class="fa fa-times text-4 mr-2"></i> QUITTER</button>
+           </div>
+  </header--> 
+
+
+<!-- /.content-header -->
+
+<!-- start: page -->
+<div class="row" >
+  <div class="col-lg-12">
+      <section class="card">
+
+              <!--h2 class="card-title"></h2-->
+     
+       
+          <div class="spinner4" *ngIf="isLoadingResults">
+              <div class="bounce1"></div>
+              <div class="bounce2"></div>
+              <div class="bounce3"></div>
+          </div> 
+
+          <section class="card card-primary">
+            <header class="card-header bg-secondary" style="padding: 10px">
+              <div class="row">
+                <div class="col-md-9 text-left">
+                  <h2 class="card-title text-white" style="padding: 0px; margin: 0px;">
+                    <span style="font-weight: 500;" class="text-warning mr-2">VEHICULE</span>[{{imatriculation|uppercase}}] - {{marque|uppercase}} {{modele|uppercase}}</h2>
+             
+                </div>
+            
+              <div class="col-md-3 text-right">
+                  <button type="button" class="btn btn-warning btn-sm" routerLink="/admin/admin/vehiculeList">
+                    PARC AUTOMOBILE <i class="fa fa-arrow-right"></i></button>
+                  
+              </div>
+          </div>
+             </header>
+
+
+            <!--header class="card-header bg-secondary" style="padding: 10px">
+              <div class="row">
+                <div class="col-md-9 text-left">
+                  <h2 class="card-title text-white" style="padding: 0px; margin: 0px;">
+                    <span style="font-weight: 500;" class="text-warning mr-2">VEHICULE</span>[{{imatriculation|uppercase}}] - {{marque|uppercase}} {{modele|uppercase}}</h2>
+             
+                </div> 
+             
+              <div class="col-md-3 text-right">
+                  <button type="button" class="btn btn-warning btn-sm" routerLink="/admin/admin/vehiculeList">
+                    PARC AUTOMOBILE <i class="fa fa-arrow-right"></i></button>
+                  
+              </div>
+          </div>
+          </header-->
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-2">
+                  <section class="card card-outline card-danger mb-1 pt-2">
+                  <a href="{{imagePreview}}" target="_blank"> <img  [src]="imagePreview" style="width:200px;" class="image-preview rounded img-fluid"></a> 
+                     
+                  <!--input style="display: none" type="file" (change)="onFileUpload($event)" #selectFile>
+                  <button (click)="selectFile.click()">Image du véhicule</button-->
+                </section>
+                </div>
+    
+                <div class="col-md-4" >
+                  <section class="card card-info mb-2">
+                    <header class="card-header"  style="margin: 0px; padding: 0px;">
+                      <h3 class="card-title" style="margin: 2px; padding: 4px;">CARTE GRISE</h3>
+                    </header>
+                    <div class="card-body" style="padding-top: 2px; padding-bottom: 0px; background-color:rgb(239, 248, 243);">
+                      <div class="row">
+                      <div class="col-md-5">
+                        <ul class="list-unstyled">
+                          <li>Immatriculation</li>
+                          <li class="propName">{{imatriculation}}</li>
+                          <hr class="solid mb-1 mt-1">
+                          <li>Carte Grise</li>
+                          <li class="propName">{{numeroCarteGrise}}</li>
+                          <hr class="solid mb-1 mt-1">
+                          <li>Mise en ciruclation</li>
+                          <li class="propName">{{datemiseenserviceCarteGrise| date: 'dd/MM/yyyy'}}</li>
+                          <hr class="solid mb-1 mt-1">
+                          <li>Date d'édition</li>
+                          <li class="propName">{{dateeditionCarteGrise| date: 'dd/MM/yyyy'}}</li>
+                         </ul>
+                      </div>
+                      <div class="col-md-7 ">
+                        <ul class="list-unstyled">
+                          <li>ID Propriétaire<li>
+                          <li class="propName">{{codeproprietaireCarteGrise}}</li>
+                          <hr class="solid mb-1 mt-1">
+                          <li>Marque: <span class="propName">{{marque|uppercase}}</span></li>
+                          <li>Genre: <span class="propName">{{genreCarteGrise}}</span> </li>
+                          <hr class="solid mb-1 mt-1">
+                          <li>Type commercial: <span class="propName">{{modele|uppercase}}</span></li>
+                          <li>Couleur: <span class="propName">{{couleurCarteGrise|uppercase}}</span></li>
+                          <hr class="solid mb-1 mt-1">
+                          <li>Energie: <span class="propName">{{energieCarteGrise}}</span></li>
+                          <li>Place: <span class="propName">{{nbreplaceCarteGrise}}</span></li>
+                          <li>Chassis: <span style="font-size: 13px;" class="propName text-danger">{{numchassisCarteGrise}}</span></li>
+                         </ul>
+                      </div>
+                    </div>
+                    </div>
+                  </section>
+                </div>
+
+                <div class="col-md-3">
+                  <section class="card card-info mb-2">
+                    <header class="card-header" style="margin: 0px; padding: 0px;">
+                      <h3 class="card-title" style="margin: 2px; padding: 4px;">VISITE TECHNIQUE ET VIGNETTE</h3>
+                    </header>
+                    <div class="card-body" style="padding-top: 2px; padding-bottom: 0px; background-color:rgb(239, 248, 243);">
+                      <div class="row">
+                      <div class="col-md-6">
+                        <ul class="list-unstyled">
+                          <li style="font-weight: 500;"><u class="propName">VISITE</u><li>
+                          <li>CFA: <span class="propName text-primary">{{Vignettemontantvisite|number}} F</span><li>
+                            <li>CAT: <span class="propName">{{Vignettecat|uppercase}}</span></li>
+                            <hr class="solid mb-1 mt-1">
+                            <li>KMS: <span class="propName">{{Vignettekms}}</span></li>
+                            <li>STAT: <span class="propName">{{Vignettestat|uppercase}}</span></li>
+                        
+                          
+                         </ul>
+                      </div>
+                      <div class="col-md-6">
+                        <ul class="list-unstyled">
+                          <li style="font-weight: 500;"><u class="propName">VIGNETTE</u><li>
+                          <li>CFA: <span class="propName text-primary">{{Vignettemontantvisite|number}} F</span><li>
+                          <li>Vignette N°:</li>
+                          <li><span class="propName">{{Vignettenumerovignette|uppercase}}</span></li>
+                          <hr class="solid mb-1 mt-1">
+                          <li>Lieu: <span class="propName">{{Vignettelieu|uppercase}}</span></li>
+                          <li>Date: <span class="propName">{{Vignettedatevisite| date: 'dd/MM/yyyy'}}</span></li>
+                         
+                         </ul>
+                      </div>
+                      <div class="col-md-12 ">
+                        <hr class="solid mb-1 mt-1">
+                      </div>
+                     
+                      <div class="col-md-12 "  style="text-align:center; font-size: 18px; font-weight: 500; padding: 5px;">Expiration</div>
+                      <div class="col-md-12 text-danger"style="text-align:center; font-size: 18px; font-weight: 500; padding: 10px;">{{Vignettedateexpiration| date: 'dd/MM/yyyy'}}</div>
+                  
+                    </div>
+                    </div>
+                  </section>
+                </div>
+
+                <div class="col-md-3">
+                  <section class="card card-info mb-4">
+                    <header class="card-header" style="margin: 0px; padding: 0px;">
+                      <h3 class="card-title" style="margin: 2px; padding: 4px;">ASSURANCE</h3>
+                    </header>
+                    <div class="card-body" style="padding-top: 2px; padding-bottom: 0px; background-color:rgb(239, 248, 243);">
+                      <ul class="list-unstyled">
+                        <li>Assureur<li>
+                        <li class="propName text-primary">{{Assuranceassueur|uppercase}}<li>
+                        <hr class="solid mb-1 mt-1">
+                        <li>Assuré: <span class="propName">{{Assuranceassure|uppercase}}</span></li>
+                        
+                        <hr class="solid mb-1 mt-1">
+                        <li>Police N°:</li>
+                        <li><span class="propName text-primary">{{Assurancenumpolice|uppercase}}</span></li>
+                        </ul>
+                        <div class="col-md-12 ">
+                          <hr class="solid mb-0 mt-1">
+                        </div>
+                       <div class="row">
+                        <div class="col-md-6 " style="text-align:center; font-size: 18px; font-weight: 500; padding: 5px;">Date Début</div>
+                        <div class="col-md-6 " style="text-align:center; font-size: 18px; font-weight: 500; padding: 5px;">Date Fin</div>
+                        <div class="col-md-6 text-success" style="text-align:center; font-size: 18px; font-weight: 500; padding: 5px;">{{Assurancedatedebut| date: 'dd/MM/yyyy'}}</div>
+                        <div class="col-md-6 text-danger"style="text-align:center; font-size: 18px; font-weight: 500; padding: 10px;">{{Assurancedatefin| date: 'dd/MM/yyyy'}}</div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+    
+          
+    
+           
+              </div>
+            
+            </div>
+
+        </section>
+          
+
+
+        <section class="card card-primary">
+          <header class="card-header bg-secondary" style="padding: 10px">
+            <div class="row">
+              <div class="col-md-9 text-left">
+                <h2 class="card-title text-white" style="padding: 0px; margin: 0px;">MEDIA RATTACHE AU VEHICULE</h2>
+             
+              </div>
+          
+            <div class="col-md-3 text-right">
+                
+            </div>
+        </div>
+           </header>
+          <div class="card-body">
+            <div class="container-fluid">
+              <div class="px-lg-5">
+                <div class="row">
+                  <!-- Gallery item -->
+             
+                  <div class="col-xl-3 col-lg-4 col-md-6 mb-4" *ngFor="let doc of listeDocument">
+                    <a href="{{this.urlPhoto}}{{doc.lienPhoto}}" target="_blank"><div class="bg-white rounded shadow-sm"><img src="{{this.urlPhoto}}{{doc.lienPhoto}}" alt="" class="img-fluid card-img-top">
+                      <div class="p-4">
+                        <h3 class="text-dark text-center">{{doc.description|uppercase}}</h3>
+                      
+                      </div>
+                    </div></a>
+                  </div>
+                  <!-- End -->
+            
+            
+                </div>
+               </div>
+            </div>          
+          </div>
+
+      </section>
+
+      </section>
+  </div>
+
+</div>
+

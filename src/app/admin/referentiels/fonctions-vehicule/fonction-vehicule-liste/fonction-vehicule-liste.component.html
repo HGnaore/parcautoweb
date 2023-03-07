@@ -1,0 +1,210 @@
+<section class="content-header" [@simpleFadeAnimation]="'in'">
+
+    <!-- /.content-header -->
+   
+    <div class="row" >
+     <div class="col-lg-12">
+         <section class="card">
+   
+                 <h2 class="card-title"></h2><!--Liste des Véhicules-->
+        
+          
+                 <div class="spinner4" *ngIf="isLoadingResults">
+                   <div class="bounce1"></div>
+                   <div class="bounce2"></div>
+                   <div class="bounce3"></div>
+               </div>
+   
+             <section class="card card-primary">
+   
+                 <header class="card-header bg-secondary" style="padding: 10px">
+                  <div class="row">
+                    <div class="col-md-9 text-left">
+                      <h2 class="card-title text-white" style="padding: 0px; margin: 0px;">
+                        <span style="font-weight: 500;" class="text-warning mr-2">REFERENTIEL</span>- FONCTION DE VEHICULES</h2>
+                 
+                    </div>
+                
+                  <div class="col-md-3 text-right">
+                      <button type="button" class="btn btn-success btn-sm" (click)="actionClose(1)" [ngClass]="{'hidden': ActionOpen}">
+                        <i class="fa fa-plus mr-2"></i> NOUVEAU</button>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="actionClose(0)" [ngClass]="{'hidden': ActionClose}">
+                          <i class="fas fa-times mr-2"></i>FERMER</button>
+                  </div>
+              </div>
+                       </header>
+             
+                 <div class="card-body">
+                 
+           
+                   <div class="row" [ngClass]="{'hidden': hidden}"><!--  -->
+                 
+                    <div class="col-md-12" style="padding-top: 5px;">
+                      <form [formGroup]="vehiculeForm" (ngSubmit)="onSubmitForm(vehiculeForm.value)"
+                              class="ecommerce-form action-buttons-fixed" action="#" method="post">
+                              <input hidden type="text" class="form-control" formControlName="fonctionID" id="fonctionID">
+                   
+                      <div class="row">
+                        <div class="col-md-12 inputSpace">
+                          <label for="fonction" class="form-label inputSpaceText">Fonction Véhicule<span class="Oblig">*</span></label>
+                          <input type="text" class="form-control" formControlName="fonction" id="fonction">
+                        </div>
+                        <!--div class="col-md-4 inputSpace">
+                            <label for="adresse" class="form-label inputSpaceText">Adresse <span class="Oblig">*</span></label>
+                            <input type="text" class="form-control" formControlName="adresse" id="adresse">
+                          </div>
+                          <div class="col-md-4 inputSpace">
+                            <label for="contact" class="form-label inputSpaceText">Contact <span class="Oblig">*</span></label>
+                            <input type="text" class="form-control" formControlName="contact" id="contact">
+                          </div-->
+
+                   
+                  
+                        <!--ERREUR ICI-->
+                        <div class="col-12 col-md-12 text-center">
+                            <button style="margin-right: 10px;" type="submit" [disabled]="vehiculeForm.invalid"
+                              class="submit-button btn btn-success btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                              data-loading-text="Loading...">
+                              <i class="fas fa-save text-4 mr-1"></i> Enregister
+                            </button>
+                      
+                            <span class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1" (click)="actionClose(0)">
+                              <i class="fas fa-times text-4 mr-1"></i> Quitter
+                            </span>
+                      
+                          </div>
+                       
+      
+                      </div>
+</form>
+                    </div>
+                  </div>
+   
+              
+
+                   <div class="row">
+                    <div class="spinner4" *ngIf="ModifsLoadingResults">
+                      <div class="bounce1"></div>
+                      <div class="bounce2"></div>
+                      <div class="bounce3"></div>
+                  </div>
+                    
+                    <div class="col-md-12" style="margin-top: 20px;">
+                      <mat-form-field >
+                          <mat-label>Rechercher un assureur</mat-label>
+                          <input matInput (keyup)="applyFilter($event)" placeholder="Immatriculation , modèle , direction ..." #input>
+                      </mat-form-field>
+      
+                      <div>
+                       
+                          <table class="table table-responsive-md  table-bordered table-striped mb-0 fontTable"
+                          mat-table [dataSource]="dataSource" matSort>
+                          <ng-container matColumnDef="number">
+                              <th *matHeaderCellDef mat-sort-header style="width: 1%;" class="text-center"> # </th>
+                              <td *matCellDef="let vehicule; let i = index" class="text-center"> {{i + 1}} </td>
+                          </ng-container>
+                          
+                          <ng-container matColumnDef="fonction">
+                            <th *matHeaderCellDef mat-sort-header style="width: 50%;">Fonction Véhicule<th>
+                            <td *matCellDef="let vehicule">
+                                {{vehicule.fonction|uppercase}}
+                            </td>
+                        </ng-container> 
+
+                
+                          <!-- Color Column -->
+                          <ng-container matColumnDef="action">
+                              <th *matHeaderCellDef mat-sort-header style="width: 8%;"> </th>
+                              <td *matCellDef="let vehicule">
+                               
+                                  <button type="button" class="btn btn-secondary btn-sm mr-2" (click)="loadOne(vehicule.ID)">
+                                      <i class="nav-icon fas fa-edit"></i>
+                                  </button>
+                                  <button type="button" class="btn btn-danger btn-sm"
+                                      (click)="ItemSupprime(vehicule.ID)" data-toggle="modal"
+                                      data-target="#modal-info">
+                                      <i class="nav-icon fas fa-trash"></i>
+                                  </button> 
+                              
+                              </td> 
+                          </ng-container>
+      
+                          <!-- Color Column -->
+      
+      
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      </table>
+      
+                      <mat-paginator [pageSizeOptions]="[10, 20, 30, 100]" showFirstLastButtons
+                          aria-label="Select page of periodic elements">
+                      </mat-paginator>
+      
+      
+                        </div>
+                  </div>
+                   </div>
+                 </div>
+     
+     
+             </section>
+             
+             
+       
+         </section>
+     </div>
+   
+   </div>
+   
+       <!-- /.container-fluid -->
+   </section>
+
+
+   <!-- /.modal -->
+<div class="modal fade" id="modal-info">
+  <div class="modal-dialog">
+      <div class="modal-content bg-default">
+          <div class="modal-header" style="height: 50px;">
+              <h2 class="modal-title">PARC AUTO - RTI </h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+              <p>Voulez-vous supprimer la fonction ?</p>
+          </div>
+          <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Annuler</button>
+              <button type="button" class="btn btn-danger" (click)="supprime()"
+                  data-dismiss="modal">Supprimer</button>
+          </div>
+      </div>
+      <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- /.modal -->
+<div class="modal fade" id="modal-info">
+  <div class="modal-dialog">
+      <div class="modal-content bg-default">
+          <div class="modal-header" style="height: 50px;">
+              <h2 class="modal-title">PARC AUTO - RTI </h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+              <p>Voulez-vous supprimer la marque ?</p>
+          </div>
+          <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Annuler</button>
+              <button type="button" class="btn btn-danger" (click)="supprime()"
+                  data-dismiss="modal">Supprimer</button>
+          </div>
+      </div>
+      <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
