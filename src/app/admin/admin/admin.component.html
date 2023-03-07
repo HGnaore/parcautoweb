@@ -204,7 +204,7 @@
               routerLinkActive="active"
               class="nav-link"
             >
-              <i class="nav-icon fas fa-car"></i>
+              <i class="nav-icon fas fa-cogs"></i>
               <p class="text-white">
                 TRAITEMENT
                 <!--span class="right badge badge-danger">New</span  -->
@@ -300,13 +300,24 @@
               style="cursor: pointer"
               routerLinkActive="active"
             >
-              <i class="nav-icon bx bxs-data"></i>
+              <i class="nav-icon fas fa-sitemap"></i>
               <p class="text-white">
                 STRUCTURE
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a
+                  routerLink="/admin/admin/structure/type-entretien"
+                  routerLinkActive="active"
+                  class="nav-link"
+                >
+                  <i class="nav-icon fa fa-caret-right" aria-hidden="true"></i>
+                  <p>Type entretien</p>
+                </a>
+              </li>
+
               <li class="nav-item">
                 <a
                   routerLink="/admin/admin/parcauto/cuvreCarburant/{{
@@ -330,19 +341,6 @@
                 >
                   <i class="nav-icon fa fa-caret-right" aria-hidden="true"></i>
                   <p>Pièces</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a
-                  routerLink="/admin/admin/parcauto/cuvreCarburant/{{
-                    this.Myprofil
-                  }}"
-                  routerLinkActive="active"
-                  class="nav-link"
-                >
-                  <i class="nav-icon fa fa-caret-right" aria-hidden="true"></i>
-                  <p>Garages</p>
                 </a>
               </li>
 

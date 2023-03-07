@@ -8,9 +8,11 @@ export class ConfigService {
   //**en dev mac
   urlg = 'https://apiparcauto.afinov.com';
   urlTrombino = 'http://backtrombino.rti.ci';
-  urlgRTI = 'http://apiparcauto.rti.ci/';
+  // urlgRTI = 'http://apiparcauto.rti.ci/';
   urlWorflowapi = 'http://apiworkflow.rti.ci/';
   urlApplication = 'http://parcauto.rti.ci/';
+  urlgRTI = 'http://10.102.0.25:8094/';
+
 
    //*sur server RTI
   // urlg = 'http://172.16.2.16:8034'; //API
