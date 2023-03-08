@@ -63,6 +63,7 @@ import { ProfilComponent } from './parametre/profil/profil.component';
 import { ValidationVehiculeComponent } from './gestion/ParcAuto/validation-vehicule/validation-vehicule.component';
 import { TypeEntretienComponent } from './gestion/structure/type-entretien/type-entretien.component';
 import { GaragesComponent } from './gestion/structure/garages/garages.component';
+import { EntretienFiltreComponent } from './gestion/structure/entretien-filtre/entretien-filtre.component';
 
 
 @NgModule({
@@ -117,7 +118,8 @@ import { GaragesComponent } from './gestion/structure/garages/garages.component'
     ProfilComponent,
     ValidationVehiculeComponent,
     TypeEntretienComponent,
-    GaragesComponent
+    GaragesComponent,
+    EntretienFiltreComponent
   ],
   imports: [
     CommonModule,

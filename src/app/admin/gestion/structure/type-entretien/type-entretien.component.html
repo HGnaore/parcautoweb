@@ -11,7 +11,7 @@
                 <i class="fa fa-plus-circle text-success"></i>&nbsp;&nbsp;
                 Nouveau Type Entretien
             </p>
-            <button class="btn btn-sm btn-warning">
+            <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#staticBackdrop" (click)="isSuccess = false; isUpdate = false; detailGroup.reset()">
                 <i class="fas fa-plus-circle"></i>
                 Ajout détails
             </button>
@@ -27,7 +27,7 @@
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                    <input type="checkbox" id="check" checked>
+                                    <input type="checkbox" id="check" checked [(ngModel)]="isControled">
                                 </div>
                             </div>
                             <input type="text" class="form-control" disabled value="Contrôlé">
@@ -35,7 +35,7 @@
                     </div>
         
                     <div class="col-6">
-                        <div class="input-group">
+                        <div class="input-group" [hidden]="!isControled">
                             <input type="number" class="form-control" min="1" max="360">
                             <div class="input-group-append">
                                 <span class="input-group-text">Jour(s)</span>
@@ -47,7 +47,7 @@
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" checked [(ngModel)]="isProgrammed">
                                 </div>
                             </div>
                             <input type="text" class="form-control" disabled value="Programmable">
@@ -55,7 +55,7 @@
                     </div>
         
                     <div class="col-6">
-                        <div class="input-group">
+                        <div class="input-group" [hidden]="!isProgrammed">
                             <input type="number" class="form-control" min="1" max="360">
                             <div class="input-group-append">
                                 <span class="input-group-text">Jour(s)</span>
@@ -75,7 +75,7 @@
                 </div>
             </div>
             <div class="ml-3" style="width: 50%;">
-                <table class="table table-striped">
+                <table class="table table-striped border">
                     <thead class="table-dark">
                         <tr>
                             <th class="py-1">Désignation.</th>
@@ -84,21 +84,29 @@
                             <th class="py-1"></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr *ngFor="let n of [].constructor(5)">
-                            <td class="py-2">Filtre à air</td>
-                            <td class="py-2 text-success" align="center">
-                                <i class="fas fa-check"></i>
+                    <tbody *ngIf="details.length > 0">
+                        <tr *ngFor="let detail of details; let i = index">
+                            <td class="py-2">{{ detail.designation }}</td>
+                            <td class="py-2" align="center">
+                                <i class="fas fa-check text-success" *ngIf="detail.estControle"></i>
+                                <i class="fas fa-window-close text-danger" *ngIf="!detail.estControle"></i>
                             </td>
-                            <td class="py-2">2 jours</td>
+                            <td class="py-2">{{ detail.duree ? detail.duree + ' jours' : '-'}}</td>
                             <td class="py-2" align="right">
-                                <button class="btn btn-sm btn-outline-primary py-1">
+                                <button class="btn btn-sm btn-outline-primary py-1" (click)="onUpdateDetail(detail)" data-toggle="modal" data-target="#staticBackdrop">
                                     <small><i class="fas fa-edit"></i></small>
                                 </button>
-                                <button class="btn btn-sm btn-outline-danger py-1 ml-2">
+
+                                <button class="btn btn-sm btn-outline-danger py-1 ml-2" (click)="onRemoveDetail(i)">
                                     <small><i class="fas fa-trash"></i></small>
                                 </button>
                             </td>
+                        </tr>
+                    </tbody>
+
+                    <tbody *ngIf="details.length == 0">
+                        <tr>
+                            <td class="py-2" colspan="4" align="center"><small>Cliquez sur le bouton <strong>Ajout détails</strong> pour ajouter les détails de l'entretien.</small></td>
                         </tr>
                     </tbody>
                 </table>
@@ -115,7 +123,7 @@
                 Total :: 25
             </div>
         </div>
-        <table class="table table-striped">
+        <table class="table table-striped border">
             <thead class="table-dark">
                 <tr>
                     <th class="py-1">Désignation.</th>
@@ -138,7 +146,10 @@
                     </td>
                     <td class="py-2">12 jours</td>
                     <td class="py-2" align="right">
-                        <button class="btn btn-sm btn-outline-primary py-1">
+                        <button class="btn btn-sm btn-outline-info py-1" routerLink="/admin/admin/structure/entretien-filtre">
+                            <small><i class="fas fa-list-alt"></i></small>
+                        </button>
+                        <button class="btn btn-sm btn-outline-primary py-1 ml-2">
                             <small><i class="fas fa-edit"></i></small>
                         </button>
                         <button class="btn btn-sm btn-outline-danger py-1 ml-2">
@@ -150,3 +161,51 @@
         </table>
     </div>
 </div>
+
+<div class="modal fade" tabindex="-1" id="staticBackdrop">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content" [formGroup]="detailGroup" (ngSubmit)="onAddDetail()">
+        <div class="modal-header bg-dark">
+          <h3 class="modal-title m-0">{{ isUpdate ? 'Modifier un détail' : 'Ajouter un détail' }}</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="message message--success bg-light" *ngIf="isSuccess">
+                <i class="fa fa-check me-2 text-success"></i>
+                {{ isUpdate ? 'Modifié avec succès' : 'Ajouté avec succès' }}
+            </div>
+            <div class="row">
+                <div class="col-12 form-group">
+                    <input type="text" class="form-control" placeholder="Désignation *" formControlName="designation">
+                </div>
+    
+                <div class="col-6 mb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" checked formControlName="estControle">
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" disabled value="Contrôlé">
+                    </div>
+                </div>
+    
+                <div class="col-6" [hidden]="!detailGroup.get('estControle').value">
+                    <div class="input-group">
+                        <input type="number" class="form-control" min="1" max="360" formControlName="duree" [required]="detailGroup.get('estControle').value ? detailGroup.get('estControle').value : false">
+                        <div class="input-group-append">
+                            <span class="input-group-text">Jour(s)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          <button type="submit" class="btn btn-success" [disabled]="detailGroup.invalid">{{ isUpdate ? 'Modifier' : 'Ajouter' }}</button>
+        </div>
+    </form>
+    </div>
+  </div>
