@@ -26,6 +26,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "admin-lte": "^3.0.5",
     "angular-confirmation-popover": "^5.0.0",
+    "bootstrap": "^4.5.3",
     "boxicons": "^2.1.2",
     "highcharts": "^9.0.1",
     "ngx-toastr": "^12.0.0",
