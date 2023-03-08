@@ -62,6 +62,7 @@ import { WorkflowEtapeComponent } from './referentiels/workflow/workflow-etape/w
 import { ProfilComponent } from './parametre/profil/profil.component';
 import { ValidationVehiculeComponent } from './gestion/ParcAuto/validation-vehicule/validation-vehicule.component';
 import { TypeEntretienComponent } from './gestion/structure/type-entretien/type-entretien.component';
+import { GaragesComponent } from './gestion/structure/garages/garages.component';
 
 
 @NgModule({
@@ -115,7 +116,8 @@ import { TypeEntretienComponent } from './gestion/structure/type-entretien/type-
     WorkflowEtapeComponent,
     ProfilComponent,
     ValidationVehiculeComponent,
-    TypeEntretienComponent
+    TypeEntretienComponent,
+    GaragesComponent
   ],
   imports: [
     CommonModule,
