@@ -30,7 +30,7 @@
                                     <input type="checkbox" id="check" checked [(ngModel)]="isControled">
                                 </div>
                             </div>
-                            <input type="text" class="form-control" disabled value="Contrôlé">
+                            <input type="text" class="form-control" disabled value="Contrôle sur entretien">
                         </div>
                     </div>
         
@@ -47,21 +47,21 @@
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                    <input type="checkbox" checked [(ngModel)]="isProgrammed">
+                                    <input type="checkbox" checked>
                                 </div>
                             </div>
                             <input type="text" class="form-control" disabled value="Programmable">
                         </div>
                     </div>
         
-                    <div class="col-6">
+                    <!-- <div class="col-6">
                         <div class="input-group" [hidden]="!isProgrammed">
                             <input type="number" class="form-control" min="1" max="360">
                             <div class="input-group-append">
                                 <span class="input-group-text">Jour(s)</span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="col-12">
                         <button class="btn btn-danger">
@@ -79,19 +79,12 @@
                     <thead class="table-dark">
                         <tr>
                             <th class="py-1">Désignation.</th>
-                            <th class="py-1">Est contrôlé.</th>
-                            <th class="py-1">Durée.</th>
                             <th class="py-1"></th>
                         </tr>
                     </thead>
                     <tbody *ngIf="details.length > 0">
                         <tr *ngFor="let detail of details; let i = index">
                             <td class="py-2">{{ detail.designation }}</td>
-                            <td class="py-2" align="center">
-                                <i class="fas fa-check text-success" *ngIf="detail.estControle"></i>
-                                <i class="fas fa-window-close text-danger" *ngIf="!detail.estControle"></i>
-                            </td>
-                            <td class="py-2">{{ detail.duree ? detail.duree + ' jours' : '-'}}</td>
                             <td class="py-2" align="right">
                                 <button class="btn btn-sm btn-outline-primary py-1" (click)="onUpdateDetail(detail)" data-toggle="modal" data-target="#staticBackdrop">
                                     <small><i class="fas fa-edit"></i></small>
@@ -106,7 +99,7 @@
 
                     <tbody *ngIf="details.length == 0">
                         <tr>
-                            <td class="py-2" colspan="4" align="center"><small>Cliquez sur le bouton <strong>Ajout détails</strong> pour ajouter les détails de l'entretien.</small></td>
+                            <td class="py-2" colspan="2" align="center"><small>Cliquez sur le bouton <strong>Ajout détails</strong> pour ajouter les détails de l'entretien.</small></td>
                         </tr>
                     </tbody>
                 </table>
@@ -181,7 +174,7 @@
                     <input type="text" class="form-control" placeholder="Désignation *" formControlName="designation">
                 </div>
     
-                <div class="col-6 mb-3">
+                <!-- <div class="col-6 mb-3">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
@@ -199,7 +192,7 @@
                             <span class="input-group-text">Jour(s)</span>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="modal-footer">
