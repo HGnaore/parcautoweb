@@ -28,16 +28,12 @@ export class TypeEntretienComponent implements OnInit {
   initForm() {
     this.detailGroup = this.builder.group({
       designation: ['', Validators.required],
-      estControle: [''],
-      duree: ['']
     });
   }
 
   onAddDetail() {
     const detail = {
       designation: this.detailGroup.get('designation').value,
-      estControle: this.detailGroup.get('estControle').value,
-      duree: this.detailGroup.get('estControle').value ? this.detailGroup.get('duree').value : ''
     };
     if (!this.isUpdate) {
       this.details.push(detail);
@@ -58,8 +54,6 @@ export class TypeEntretienComponent implements OnInit {
 
     this.detailGroup.patchValue({
       designation: detail.designation,
-      estControle: detail.estControle,
-      duree: detail.duree,
     })    
   }
 
