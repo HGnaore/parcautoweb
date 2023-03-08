@@ -52,6 +52,7 @@ import { ProfilComponent } from './parametre/profil/profil.component';
 import { UtilisateurComponent } from './parametre/utilisateur/utilisateur.component';
 import { ValidationVehiculeComponent } from './gestion/ParcAuto/validation-vehicule/validation-vehicule.component';
 import { TypeEntretienComponent } from './gestion/structure/type-entretien/type-entretien.component';
+import { GaragesComponent } from './gestion/structure/garages/garages.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'admin', pathMatch: 'full' },
@@ -132,7 +133,8 @@ const routes: Routes = [
       { path: 'vehiculePanneReparation/:id/:ProfilID', component: PannereparationEditionComponent, canActivate: [AuthGuard] },
       { path: 'vehiculeAccident/:id/:ProfilID', component: AccidentEditionComponent, canActivate: [AuthGuard] },*/
 
-    
+      /////////REFERENTIEL AJOUT GNAORE////////////
+      { path: 'structure/garages', component: GaragesComponent, canActivate: [AuthGuard] },
 
     ]
   },
