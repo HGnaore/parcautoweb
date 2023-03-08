@@ -1,0 +1,90 @@
+<div class="pt-4">
+    <div class="bg-dark py-2 px-3 rounded">
+        <h3 class="m-0 d-flex text-warning"><div class="text-muted">
+            <i class="fa fa-sitemap"></i>&nbsp;&nbsp;
+            STRUCTURE .::. </div>Entretien filtre
+        </h3>
+    </div>
+    <div class="border rounded px-3 py-2 mt-3">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+            <button class="btn btn-sm btn-danger" routerLink="/admin/admin/structure/type-entretien">
+                <i class="fas fa-arrow-left"></i>
+                Retour
+            </button>
+            <div>
+                <button class="btn btn-sm btn-warning">
+                    <i class="fas fa-file-export"></i>
+                    Exporter
+                </button>
+    
+                <button class="btn btn-sm btn-success ml-2">
+                    <i class="fas fa-print"></i>
+                    Imprimer
+                </button>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-end">
+            <div class="ml-2 form-group w-25">
+                <label class="form-label">Date début</label>
+                <input type="date" class="form-control">
+            </div>
+            <div class="ml-2 form-group w-25">
+                <label class="form-label">Date fin</label>
+                <input type="date" class="form-control">
+            </div>
+            <div class="ml-2 form-group w-25">
+                <label for="debut" class="form-label">Type d'entretien</label>
+                <select class="custom-select">
+                    <option value="" selected>-- Choisir le type d'entretien --</option>
+                </select>
+            </div>
+            <div class="ml-2 w-25 mb-3">
+                <button class="btn btn-secondary w-100">
+                    <i class="fas fa-eye"></i>
+                    Afficher
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="border rounded px-3 py-2 mt-3">
+        <div class="d-flex mb-3 justify-content-end align-items-center">
+            <div class="rounded text-muted border py-2 px-3">
+                Total :: 25
+            </div>
+        </div>
+        <table class="table table-striped border">
+            <thead class="table-dark">
+                <tr>
+                    <th class="py-1">Immatriculation.</th>
+                    <th class="py-1">Date de l'entretien.</th>
+                    <th class="py-1">Garage.</th>
+                    <th class="py-1">Montant.</th>
+                    <th class="py-1"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let n of [].constructor(5)">
+                    <td class="py-2 font-weight-bold text-danger">456HJ01</td>
+                    <td class="py-2">24/02/2023</td>
+                    <td class="py-2">
+                        Garage Bouaffo
+                    </td>
+                    <td class="py-2">12 755 F CFA</td>
+                    <td class="py-2" align="right">
+                        <button class="btn btn-sm btn-outline-info py-1" routerLink="/admin/admin/structure/entretien-filtre">
+                            <small><i class="fas fa-list-alt"></i></small>
+                        </button>
+                        <button class="btn btn-sm btn-outline-primary py-1 ml-2">
+                            <small><i class="fas fa-edit"></i></small>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger py-1 ml-2">
+                            <small><i class="fas fa-trash"></i></small>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
