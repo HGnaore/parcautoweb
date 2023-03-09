@@ -64,6 +64,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { StatComponent } from './StatistiqueCmidi/stat/stat.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 // Import the library
 
 
@@ -89,6 +90,7 @@ import { StatComponent } from './StatistiqueCmidi/stat/stat.component';
     MatInputModule,
     MatIconModule,
     MatCardModule,
+    NgxPaginationModule,
 
     A11yModule,
     CdkAccordionModule,
