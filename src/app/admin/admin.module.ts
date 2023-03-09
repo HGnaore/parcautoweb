@@ -64,6 +64,8 @@ import { ValidationVehiculeComponent } from './gestion/ParcAuto/validation-vehic
 import { TypeEntretienComponent } from './gestion/structure/type-entretien/type-entretien.component';
 import { GaragesComponent } from './gestion/structure/garages/garages.component';
 import { EntretienFiltreComponent } from './gestion/structure/entretien-filtre/entretien-filtre.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { SearchgarfilterPipe } from './gestion/structure/garages/searchgarfilter.pipe';
 
 
 @NgModule({
@@ -119,7 +121,8 @@ import { EntretienFiltreComponent } from './gestion/structure/entretien-filtre/e
     ValidationVehiculeComponent,
     TypeEntretienComponent,
     GaragesComponent,
-    EntretienFiltreComponent
+    EntretienFiltreComponent,
+    SearchgarfilterPipe
   ],
   imports: [
     CommonModule,
@@ -130,6 +133,7 @@ import { EntretienFiltreComponent } from './gestion/structure/entretien-filtre/e
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
+    NgxPaginationModule,
     FormsModule,
     MatCardModule,
     MatIconModule,
