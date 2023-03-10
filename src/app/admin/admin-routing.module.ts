@@ -54,6 +54,7 @@ import { ValidationVehiculeComponent } from './gestion/ParcAuto/validation-vehic
 import { TypeEntretienComponent } from './gestion/structure/type-entretien/type-entretien.component';
 import { GaragesComponent } from './gestion/structure/garages/garages.component';
 import { EntretienFiltreComponent } from './gestion/structure/entretien-filtre/entretien-filtre.component';
+import { PieceComponent } from './gestion/structure/piece/piece.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'admin', pathMatch: 'full' },
@@ -74,6 +75,7 @@ const routes: Routes = [
       { path: 'entretienList', component: EntretienListeComponent, canActivate: [AuthGuard] },
       { path: 'structure/type-entretien', component: TypeEntretienComponent, canActivate: [AuthGuard] },
       { path: 'structure/entretien-filtre', component: EntretienFiltreComponent, canActivate: [AuthGuard] },
+      { path: 'structure/piece', component: PieceComponent, canActivate: [AuthGuard] },
      /* { path: 'entretienEdition/:id', component: EntretienEditionComponent, canActivate: [AuthGuard] },*/
       { path: 'entretienProgramList', component: EntretienProgramListeComponent, canActivate: [AuthGuard] },
       { path: 'entretienProgramEdition/:id', component: EntretienProgramEditionComponent, canActivate: [AuthGuard] },
