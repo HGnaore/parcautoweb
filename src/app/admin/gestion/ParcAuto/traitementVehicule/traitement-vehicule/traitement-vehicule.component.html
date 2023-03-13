@@ -1590,23 +1590,31 @@
                 >
                   <!--*ngIf="TabCarteGrise"-->
                   <div class="row">
-                    <div class="col-md-12 text-right">
+                    <div class="col-md-12 text-right border-bottom pb-3">
                       <button
                         type="button"
-                        class="btn btn-success"
+                        class="btn btn-success btn-sm"
                         (click)="actionClosePanne(1)"
                         [ngClass]="{ hidden: ActionOpenPanne }"
                       >
                         <i class="fa fa-plus mr-2"></i>AJOUTER UNE PANNE
                       </button>
-                      <button
-                        type="button"
-                        class="btn btn-danger"
-                        (click)="actionClosePanne(0)"
-                        [ngClass]="{ hidden: ActionClosePanne }"
-                      >
-                        <i class="fas fa-times mr-2"></i>FERMER
-                      </button>
+                      <div class="d-flex align-items-center justify-content-between"
+                      [ngClass]="{ hidden: ActionClosePanne }">
+                        <h3 class="m-0 d-flex text-danger font-weight-bold">
+                          <div class="text-muted">
+                              <i class="fas fa-car"></i>&nbsp;&nbsp;
+                              PANNE .::.
+                          </div>Déclaration d'une panne
+                        </h3>
+                        <button
+                          type="button"
+                          class="btn btn-danger btn-sm"
+                          (click)="actionClosePanne(0)"
+                        >
+                          <i class="fas fa-times mr-2"></i>FERMER
+                        </button>
+                      </div>
                     </div>
                   </div>
                   <div class="card-body">
@@ -1628,7 +1636,7 @@
                       <div class="col-md-3 inputSpace">
                         <label
                           for="inputEmail4"
-                          class="form-label inputSpaceText"
+                          class="form-label"
                           >Véhicule</label
                         >
                         <select
@@ -1646,7 +1654,7 @@
                       <div class="col-md-2 inputSpace">
                         <label
                           for="inputEmail4"
-                          class="form-label inputSpaceText"
+                          class="form-label"
                           >Date <span class="Oblig">*</span></label
                         >
                         <input
@@ -1660,7 +1668,7 @@
                       <div class="col-md-5 inputSpace">
                         <label
                           for="inputEmail4"
-                          class="form-label inputSpaceText"
+                          class="form-label"
                           >Libellé de la panne <span class="Oblig">*</span>
                         </label>
 
@@ -1675,8 +1683,8 @@
                       <div class="col-md-2 inputSpace">
                         <label
                           for="inputEmail4"
-                          class="form-label inputSpaceText"
-                          >Kilometrage <span class="Oblig">*</span></label
+                          class="form-label"
+                          >Kilométrage <span class="Oblig">*</span></label
                         >
                         <input
                           type="number"
@@ -1689,11 +1697,11 @@
                       <div class="col-md-9 inputSpace">
                         <label
                           for="inputEmail4"
-                          class="form-label inputSpaceText"
+                          class="form-label"
                           >Description de la panne
                         </label>
                         <textarea
-                          rows="3"
+                          rows="1"
                           class="form-control form-control-modern"
                           id="panneDescription"
                           formControlName="panneDescription"
@@ -1704,7 +1712,7 @@
                       <div class="col-md-3 inputSpace">
                         <label
                           for="inputEmail4"
-                          class="form-label inputSpaceText"
+                          class="form-label"
                           >Statut Véhicule <span class="Oblig">*</span></label
                         >
                         <div class="form-check">
@@ -1718,7 +1726,7 @@
                             checked
                           />
                           <label class="form-check-label" for="exampleRadios1"
-                            >En ciruclation
+                            >En circulation
                           </label>
                         </div>
                         <div class="form-check">
@@ -1756,7 +1764,7 @@
                       </div>
                     </form>
 
-                    <mat-form-field>
+                    <mat-form-field class="mt-3">
                       <mat-label>Rechercher</mat-label>
                       <input
                         matInput
@@ -1888,20 +1896,21 @@
                     <div class="col-md-12 text-right">
                       <button
                         type="button"
-                        class="btn btn-success"
+                        class="btn btn-success btn-sm"
                         (click)="actionCloseReparation(1)"
                         [ngClass]="{ hidden: ActionOpenReparation }"
                       >
                         <i class="fa fa-plus mr-2"></i>AJOUTER UNE REPARATION
                       </button>
+                        
                       <button
-                        type="button"
-                        class="btn btn-danger"
-                        (click)="actionCloseReparation(0)"
-                        [ngClass]="{ hidden: ActionCloseReparation }"
-                      >
-                        <i class="fas fa-times mr-2"></i>FERMER
-                      </button>
+                          type="button"
+                          class="btn btn-danger btn-sm"
+                          (click)="actionCloseReparation(0)"
+                          [ngClass]="{ hidden: ActionCloseReparation }"
+                        >
+                          <i class="fas fa-times mr-2"></i>FERMER
+                        </button>
                     </div>
                   </div>
                   <div class="row" [ngClass]="{ hidden: hiddenReparation }">
@@ -1925,7 +1934,7 @@
                         <div class="col-md-3 inputSpace">
                           <label
                             for="inputEmail4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Véhicule</label
                           >
                           <select
@@ -1940,11 +1949,11 @@
                             </option>
                           </select>
                         </div>
-                        <div class="col-md-4 inputSpace">
+                        <div class="col-md-5 inputSpace">
                           <label
                             for="inputEmail4"
-                            class="form-label inputSpaceText"
-                            >Panne & Sinistre
+                            class="form-label"
+                            >Panne ou Sinistre
                             <span class="Oblig">*</span></label
                           >
 
@@ -1976,7 +1985,7 @@
                         <div class="col-md-4 inputSpace">
                           <label
                             for="inputEmail4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Garagiste <span class="Oblig">*</span></label
                           >
                           <select
@@ -2006,8 +2015,8 @@
                         <div class="col-md-3 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
-                            >date <span class="Oblig">*</span></label
+                            class="form-label"
+                            >Date d'envoi en réparation. <span class="Oblig">*</span></label
                           >
                           <input
                             type="date"
@@ -2019,7 +2028,7 @@
                         <div class="col-md-7 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Libellé (Object)
                             <span class="Oblig">*</span></label
                           >
@@ -2033,8 +2042,8 @@
                         <div class="col-md-2 inputSpace">
                           <label
                             for="inputEmail4"
-                            class="form-label inputSpaceText"
-                            >Kilometrage <span class="Oblig">*</span></label
+                            class="form-label"
+                            >Kilométrage <span class="Oblig">*</span></label
                           >
                           <input
                             type="number"
@@ -2043,10 +2052,57 @@
                             formControlName="reparationKilometrage"
                           />
                         </div>
+                        <div class="col-12">
+                          <hr>
+                        </div>
+                        <div class="col-md-3 inputSpace">
+                          <label
+                            for="inputPassword4"
+                            class="form-label"
+                            >Date de retour réparation.</label
+                          >
+                          <input
+                            type="date"
+                            class="form-control form-control-modern bg-light border-info"
+                            id="reparationDateRetour"
+                            formControlName="reparationDateRetour"
+                          />
+                        </div>
+
+                        <div class="col-md-3 inputSpace">
+                          <label
+                            for="inputPassword4"
+                            class="form-label"
+                            >Kilométrage de retour.</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control form-control-modern bg-light border-info"
+                            id="reparationKmRetour"
+                            formControlName="reparationKmRetour"
+                          />
+                        </div>
+
+                        <div class="col-md-6 inputSpace">
+                          <label
+                            for="inputPassword4"
+                            class="form-label"
+                            >Montant.</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control form-control-modern bg-light border-info"
+                            id="reparationMontant"
+                            formControlName="reparationMontant"
+                          />
+                        </div>
+                        <div class="col-12">
+                          <hr>
+                        </div>
                         <div class="col-md-8 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Description</label
                           >
                           <textarea
@@ -2063,7 +2119,7 @@
                         <div class="col-md-3 inputSpace">
                           <label
                             for="inputEmail4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Statut Réparation
                             <span class="Oblig">*</span></label
                           >
@@ -2102,7 +2158,7 @@
                         <div class="col-md-4 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Facture Proforma
                             <span class="text-danger">(PDF)</span></label
                           >
@@ -2134,7 +2190,7 @@
                         <div class="col-md-4 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Bon de Commande
                             <span class="text-danger">(PDF)</span></label
                           >
@@ -2166,7 +2222,7 @@
                         <div class="col-md-4 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Facture
                             <span class="text-danger">(PDF)</span></label
                           >
@@ -2194,7 +2250,7 @@
                         </div>
 
                         <div
-                          class="col-12 col-md-12 text-center"
+                          class="col-12 col-md-12 text-center my-3"
                           *ngIf="hiddenTabReparationSave"
                         >
                           <button
@@ -2216,7 +2272,72 @@
                         </div>
                       </form>
                       <!---->
-                      <section
+                      <div class="mt-3">
+                        <div class="bg-dark py-2 px-3 rounded">
+                          <h3 class="m-0 d-flex text-warning"><div class="text-muted">
+                              <i class="fa fa-car"></i>&nbsp;&nbsp;
+                              REPARATION .::. </div>Détails des travaux éffectués
+                          </h3>
+                        </div>
+  
+                        <div class="my-3 border rounded p-3">
+                          <p class="text-danger">::. Cliquez sur le bouton <strong>Ajouter</strong> pour ajouter le détail de la réparation au tableau .::</p>
+                          <table class="w-100 mb-3">
+                            <tr>
+                              <td class="p-2">
+                                <select class="form-control bg-light">
+                                  <option value="">-- Choisir la pièce --</option>
+                                </select>
+                              </td>
+                              <td class="p-2">
+                                <input type="number" class="form-control" placeholder="Quantité">
+                              </td>
+                              <td class="p-2">
+                                <input type="text" class="form-control" placeholder="Montant">
+                              </td>
+                              <td class="p-2">
+                                <textarea rows="1" class="form-control" placeholder="Description"></textarea>
+                              </td>
+                              <td align="center" class="p-2">
+                                <button class="btn btn-success w-100">
+                                  <i class="fas fa-plus-square"></i>
+                                  Ajouter
+                                </button>
+                              </td>
+                            </tr>
+                          </table>
+                          <table class="table table-striped border mt-4">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th class="py-1">Désignation.</th>
+                                    <th class="py-1">Quantité.</th>
+                                    <th class="py-1">Montant.</th>
+                                    <th class="py-1">Description.</th>
+                                    <th class="py-1"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let n of [].constructor(5)">
+                                    <td class="py-2 font-weight-bold">Filtre à air</td>
+                                    <td class="py-2">1</td>
+                                    <td class="py-2">
+                                        15 000 F.CFA
+                                    </td>
+                                    <td class="py-2">-</td>
+                                    <td class="py-2" align="right">
+                                        <button class="btn btn-sm btn-outline-primary py-1 ml-2">
+                                            <small><i class="fas fa-edit"></i></small>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger py-1 ml-2">
+                                            <small><i class="fas fa-trash"></i></small>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <section hidden
                         class="col-md-12 card"
                         style="margin-top: 10px"
                         *ngIf="hiddenTabReparation"
@@ -2641,20 +2762,29 @@
                     <div class="col-md-12 text-right">
                       <button
                         type="button"
-                        class="btn btn-success"
+                        class="btn btn-success btn-sm"
                         (click)="actionCloseSinistre(1)"
                         [ngClass]="{ hidden: ActionOpenSinistre }"
                       >
                         <i class="fa fa-plus mr-2"></i>AJOUTER UN SINISTRE
                       </button>
-                      <button
-                        type="button"
-                        class="btn btn-danger"
-                        (click)="actionCloseSinistre(0)"
-                        [ngClass]="{ hidden: ActionCloseSinistre }"
-                      >
-                        <i class="fas fa-times mr-2"></i>FERMER
-                      </button>
+                      <div class="d-flex align-items-center justify-content-between border-bottom pb-3"
+                      [ngClass]="{ hidden: ActionCloseSinistre }">
+                        <h3 class="m-0 d-flex text-danger font-weight-bold">
+                          <div class="text-muted">
+                              <i class="fas fa-car-crash"></i>&nbsp;&nbsp;
+                              SINISTRE .::.
+                          </div>Déclaration d'un sinistre
+                        </h3>
+                        <button
+                          type="button"
+                          class="btn btn-danger btn-sm"
+                          (click)="actionCloseSinistre(0)"
+                          
+                        >
+                          <i class="fas fa-times mr-2"></i>FERMER
+                        </button>
+                      </div>
                     </div>
                   </div>
                   <div class="row" [ngClass]="{ hidden: hiddenSinistre }">
@@ -2678,7 +2808,7 @@
                         <div class="col-md-3 inputSpace">
                           <label
                             for="inputEmail4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Véhicule</label
                           >
                           <select
@@ -2696,7 +2826,7 @@
                         <div class="col-md-5 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Lieu du sinistre
                             <span class="Oblig">*</span></label
                           >
@@ -2710,7 +2840,7 @@
                         <div class="col-md-2 inputSpace">
                           <label
                             for="inputEmail4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Date <span class="Oblig">*</span></label
                           >
                           <input
@@ -2723,7 +2853,7 @@
                         <div class="col-md-2 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Heure</label
                           >
                           <input
@@ -2737,20 +2867,24 @@
                         <div class="col-md-3 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Nature du sinistre
                           </label>
-                          <input
-                            type="text"
-                            class="form-control form-control-modern"
-                            id="inputPassword4"
-                            formControlName="sinistreNature"
-                          />
+                          <div class="input-group">
+                            <input type="text" class="form-control form-control-modern" list="sinistres">
+                            <datalist id="sinistres">
+                              <option value="Choisir la nature du sinistre">-- Choisir la nature du sinistre --</option>
+                              <option value="">-- Choisir la nature du sinistre --</option>
+                            </datalist>
+                            <button class="input-group-text" type="button" data-toggle="modal" data-target="#addNature">
+                              <i class="fa fa-plus-circle"></i>
+                            </button>
+                          </div>
                         </div>
                         <div class="col-md-2 inputSpace">
                           <label
                             for="inputEmail4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Kilométrage <span class="Oblig">*</span></label
                           >
                           <input
@@ -2761,10 +2895,10 @@
                           />
                         </div>
 
-                        <div class="col-md-3 inputSpace">
+                        <div class="col-md-4 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Conducteur (Nom et Prénoms)
                             <span class="Oblig">*</span></label
                           >
@@ -2790,7 +2924,7 @@
                         <div class="col-md-3 inputSpace">
                           <label
                             for="inputEmail4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Statut Véhicule <span class="Oblig">*</span></label
                           >
                           <div class="form-check">
@@ -2804,7 +2938,7 @@
                               checked
                             />
                             <label class="form-check-label" for="exampleRadios1"
-                              >En ciruclation
+                              >En circulation
                             </label>
                           </div>
                           <div class="form-check">
@@ -2825,13 +2959,20 @@
                           </div>
                         </div>
 
-                        <div class="col-md-12 ligne"></div>
+                        <div class="col-md-12 ligne border-bottom">
+                          <h3 class="m-0 d-flex text-danger font-weight-bold py-2">
+                            <div class="text-muted">
+                                <i class="fas fa-car-crash"></i>&nbsp;&nbsp;
+                                SINISTRE .::.
+                            </div>Autre acteur du sinistre
+                          </h3>
+                        </div>
 
                         <div class="col-md-3 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
-                            >Autre acteur</label
+                            class="form-label"
+                            >Identification</label
                           >
                           <input
                             type="text"
@@ -2845,7 +2986,7 @@
                         <div class="col-md-3 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Véhicule concerné</label
                           >
                           <input
@@ -2860,55 +3001,65 @@
                         <div class="col-md-3 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Marque</label
                           >
-                          <select
-                            id="marque_ID"
-                            class="form-control"
-                            formControlName="marque_ID"
-                            name="marque_ID"
-                            (change)="changeMarque($event.target.value)"
-                          >
-                            <option selected value="">-- Choisir --</option>
-                            <option
-                              *ngFor="let marque of listemarques.results"
-                              [value]="marque.ID"
+                          <div class="input-group">
+                            <select
+                              id="marque_ID"
+                              class="form-control"
+                              formControlName="marque_ID"
+                              name="marque_ID"
+                              (change)="changeMarque($event.target.value)"
                             >
-                              {{ marque.designation | uppercase }}
-                            </option>
-                          </select>
+                              <option selected value="">-- Choisir --</option>
+                              <option
+                                *ngFor="let marque of listemarques.results"
+                                [value]="marque.ID"
+                              >
+                                {{ marque.designation | uppercase }}
+                              </option>
+                            </select>
+                            <button class="input-group-text" type="button">
+                              <i class="fa fa-plus-circle"></i>
+                            </button>
+                          </div>
                         </div>
 
                         <div class="col-md-3 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Modèle</label
                           >
-                          <select
-                            id="modele_ID"
-                            class="form-control"
-                            formControlName="modele_ID"
-                            name="modele_ID"
-                          >
-                            <option selected value="">---- Choisir ----</option>
-                            <option
-                              selected
-                              *ngFor="
-                                let moelmarque of listemodelebymarques.results
-                              "
-                              [value]="moelmarque.model_ID"
+                          <div class="input-group">
+                            <select
+                              id="modele_ID"
+                              class="form-control"
+                              formControlName="modele_ID"
+                              name="modele_ID"
                             >
-                              {{ moelmarque.modele | uppercase }}
-                            </option>
-                          </select>
+                              <option selected value="">---- Choisir ----</option>
+                              <option
+                                selected
+                                *ngFor="
+                                  let moelmarque of listemodelebymarques.results
+                                "
+                                [value]="moelmarque.model_ID"
+                              >
+                                {{ moelmarque.modele | uppercase }}
+                              </option>
+                            </select>
+                            <button class="input-group-text" type="button">
+                              <i class="fa fa-plus-circle"></i>
+                            </button>
+                          </div>
                         </div>
 
                         <div class="col-md-3 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Conducteur</label
                           >
                           <input
@@ -2923,7 +3074,7 @@
                         <div class="col-md-3 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Contact conducteur</label
                           >
                           <input
@@ -2937,7 +3088,7 @@
                         <div class="col-md-3 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >N° police assurance</label
                           >
                           <input
@@ -2951,7 +3102,7 @@
                         <div class="col-md-3 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Assureur</label
                           >
                           <input
@@ -2963,10 +3114,10 @@
                           />
                         </div>
 
-                        <div class="col-md-2 inputSpace">
+                        <div class="col-md-3 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Date Début ass.</label
                           >
                           <input
@@ -2978,10 +3129,10 @@
                           />
                         </div>
 
-                        <div class="col-md-2 inputSpace">
+                        <div class="col-md-3 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Date FIn ass.</label
                           >
                           <input
@@ -2998,7 +3149,7 @@
                         <div class="col-md-8 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Description du sinistre
                             <span class="text-danger"></span
                           ></label>
@@ -3014,7 +3165,7 @@
                         <div class="col-md-4 inputSpace">
                           <label
                             for="inputPassword4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Rapport du sinistre
                             <span class="text-danger">(PDF)</span></label
                           >
@@ -4382,3 +4533,26 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+
+<div class="modal fade" id="addNature" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <form class="modal-content">
+      <div class="modal-header bg-secondary fw-bold text-white">
+        <h2 class="modal-title" id="staticBackdropLabel">Ajouter une nature de sinistre</h2>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="form-group mb-3 col-12">
+                  <label class="form-label">Libellé de la nature</label>
+                  <input type="text" class="form-control w-100">
+              </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Fermer</button>
+        <button type="button" class="btn btn-sm btn-success">Enregistrer</button>
+      </div>
+  </form>
+  </div>
+</div>

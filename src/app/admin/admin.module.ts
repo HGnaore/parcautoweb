@@ -66,6 +66,7 @@ import { GaragesComponent } from './gestion/structure/garages/garages.component'
 import { EntretienFiltreComponent } from './gestion/structure/entretien-filtre/entretien-filtre.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchgarfilterPipe } from './gestion/structure/garages/searchgarfilter.pipe';
+import { PieceComponent } from './gestion/structure/piece/piece.component';
 
 
 @NgModule({
@@ -122,7 +123,8 @@ import { SearchgarfilterPipe } from './gestion/structure/garages/searchgarfilter
     TypeEntretienComponent,
     GaragesComponent,
     EntretienFiltreComponent,
-    SearchgarfilterPipe
+    SearchgarfilterPipe,
+    PieceComponent
   ],
   imports: [
     CommonModule,
