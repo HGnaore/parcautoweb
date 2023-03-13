@@ -3777,7 +3777,7 @@
                       </button>
                       <button
                         type="button"
-                        class="btn btn-danger"
+                        class="btn btn-danger btn-sm"
                         (click)="actionCloseKilometrage(0)"
                         [ngClass]="{ hidden: ActionCloseKilometrage }"
                       >
@@ -3806,7 +3806,7 @@
                         <div class="col-md-3 inputSpace">
                           <label
                             for="inputEmail4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Véhicule</label
                           >
                           <select
@@ -3820,12 +3820,13 @@
                               {{ marque | uppercase }} {{ modele | uppercase }}
                             </option>
                           </select>
+                          <small class="text-danger">Dernier rélevé le : 24/02/2023</small>
                           <!--small class="text-danger font-weight-bold">Réservoir Total: 30L</small-->
                         </div>
                         <div class="col-md-2 inputSpace">
                           <label
                             for="inputEmail4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Date <span class="Oblig">*</span></label
                           >
                           <input
@@ -3841,7 +3842,7 @@
                         <div class="col-md-3 inputSpace">
                           <label
                             for="inputEmail4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Kilométrage <span class="Oblig">*</span></label
                           >
                           <input
@@ -3850,11 +3851,12 @@
                             id="inputPassword4"
                             formControlName="kilometrageData"
                           />
+                          <small class="text-danger">Dernier kilométrage : 24089 KM</small>
                         </div>
                         <div class="col-md-4 inputSpace">
                           <label
                             for="inputEmail4"
-                            class="form-label inputSpaceText"
+                            class="form-label"
                             >Observation
                           </label>
                           <input
@@ -4029,7 +4031,7 @@
                     <div class="col-md-12 text-right">
                       <button
                         type="button"
-                        class="btn btn-success"
+                        class="btn btn-success btn-sm"
                         (click)="actionCloseInfraction(1)"
                         [ngClass]="{ hidden: ActionOpenInfraction }"
                       >
@@ -4037,7 +4039,7 @@
                       </button>
                       <button
                         type="button"
-                        class="btn btn-danger"
+                        class="btn btn-danger btn-sm"
                         (click)="actionCloseInfraction(0)"
                         [ngClass]="{ hidden: ActionCloseInfraction }"
                       >
@@ -4045,7 +4047,81 @@
                       </button>
                     </div>
                   </div>
-                  <div class="row" [ngClass]="{ hidden: hiddenInfraction }">
+                  <div class="my-3" [ngClass]="{ hidden: hiddenInfraction }">
+                    <div class="rounded border p-3 mt-3 bg-light">
+                      <div class="row">
+                        <div class="col-6">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="bg-dark py-2 px-3 rounded shadow">
+                                <h3 class="m-0 d-flex text-warning">
+                                    DESCRIPTION DE L'INFRACTION
+                                </h3>
+                              </div>
+                            </div>
+                            <div class="col-6 my-3">
+                              <label class="form-label">Date <span class="text-danger">*</span></label>
+                              <input type="date" class="form-control">
+                            </div>
+                            <div class="col-6 my-3">
+                              <label class="form-label">Heure <span class="text-danger">*</span></label>
+                              <input type="time" class="form-control">
+                            </div>
+                            <div class="col-12 mb-3">
+                              <label class="form-label">Code <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control">
+                            </div>
+                            <div class="col-4">
+                              <label class="form-label">Vitesse mésurée <span class="text-danger">*</span></label>
+                              <div class="input-group">
+                                <input type="number" class="form-control">
+                                <span class="input-group-text">Km/h</span>
+                              </div>
+                            </div>
+                            <div class="col-8 mb-3">
+                              <label class="form-label">Matricule agent verb. <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control">
+                            </div>
+                            <div class="col-12 mb-3">
+                              <label class="form-label">Lieu <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="row">
+                            <div class="col-12 mb-3">
+                              <div class="bg-dark py-2 px-3 rounded shadow">
+                                <h3 class="m-0 d-flex text-warning">
+                                    EFFET SUR LA CONTRAVENTION
+                                </h3>
+                              </div>
+                            </div>
+  
+                            <div class="col-12">
+                              <textarea rows="10" class="form-control" style="height: 232px;" placeholder="Description de l'effet"></textarea>
+                            </div>
+                            <div class="col-12 mt-3">
+                              <label class="form-label">Montant amende <span class="text-danger">*</span></label>
+                              <div class="input-group">
+                                <input type="number" class="form-control border-0" style="background-color: rgb(227, 240, 255);">
+                                <span class="input-group-text">F CFA</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 text-right mt-3">
+                          <button class="btn btn-danger">
+                            ANNULER
+                          </button>
+                          <button class="btn btn-success ml-3">
+                            ENREGISTRER
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="row" [ngClass]="{ hidden: hiddenInfraction }">
                     <div class="spinner4" *ngIf="isLoadingResultsModif">
                       <div class="bounce1"></div>
                       <div class="bounce2"></div>
@@ -4065,15 +4141,7 @@
                           hidden
                           class="form-control form-control-modern"
                         />
-                        <!--div class="col-md-3 inputSpace">
-                                          <label for="inputEmail4" class="form-label inputSpaceText">Véhicule <span class="Oblig">*</span></label>
-                                          <select disabled id="inputState" class="form-control form-control-modern" name="stockStatus">
-                                          
-                                            <option selected>[2792 HY 01] - TOYOTA RAV4</option>
-                                           
-                                          </select>
-                                        </div-->
-
+                        
                         <div class="col-md-2 inputSpace">
                           <label
                             for="inputPassword4"
@@ -4195,7 +4263,7 @@
                             for="inputPassword4"
                             class="form-label inputSpaceText"
                             >Justificatif
-                            <!--span class="Oblig">*</span--></label
+                            </label
                           >
                           <input
                             type="file"
@@ -4208,7 +4276,6 @@
                             style="padding: 5px; font-weight: 500"
                             class="bg-warning"
                           >
-                            <!---->
                             <a
                               href="{{ selecetdFileInfraction }}"
                               target="_blank"
@@ -4242,7 +4309,7 @@
                         </div>
                       </form>
                     </div>
-                  </div>
+                  </div> -->
 
                   <section class="card">
                     <!--header class="card-header" style="margin: 0px; padding: 5px;">

@@ -20,10 +20,10 @@
         <div class="d-flex">
         
             <div class="w-50" style="margin-right: 5px;">
-                <div class="row  px-3">
+                <form class="row px-3" [formGroup]="pieceGroup" (ngSubmit)="onSubmitPiece()">
                     <div class="col-12 form-group mb-0">
                         <label>Type de pièces <span style="color: red;">*</span></label>
-                        <input type="text" class="form-control" list="type">
+                        <input type="text" class="form-control" list="type" formControlName="type">
                         <datalist id="type">
                             <option value="[MECANIQUE]">-- [MECANIQUE] --</option>
                             <option value="[ELECTRIQUE]">-- [ELECTRIQUE] --</option>
@@ -32,32 +32,32 @@
 
                     <div class="col-12 form-group">
                         <label>Libellé de la pièce <span style="color: red;">*</span></label>
-                        <input type="text" class="form-control" placeholder="Ex : Moteur">
+                        <input type="text" class="form-control" placeholder="Ex : Moteur" formControlName="libelle">
                     </div>
 
                     <div class="col-6 mb-3">
                         <label>Jours avant rechange <span style="color: red;">*</span></label>
-                        <input type="number" class="form-control" value="1" min="1">
+                        <input type="number" class="form-control" value="1" min="1" formControlName="jrAvtRechange">
                     </div>
                     <div class="col-6 mb-3">
                         <label>Km avant rechange <span style="color: red;">*</span></label>
-                        <input type="number" class="form-control" value="1" min="1">
+                        <input type="number" class="form-control" value="1" min="1" formControlName="kmAvtRechange">
                     </div>
 
                     <div class="col-12 center my-2">
                         <button type="button" class="btn btn-danger w-25">
                             Annuler
                         </button>
-                        <button type="button" class="btn btn-success ml-3 w-25">
+                        <button type="submit" class="btn btn-success ml-3 w-25" [disabled]="pieceGroup.invalid">
                             <i class="fa fa-database"></i>
                             Enregistrer
                         </button>
                     </div>
-                </div>
+                </form>
             </div>
             <div class="w-50 ml-2 mr-3" *ngIf="!isTypeList">
-                <div class="row border rounded bg-secondary px-3 py-2 mt-3">
-                    <div class="col-12 ">
+                <form class="row border rounded bg-secondary px-3 py-2 mt-3" [formGroup]="pieceTypeGroup" (ngSubmit)="onSubmitPieceType()">
+                    <div class="col-12">
                         <p class="text-white">
                             <i class="fa fa-plus-circle text-success"></i>&nbsp;&nbsp;
                             Ajouter un Type de Pièces
@@ -66,11 +66,11 @@
 
                     <div class="col-12 form-group">
                         <label>Libellé du type <span style="color: red;">*</span></label>
-                        <input type="text" class="form-control" placeholder="Ex : [ELECTRIQUE]">
+                        <input type="text" class="form-control" placeholder="Ex : [ELECTRIQUE]" formControlName="libelle">
                     </div>
 
                     <div class="col-12 center my-2">
-                        <button type="button" class="btn btn-success w-25">
+                        <button type="submit" class="btn btn-success w-25" [disabled]="pieceTypeGroup.invalid">
                             <i class="fa fa-plus-circle"></i>
                             Ajouter
                         </button>
@@ -79,7 +79,7 @@
                             Liste des types
                         </button>
                     </div>
-                </div>
+                </form>
             </div>
 
             <div class="w-50 ml-2 mr-3" *ngIf="isTypeList">
@@ -94,36 +94,23 @@
                             </thead>
                             <tbody>
                                 <tr
-                                    *ngFor="let garage of data | paginate   : { itemsPerPage: tableSize, currentPage: page, totalItems: count };let i = index">
+                                    *ngFor="let typePiece of data">
                                     <td class="py-2"></td>
                                     <td class="py-2" align="right">
                                         <button class="btn btn-sm btn-outline-primary py-1  ml-2"
-                                            title="Modifier les informations">
+                                            title="Modifier les informations"
+                                            (click)="onUpdatePieceType(typePiece)"
+                                        >
                                             <small><i class="fas fa-edit"></i></small>
                                         </button>
                                         <button class="btn btn-sm btn-outline-danger py-1 ml-2"
-                                            title="Supprimer le garage">
+                                            title="Supprimer le piece" (click)="onDeletePieceType()">
                                             <small><i class="fas fa-trash"></i></small>
                                         </button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="px-2 d-flex justify-content-end align-items-center" style="font-size: smaller;" *ngIf="data.length > 0">
-                            <p>Total : [ {{ data.length }} ]</p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        
-                            <div class="d-flex mr-3">
-                                Enregistrements par page :&nbsp;&nbsp;
-                                <select id="items-per-page" #value class="mr-3 mb-3" (change)="changeSize(value.value)">
-                                    <option *ngFor="let size of tableSizes" [value]="size">{{ size }}</option>
-                                </select>
-                            </div>
-                        
-                            <div class="d-flex justify-content-center">
-                                <pagination-controls previousLabel="Précédent" nextLabel="Suivant" (pageChange)="onTableDataChange($event)">
-                                </pagination-controls>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="col-12 center my-2">
@@ -160,22 +147,24 @@
             </thead>
             <tbody>
                 <tr
-                    *ngFor="let garage of data | paginate   : { itemsPerPage: tableSize, currentPage: page, totalItems: count };let i = index">
-                    <td class="py-2">{{garage.designation}}</td>
+                    *ngFor="let piece of data | paginate   : { itemsPerPage: tableSize, currentPage: page, totalItems: count };let i = index">
+                    <td class="py-2">{{piece.designation}}</td>
                     <td class="py-2 text-success">
-                        Fixe : {{garage.fixe}} | Cel. : {{garage.portable}}
+                        Fixe : {{piece.fixe}} | Cel. : {{piece.portable}}
                     </td>
-                    <td class="py-2">{{garage.pf_nomprenoms}}</td>
+                    <td class="py-2">{{piece.pf_nomprenoms}}</td>
                     <td class="py-2 text-info">
-                        {{garage.pf_portable}}
+                        {{piece.pf_portable}}
                     </td>
                     <td class="py-2" align="right">
                         <button class="btn btn-sm btn-outline-primary py-1  ml-2"
-                            title="Modifier les informations">
+                            title="Modifier les informations"
+                            (click)="onUpdatePiece(piece)"
+                        >
                             <small><i class="fas fa-edit"></i></small>
                         </button>
                         <button class="btn btn-sm btn-outline-danger py-1 ml-2"
-                            title="Supprimer le garage">
+                            title="Supprimer la piece" (click)="onDeletePiece()">
                             <small><i class="fas fa-trash"></i></small>
                         </button>
                     </td>
