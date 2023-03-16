@@ -11,7 +11,8 @@
                 <i class="fa fa-plus-circle text-success"></i>&nbsp;&nbsp;
                 Nouveau Type Entretien
             </p>
-            <button class="btn btn-sm btn-warning" *ngIf="varID" data-toggle="modal" data-target="#staticBackdrop">
+            <button class="btn btn-sm btn-warning" *ngIf="varID" (click)="resetDetails()" data-toggle="modal"
+                data-target="#staticBackdrop">
                 <i class="fas fa-plus-circle"></i>
                 Ajout détails
             </button>
@@ -162,15 +163,15 @@
     <div class="modal-dialog modal-dialog-centered">
     <form [formGroup]="typeentretiendetailsForm" class="modal-content">
         <div class="modal-header bg-dark">
-        <h3 class="modal-title m-0"></h3>
+        <h3 class="modal-title m-0">Edition détails</h3>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-            <div class="message message--success bg-light">
+            <div class="message message--success bg-light" *ngIf="validationDetails">
                 <i class="fa fa-check me-2 text-success"></i>
-            Edition détails
+            {{messagevalidationDetails}}
             </div>
             <div class="row">
                 <div class="col-12 form-group">

@@ -15,6 +15,8 @@ export class TypeEntretienComponent implements OnInit {
   data: any;
   varID = '';
   controlle = false;
+  validationDetails = false;
+  messagevalidationDetails = '';
 
   typeentretienForm: FormGroup;
   typeentretiendetailsForm: FormGroup;
@@ -84,78 +86,50 @@ export class TypeEntretienComponent implements OnInit {
     });
   }
 
+  resetDetails() {
+    this.typeentretiendetailsForm.reset();
+  }
+
+
+
+
   ajoutDetails() {
     const ID = this.typeentretienForm.get('ID')?.value;
     const IDdetails = this.typeentretiendetailsForm.get('ID')?.value;
     const detailsData = new FormData();
     detailsData.append('ID', this.typeentretienForm.get('ID')?.value);
     detailsData.append('designation', this.typeentretiendetailsForm.get('designation')?.value);
-    if (ID == '' || ID == null) {
-      Swal.fire({
-        title: 'Erreur !',
-        text: 'Impossible d\'associer le Type d\'entretien',
-        icon: 'error',
-        confirmButtonText: 'Ok'
-      });
-      return;
-    } else {
 
-    }
+    if (ID == '' || ID == null) {
+      this.validationDetails = true;
+      this.messagevalidationDetails = 'Impossible d\'associer le Type d\'entretien';
+      let n: number;
+      n = setTimeout(function () { this.validationDetails = false; }, 500) as unknown as number;
+      return;
+    } 
 
     if (IDdetails == '' || IDdetails == null) {
       this.entretienService.savedetailstypeentretien(detailsData).subscribe(ret => {
         this.reponse = ret;
         if (this.reponse.success == true) {
-          //////////////////////////////////////////
-
-          Swal.fire({
-            title: this.reponse.message,
-            text: "Voulez-vous ajouter des détails ?",
-            icon: 'success',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            cancelButtonText: 'Non ',
-            confirmButtonText: 'Oui je veux ajouter des détails'
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.activeDetails(this.reponse.results);
-            } else {
-              this.getAllTypeentretien();
-              this.reinitialiseForm();
-            }
-          })
-
-          //////////////////////////////////////
-
+          this.validationDetails = true;
+          this.messagevalidationDetails = this.reponse.message;
+          let n: any;
+          n = setTimeout(function () { this.messagevalidationDetails = 'tttttt' }, 500);
         } else {
-          Swal.fire({
-            title: 'Echec!',
-            text: this.reponse.message,
-            icon: 'error',
-            confirmButtonText: 'Ok'
-          });
+          this.validationDetails = true;
+          this.messagevalidationDetails = this.reponse.message;
         }
       });
     } else {
       this.entretienService.updatedetailstypeentretien(detailsData).subscribe(ret => {
         this.reponse = ret;
         if (this.reponse.success == true) {
-          Swal.fire({
-            title: 'Succes!',
-            text: this.reponse.message,
-            icon: 'success',
-            confirmButtonText: 'Ok'
-          });
-          this.getAllTypeentretien();
-          this.reinitialiseForm();
+          this.validationDetails = true;
+          this.messagevalidationDetails = this.reponse.message;
         } else {
-          Swal.fire({
-            title: 'Echec!',
-            text: this.reponse.message,
-            icon: 'error',
-            confirmButtonText: 'Ok'
-          });
+          this.validationDetails = true;
+          this.messagevalidationDetails = this.reponse.message;
         }
       });
     }
