@@ -12,12 +12,34 @@ import Swal from 'sweetalert2';
 export class TypeEntretienComponent implements OnInit {
 
   reponse: any;
-  data: any;
   varID = '';
   controlle = false;
+  validationDetails = false;
+  messagevalidationDetails = '';
+  reponsevalidationDetails = false;
+
+  details: any;
+  undetails: any;
 
   typeentretienForm: FormGroup;
   typeentretiendetailsForm: FormGroup;
+
+  //GESTION PAGINATION TABLE
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 10;
+  tableSizes: any = [10, 20, 30, 100];
+  data: any = [];
+  //---
+  //GESTION PAGINATION TABLE
+  pageD: number = 1;
+  countD: number = 0;
+  tableSizeD: number = 3;
+  tableSizesD: any = [3, 6, 12];
+  dataD: any = [];
+  //---
+
+  searchValue = "";
 
   constructor(
     private formBuilder: FormBuilder,
@@ -81,8 +103,81 @@ export class TypeEntretienComponent implements OnInit {
       this.typeentretienForm.controls['controlle'].setValue(this.reponse.results[0].controlle);
       this.typeentretienForm.controls['nbjourlimite'].setValue(this.reponse.results[0].nbjourlimite);
       this.typeentretienForm.controls['programable'].setValue(this.reponse.results[0].programable);
+      this.getAllDetailsByID(id);
     });
   }
+
+  getAllDetailsByID(id) {
+    this.entretienService.getAllDetailsTypeentretien(id).subscribe(ret => {
+      this.reponse = ret;
+      this.dataD = this.reponse.results;
+    });
+  }
+
+  getOneDetailsByID(id) {
+    this.validationDetails = false;
+    this.entretienService.getOneDetailsTypeentretien(id).subscribe(ret => {
+      this.reponse = ret;
+      this.undetails = this.reponse.results[0];
+      this.typeentretiendetailsForm.controls['ID'].setValue(this.undetails.ID);
+      this.typeentretiendetailsForm.controls['designation'].setValue(this.undetails.designation);
+    });
+  }
+
+  resetDetails() {
+    this.typeentretiendetailsForm.reset();
+    this.validationDetails = false;
+  }
+
+  questionSuppression(id) {
+    Swal.fire({
+      title: "Vous allez supprimer le type d'entretien",
+      text: 'Etes-vous certain de vouloir le faire ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Non annuler',
+      confirmButtonText: 'Oui supprimer!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deleteOneTypeentretien(id);
+      }
+    })
+  }
+
+  deleteOneTypeentretien(id) {
+    this.entretienService.deleteOneTypeentretien(id).subscribe(ret => {
+      this.reponse = ret;
+      this.getAllTypeentretien();
+    });
+  }
+
+  questionSuppressiondetails(id, idtype) {
+    Swal.fire({
+      title: "Vous allez supprimer le details",
+      text: 'Etes-vous certain de vouloir le faire ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Non annuler',
+      confirmButtonText: 'Oui supprimer!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deleteOneDetailsTypeentretien(id, idtype);
+      }
+    })
+  }
+
+  deleteOneDetailsTypeentretien(id, idtype) {
+    const ID = this.typeentretienForm.get('ID')?.value;
+    this.entretienService.deleteOneDetailsTypeentretien(id).subscribe(ret => {
+      this.reponse = ret;
+      this.getAllDetailsByID(idtype);
+    });
+  }
+
 
   ajoutDetails() {
     const ID = this.typeentretienForm.get('ID')?.value;
@@ -90,72 +185,44 @@ export class TypeEntretienComponent implements OnInit {
     const detailsData = new FormData();
     detailsData.append('ID', this.typeentretienForm.get('ID')?.value);
     detailsData.append('designation', this.typeentretiendetailsForm.get('designation')?.value);
-    if (ID == '' || ID == null) {
-      Swal.fire({
-        title: 'Erreur !',
-        text: 'Impossible d\'associer le Type d\'entretien',
-        icon: 'error',
-        confirmButtonText: 'Ok'
-      });
-      return;
-    } else {
+    detailsData.append('IDdetails', IDdetails);
 
-    }
+
+    if (ID == '' || ID == null) {
+      this.validationDetails = true;
+      this.messagevalidationDetails = 'Impossible d\'associer le Type d\'entretien';
+      let n: number;
+      n = setTimeout(function () { this.validationDetails = false; }, 500) as unknown as number;
+      return;
+    } 
 
     if (IDdetails == '' || IDdetails == null) {
       this.entretienService.savedetailstypeentretien(detailsData).subscribe(ret => {
         this.reponse = ret;
         if (this.reponse.success == true) {
-          //////////////////////////////////////////
-
-          Swal.fire({
-            title: this.reponse.message,
-            text: "Voulez-vous ajouter des détails ?",
-            icon: 'success',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            cancelButtonText: 'Non ',
-            confirmButtonText: 'Oui je veux ajouter des détails'
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.activeDetails(this.reponse.results);
-            } else {
-              this.getAllTypeentretien();
-              this.reinitialiseForm();
-            }
-          })
-
-          //////////////////////////////////////
-
+          this.reponsevalidationDetails = true;
+          this.validationDetails = true;
+          this.messagevalidationDetails = this.reponse.message;
+          this.resetDetails();
+          this.getAllDetailsByID(ID);
         } else {
-          Swal.fire({
-            title: 'Echec!',
-            text: this.reponse.message,
-            icon: 'error',
-            confirmButtonText: 'Ok'
-          });
+          this.reponsevalidationDetails = false;
+          this.validationDetails = true;
+          this.messagevalidationDetails = this.reponse.message;
         }
       });
     } else {
       this.entretienService.updatedetailstypeentretien(detailsData).subscribe(ret => {
         this.reponse = ret;
         if (this.reponse.success == true) {
-          Swal.fire({
-            title: 'Succes!',
-            text: this.reponse.message,
-            icon: 'success',
-            confirmButtonText: 'Ok'
-          });
-          this.getAllTypeentretien();
-          this.reinitialiseForm();
+          this.reponsevalidationDetails = true;
+          this.validationDetails = true;
+          this.messagevalidationDetails = this.reponse.message;
+          this.getAllDetailsByID(ID);
         } else {
-          Swal.fire({
-            title: 'Echec!',
-            text: this.reponse.message,
-            icon: 'error',
-            confirmButtonText: 'Ok'
-          });
+          this.reponsevalidationDetails = false;
+          this.validationDetails = true;
+          this.messagevalidationDetails = this.reponse.message;
         }
       });
     }
@@ -246,5 +313,41 @@ export class TypeEntretienComponent implements OnInit {
   reinitialiseForm() {
     this.typeentretienForm.reset();
     this.typeentretienForm.controls['nbjourlimite'].setValue(0);
+    this.resetDetails();
+    this.dataD = [];
   }
+
+  //GESTION PAGINATION TABLE
+  changeSize(value: string) {
+    this.tableSize = +value;
+  }
+
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.data;
+  }
+
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.data;
+  }
+  //---
+
+  //GESTION PAGINATION TABLE
+  changeSizeD(value: string) {
+    this.tableSizeD = +value;
+  }
+
+  onTableDataChangeD(event: any) {
+    this.pageD = event;
+    this.dataD;
+  }
+
+  onTableSizeChangeD(event: any): void {
+    this.tableSizeD = event.target.value;
+    this.pageD = 1;
+    this.dataD;
+  }
+  //---
 }

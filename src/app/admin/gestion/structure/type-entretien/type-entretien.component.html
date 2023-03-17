@@ -11,7 +11,8 @@
                 <i class="fa fa-plus-circle text-success"></i>&nbsp;&nbsp;
                 Nouveau Type Entretien
             </p>
-            <button class="btn btn-sm btn-warning" *ngIf="varID" data-toggle="modal" data-target="#staticBackdrop">
+            <button class="btn btn-sm btn-warning" *ngIf="varID" (click)="resetDetails()" data-toggle="modal"
+                data-target="#staticBackdrop">
                 <i class="fas fa-plus-circle"></i>
                 Ajout détails
             </button>
@@ -75,23 +76,25 @@
                             </div>
                 </form>
             </div>
-            <div class="ml-3" style="width: 50%;" *ngIf="varID">
+            <div class="ml-3" style="width: 50%;">
                 <table class="table table-striped border">
                     <thead class="table-dark">
                         <tr>
-                            <th class="py-1">Désignation.</th>
+                            <th class="py-1">Liste des détails du type d'entretien.</th>
                             <th class="py-1"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="py-2">designation </td>
+                        <tr
+                            *ngFor="let detail of dataD | paginate   : { itemsPerPage: tableSizeD, currentPage: pageD, totalItems: countD };let i = index">
+                            <td class="py-2">{{detail.designation}} </td>
                             <td class="py-2" align="right">
-                                <button class="btn btn-sm btn-outline-primary py-1" data-toggle="modal" data-target="#staticBackdrop">
+                                <button class="btn btn-sm btn-outline-primary py-1" (click)=" getOneDetailsByID(detail.ID)" data-toggle="modal"
+                                    data-target="#staticBackdrop">
                                     <small><i class="fas fa-edit"></i></small>
                                 </button>
 
-                                <button class="btn btn-sm btn-outline-danger py-1 ml-2">
+                                <button class="btn btn-sm btn-outline-danger py-1 ml-2" (click)="questionSuppressiondetails(detail.ID, detail.ID_Type)">
                                     <small><i class="fas fa-trash"></i></small>
                                 </button>
                             </td>
@@ -104,6 +107,21 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="px-2 d-flex justify-content-end align-items-center" style="font-size: smaller;" *ngIf="dataD.length > 0">
+                    <p>Total : [ {{ dataD.length }} ]</p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                
+                    <div class="d-flex mr-3">
+                        Enregistrements par page :&nbsp;&nbsp;
+                        <select id="items-per-page" #value class="mr-3 mb-3" (change)="changeSizeD(value.value)">
+                            <option *ngFor="let size of tableSizesD" [value]="size">{{ size }}</option>
+                        </select>
+                    </div>
+                
+                    <div class="d-flex justify-content-center">
+                        <pagination-controls previousLabel="Précédent" nextLabel="Suivant" (pageChange)="onTableDataChangeD($event)">
+                        </pagination-controls>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -111,10 +129,10 @@
     <div class="border rounded px-3 py-2 mt-3">
         <div class="d-flex mb-3 justify-content-between align-items-center">
             <div class="w-50">
-                <input type="search" class="form-control w-10" placeholder="Tapez votre recherche ici...">
+                <input type="search" class="form-control w-10" [(ngModel)]="searchValue" placeholder="Tapez votre recherche ici...">
             </div>
             <div class="rounded text-muted border py-2 px-3">
-                Total :: 25
+                Total : {{ data.length }}
             </div>
         </div>
         <table class="table table-striped border">
@@ -129,7 +147,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let typeentretien of data ">
+                <tr
+                    *ngFor="let typeentretien of data | searchtypefilter: searchValue | paginate   : { itemsPerPage: tableSize, currentPage: page, totalItems: count };let i = index">
                     <td class="py-2">{{typeentretien.designation}}</td>
                     <td class="py-2 " align="center" [ngClass]="setColor(typeentretien.controlle)">
                         <i *ngIf="typeentretien.controlle == 1" class="fas fa-check"></i>
@@ -148,13 +167,28 @@
                         <button class="btn btn-sm btn-outline-primary py-1 ml-2" (click)="getOneTypeentretien(typeentretien.ID)">
                             <small><i class="fas fa-edit"></i></small>
                         </button>
-                        <button class="btn btn-sm btn-outline-danger py-1 ml-2">
+                        <button class="btn btn-sm btn-outline-danger py-1 ml-2" (click)="questionSuppression(typeentretien.ID)">
                             <small><i class="fas fa-trash"></i></small>
                         </button>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <div class="px-2 d-flex justify-content-end align-items-center" style="font-size: smaller;" *ngIf="data.length > 0">
+            <p>Total : [ {{ data.length }} ]</p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        
+            <div class="d-flex mr-3">
+                Enregistrements par page :&nbsp;&nbsp;
+                <select id="items-per-page" #value class="mr-3 mb-3" (change)="changeSize(value.value)">
+                    <option *ngFor="let size of tableSizes" [value]="size">{{ size }}</option>
+                </select>
+            </div>
+        
+            <div class="d-flex justify-content-center">
+                <pagination-controls previousLabel="Précédent" nextLabel="Suivant" (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -162,19 +196,22 @@
     <div class="modal-dialog modal-dialog-centered">
     <form [formGroup]="typeentretiendetailsForm" class="modal-content">
         <div class="modal-header bg-dark">
-        <h3 class="modal-title m-0"></h3>
+        <h3 class="modal-title m-0">Ajout / Modification des details</h3>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-            <div class="message message--success bg-light">
-                <i class="fa fa-check me-2 text-success"></i>
-            Edition détails
+            <div class="message message--success bg-light" *ngIf="validationDetails">
+                <i
+                    [ngClass]="{' me-2 text-success': reponsevalidationDetails === true, ' me-2 text-danger' : reponsevalidationDetails === false }">
+                    {{messagevalidationDetails}}
+                </i>
+
             </div>
             <div class="row">
                 <div class="col-12 form-group">
-                    <input type="text" class="form-control" placeholder="ID" formControlName="ID">
+                    <input type="text" class="form-control" placeholder="ID" formControlName="ID" hidden>
                     <input type="text" class="form-control" placeholder="Désignation *" formControlName="designation">
                 </div>
     

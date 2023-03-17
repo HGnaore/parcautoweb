@@ -48,6 +48,25 @@ export class EntretienService {
     return this.httpClient.post<any>(this.urlG + '/vehicule/typeentretien/modificationdetailstypeentretien.php', data);
   }
 
+  getAllDetailsTypeentretien(id): Observable<any> {
+    return this.httpClient.get<any>(this.urlG + '/vehicule/typeentretien/listedetailstypeentretien.php?id=' + id);
+  }
+
+  getOneDetailsTypeentretien(id): Observable<any> {
+    return this.httpClient.get<any>(this.urlG + '/vehicule/typeentretien/detailstypeentretienparid.php?ID=' + id);
+  }
+
+  deleteOneTypeentretien(id): Observable<any> {
+    return this.httpClient.get<any>(this.urlG + '/vehicule/typeentretien/suppressiontypeentretienparid.php?ID=' + id);
+  }
+
+  deleteOneDetailsTypeentretien(id): Observable<any> {
+    return this.httpClient.get<any>(this.urlG + '/vehicule/typeentretien/suppressiondetailstypeentretienparid.php?ID=' + id);
+  }
+
+
+
+
   // ENTRETIEN
 
   listeEntretiens(): Observable<any[]> {
