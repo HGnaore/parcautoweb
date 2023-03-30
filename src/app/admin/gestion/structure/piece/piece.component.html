@@ -18,30 +18,28 @@
             </p>
         </div>
         <div class="d-flex">
-        
             <div class="w-50" style="margin-right: 5px;">
                 <form class="row px-3" [formGroup]="pieceGroup" (ngSubmit)="onSubmitPiece()">
                     <div class="col-12 form-group mb-0">
+                        <input type="text" class="form-control" formControlName="ID" placeholder="ID" hidden>
                         <label>Type de pièces <span style="color: red;">*</span></label>
-                        <input type="text" class="form-control" list="type" formControlName="type">
-                        <datalist id="type">
-                            <option value="[MECANIQUE]">-- [MECANIQUE] --</option>
-                            <option value="[ELECTRIQUE]">-- [ELECTRIQUE] --</option>
-                        </datalist>
+                        <ng-select [items]="allTypePiece" bindValue="typePiece" bindLabel="typePiece" placeholder="Type pièce"
+                            formControlName="typePiece">
+                        </ng-select>
                     </div>
 
                     <div class="col-12 form-group">
                         <label>Libellé de la pièce <span style="color: red;">*</span></label>
-                        <input type="text" class="form-control" placeholder="Ex : Moteur" formControlName="libelle">
+                        <input type="text" class="form-control" placeholder="Ex : Moteur" formControlName="designation">
                     </div>
 
                     <div class="col-6 mb-3">
                         <label>Jours avant rechange <span style="color: red;">*</span></label>
-                        <input type="number" class="form-control" value="1" min="1" formControlName="jrAvtRechange">
+                        <input type="number" class="form-control" min="0" formControlName="nbreJours">
                     </div>
                     <div class="col-6 mb-3">
                         <label>Km avant rechange <span style="color: red;">*</span></label>
-                        <input type="number" class="form-control" value="1" min="1" formControlName="kmAvtRechange">
+                        <input type="number" class="form-control" min="0" formControlName="nbreKm">
                     </div>
 
                     <div class="col-12 center my-2">
@@ -56,7 +54,7 @@
                 </form>
             </div>
             <div class="w-50 ml-2 mr-3" *ngIf="!isTypeList">
-                <form class="row border rounded bg-secondary px-3 py-2 mt-3" [formGroup]="pieceTypeGroup" (ngSubmit)="onSubmitPieceType()">
+                <form class="row border rounded bg-secondary px-3 py-2 mt-3" [formGroup]="pieceTypeGroup">
                     <div class="col-12">
                         <p class="text-white">
                             <i class="fa fa-plus-circle text-success"></i>&nbsp;&nbsp;
@@ -66,11 +64,12 @@
 
                     <div class="col-12 form-group">
                         <label>Libellé du type <span style="color: red;">*</span></label>
-                        <input type="text" class="form-control" placeholder="Ex : [ELECTRIQUE]" formControlName="libelle">
+                        <input type="text" class="form-control" placeholder="ID" formControlName="ID" hidden>
+                        <input type="text" class="form-control" placeholder="Ex : [ELECTRIQUE]" formControlName="typePiece">
                     </div>
 
                     <div class="col-12 center my-2">
-                        <button type="submit" class="btn btn-success w-25" [disabled]="pieceTypeGroup.invalid">
+                        <button type="submit" class="btn btn-success w-25" [disabled]="pieceTypeGroup.invalid" (click)="onSubmitPieceType()">
                             <i class="fa fa-plus-circle"></i>
                             Ajouter
                         </button>
@@ -94,12 +93,12 @@
                             </thead>
                             <tbody>
                                 <tr
-                                    *ngFor="let typePiece of data">
-                                    <td class="py-2"></td>
+                                    *ngFor="let typePiece of allTypePiece">
+                                    <td class="py-2"> {{typePiece.typePiece}}</td>
                                     <td class="py-2" align="right">
                                         <button class="btn btn-sm btn-outline-primary py-1  ml-2"
                                             title="Modifier les informations"
-                                            (click)="onUpdatePieceType(typePiece)"
+                                            
                                         >
                                             <small><i class="fas fa-edit"></i></small>
                                         </button>
@@ -150,21 +149,20 @@
                     *ngFor="let piece of data | paginate   : { itemsPerPage: tableSize, currentPage: page, totalItems: count };let i = index">
                     <td class="py-2">{{piece.designation}}</td>
                     <td class="py-2 text-success">
-                        Fixe : {{piece.fixe}} | Cel. : {{piece.portable}}
+                    {{piece.typePiece}}
                     </td>
-                    <td class="py-2">{{piece.pf_nomprenoms}}</td>
+                    <td class="py-2">{{piece.nbreJours}}</td>
                     <td class="py-2 text-info">
-                        {{piece.pf_portable}}
+                        {{piece.nbreKm}}
                     </td>
                     <td class="py-2" align="right">
                         <button class="btn btn-sm btn-outline-primary py-1  ml-2"
                             title="Modifier les informations"
-                            (click)="onUpdatePiece(piece)"
-                        >
+                            (click)="getOnePiece(piece.ID)">
                             <small><i class="fas fa-edit"></i></small>
                         </button>
                         <button class="btn btn-sm btn-outline-danger py-1 ml-2"
-                            title="Supprimer la piece" (click)="onDeletePiece()">
+                            title="Supprimer la piece" (click)="questionSuppression(piece.ID)">
                             <small><i class="fas fa-trash"></i></small>
                         </button>
                     </td>
