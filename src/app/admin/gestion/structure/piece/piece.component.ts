@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PiecesService } from 'src/app/services/pieces.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -8,6 +9,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./piece.component.scss']
 })
 export class PieceComponent implements OnInit {
+
+  reponse: any;
+  unePiece: any;
 
   page: number = 1;
   count: number = 0;
@@ -18,6 +22,7 @@ export class PieceComponent implements OnInit {
   isTypeList: boolean = false;
   pieceGroup!: FormGroup;
   pieceTypeGroup!: FormGroup;
+  allTypePiece: any;
 
   updatePiece: boolean = false;
   updatePieceType: boolean = false;
@@ -35,131 +40,155 @@ export class PieceComponent implements OnInit {
   })
 
   constructor(
-    private builder: FormBuilder
-  ) { }
+    private builder: FormBuilder,
+    private piecesService: PiecesService
+  ) {
+    this.pieceTypeGroup = this.builder.group({
+      ID: [''],
+      typePiece: ['', Validators.required],
+    });
+
+    this.pieceGroup = this.builder.group({
+      ID: [''],
+      designation: ['', Validators.required],
+      nbreJours: [0],
+      nbreKm: [0],
+      typePiece: ['', Validators.required],
+    });
+
+  }
 
   ngOnInit(): void {
     this.initForm();
   }
   
   initForm() {
-    this.pieceGroup = this.builder.group({
-      id: [''],
-      type: ['', Validators.required],
-      libelle: ['', Validators.required],
-      jrAvtRechange: ['1', Validators.required],
-      kmAvtRechange: ['1', Validators.required],
-    });
+    this.getAllTypepiece();
+    this.getAllPiece();
+  }
 
-    this.pieceTypeGroup = this.builder.group({
-      id: [''],
-      libelle: ['', Validators.required],
+  getAllTypepiece() {
+    this.piecesService.getAllTypepiece().subscribe(ret => {
+      this.reponse = ret;
+      this.allTypePiece = this.reponse.results;
+    });
+  }
+
+  getAllPiece() {
+    this.piecesService.getAllPiece().subscribe(ret => {
+      this.reponse = ret;
+      this.data = this.reponse.results;
+    });
+  }
+
+  getOnePiece(id) {
+    this.piecesService.getOnePiece(id).subscribe(ret => {
+      this.reponse = ret;
+      this.unePiece = this.reponse.results;
+      this.pieceGroup.controls['ID'].setValue(this.unePiece[0].ID);
+      this.pieceGroup.controls['designation'].setValue(this.unePiece[0].designation);
+      this.pieceGroup.controls['nbreJours'].setValue(this.unePiece[0].nbreJours);
+      this.pieceGroup.controls['nbreKm'].setValue(this.unePiece[0].nbreKm);
+      this.pieceGroup.controls['typePiece'].setValue(this.unePiece[0].typePiece);
+
     });
   }
 
   onSubmitPiece() {
     const formData = new FormData();
+    const ID = this.pieceGroup.get('ID').value;
+    formData.append('ID', ID);
+    formData.append('typePiece', this.pieceGroup.get('typePiece').value);
+    formData.append('designation', this.pieceGroup.get('designation').value);
+    formData.append('nbreJours', this.pieceGroup.get('nbreJours').value);
+    formData.append('nbreKm', this.pieceGroup.get('nbreKm').value);
 
-    formData.append('', this.pieceGroup.get('id').value);
-    formData.append('', this.pieceGroup.get('type').value);
-    formData.append('', this.pieceGroup.get('libelle').value);
-    formData.append('', this.pieceGroup.get('jrAvtRechange').value);
-    formData.append('', this.pieceGroup.get('kmAvtRechange').value);
-
-    if (!this.updatePiece) {
-      this.Toast.fire({
-        icon: 'success',
-        title: 'response.message'
-      })
-    }
-    else {
-      Swal.fire({
-        title: 'Voulez-vous vraiment modifier cette pièce ?',
-        showDenyButton: true,
-        confirmButtonText: 'Oui',
-        denyButtonText: `Non`,
-      }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          // this.loading = true;
-          // this.userService.deleteUser(id).subscribe(
-          //   response => {
-          //     // this.loading = false;
-          //     if (response.success) {
-          //       this.Toast.fire({
-          //         icon: 'success',
-          //         title: response.message
-          //       })
-          //     }
-          //   }
-          // );
+    if (ID == '' || ID == null) {
+      this.piecesService.savePiece(formData).subscribe(ret => {
+        this.reponse = ret;
+        if (this.reponse.success == true) {
+          Swal.fire({
+            title: 'Succes!',
+            text: this.reponse.message,
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          });
+          this.pieceGroup.reset();
+          this.getAllPiece();
+        } else {
+          Swal.fire({
+            title: 'Erreur !',
+            text: this.reponse.message,
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          });
         }
-      })
-      this.pieceGroup.reset();
-      this.updatePiece = false;
+
+      });
+    } else {
+      this.piecesService.updatePiece(formData).subscribe(ret => {
+        this.reponse = ret;
+        if (this.reponse.success == true) {
+          Swal.fire({
+            title: 'Succes!',
+            text: this.reponse.message,
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          });
+          this.pieceGroup.reset();
+          this.getAllPiece();
+        } else {
+          Swal.fire({
+            title: 'Erreur !',
+            text: this.reponse.message,
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          });
+        }
+      });
+
+
     }
   }
+  resetpieceform() {
+    this.pieceGroup.reset();
+  }
+
+  resettypepieceform() {
+    this.pieceTypeGroup.reset();
+  }
+
+
 
   onSubmitPieceType() {
-    const formData = new FormData();
-
-    formData.append('', this.pieceTypeGroup.get('id').value);
-    formData.append('', this.pieceTypeGroup.get('libelle').value);
-
-    if (!this.updatePieceType) {
-      this.Toast.fire({
-        icon: 'success',
-        title: 'response.message'
-      })
-    }
-    else {
-      Swal.fire({
-        title: 'Voulez-vous vraiment modifier cet type de pièces ?',
-        showDenyButton: true,
-        confirmButtonText: 'Oui',
-        denyButtonText: `Non`,
-      }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          // this.loading = true;
-          // this.userService.deleteUser(id).subscribe(
-          //   response => {
-          //     // this.loading = false;
-          //     if (response.success) {
-          //       this.Toast.fire({
-          //         icon: 'success',
-          //         title: response.message
-          //       })
-          //     }
-          //   }
-          // );
-        }
-      })
-      this.pieceTypeGroup.reset();
-      this.updatePieceType = false;
-    }
-  }
-
-  onUpdatePiece(piece: any) {
-    this.updatePiece = true;
-
-    this.pieceGroup.patchValue({
-      id: piece.id,
-      type: piece.type,
-      libelle: piece.libelle,
-      jrAvtRechange: piece.jrAvtRechange,
-      kmAvtRechange: piece.jrAvtRechange,
+    const typepieceData = new FormData();
+    const ID = this.pieceTypeGroup.get('ID')?.value;
+    typepieceData.append('ID', ID);
+    typepieceData.append('typePiece', this.pieceTypeGroup.get('typePiece')?.value);
+    this.piecesService.saveTypepiece(typepieceData).subscribe(ret => {
+      this.reponse = ret;
+      if (this.reponse.success == true) {
+        Swal.fire({
+          title: 'Succes!',
+          text: this.reponse.message,
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        });
+        this.pieceTypeGroup.reset();
+        this.getAllTypepiece();
+      }
+      else {
+        Swal.fire({
+          title: 'Erreur!',
+          text: this.reponse.message,
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        });
+      }
     });
   }
 
-  onUpdatePieceType(pieceType: any) {
-    this.updatePieceType = true;
 
-    this.pieceTypeGroup.patchValue({
-      id: pieceType.id,
-      libelle: pieceType.libelle,
-    });
-  }
 
   onDeletePieceType() {
     Swal.fire({
@@ -186,7 +215,7 @@ export class PieceComponent implements OnInit {
     })
   }
 
-  onDeletePiece() {
+  questionSuppression(id) {
     Swal.fire({
       title: 'Voulez-vous vraiment supprimer cette pièce ?',
       showDenyButton: true,
@@ -195,21 +224,18 @@ export class PieceComponent implements OnInit {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        // this.loading = true;
-        // this.userService.deleteUser(id).subscribe(
-        //   response => {
-        //     // this.loading = false;
-        //     if (response.success) {
-        //       this.Toast.fire({
-        //         icon: 'success',
-        //         title: response.message
-        //       })
-        //     }
-        //   }
-        // );
+        this.onDeletePiece(id);
       }
     })
   }
+
+  onDeletePiece(id) {
+    this.piecesService.deleteOne(id).subscribe(ret => {
+      this.reponse = ret;
+
+    });
+  }
+
 
   changeSize(value: string) {
     this.tableSize = +value;

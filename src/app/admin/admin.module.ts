@@ -68,7 +68,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchgarfilterPipe } from './gestion/structure/garages/searchgarfilter.pipe';
 import { PieceComponent } from './gestion/structure/piece/piece.component';
 import { SearchtypefilterPipe } from './gestion/structure/type-entretien/searchtypefilter.pipe';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [AdminComponent,
@@ -138,6 +138,7 @@ import { SearchtypefilterPipe } from './gestion/structure/type-entretien/searcht
     MatInputModule,
     ReactiveFormsModule,
     NgxPaginationModule,
+    NgSelectModule,
     FormsModule,
     MatCardModule,
     MatIconModule,
