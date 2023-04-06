@@ -1,0 +1,599 @@
+<section class="content-header" [@simpleFadeAnimation]="'in'">
+  <!-- /.content-header -->
+
+  <div class="row">
+    <div class="col-lg-12">
+      <section class="card">
+        <h2 class="card-title"></h2>
+        <!--Liste des Véhicules-->
+
+        <div class="spinner4" *ngIf="isLoadingResults">
+          <!---->
+          <div class="bounce1"></div>
+          <div class="bounce2"></div>
+          <div class="bounce3"></div>
+        </div>
+
+        <section class="card card-primary">
+          <header class="card-header bg-secondary" style="padding: 10px">
+            <div class="row">
+              <div class="col-md-9 text-left">
+                <h2
+                  class="card-title text-white"
+                  style="padding: 0px; margin: 0px"
+                >
+                  <i class="fa fa-sitemap mr-2"></i>
+                  <span style="font-weight: 500" class="text-warning mr-2"
+                    >STRUCTURE</span
+                  >- GARAGES
+                </h2>
+              </div>
+
+              <div class="col-md-3 text-right">
+                <button
+                  type="button"
+                  class="btn btn-success btn-sm"
+                  (click)="actionClose(1)"
+                  [ngClass]="{ hidden: ActionOpen }"
+                >
+                  <!---->
+                  <i class="fa fa-plus mr-2"></i> NOUVEAU
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger btn-sm"
+                  (click)="actionClose(0)"
+                  [ngClass]="{ hidden: ActionClose }"
+                >
+                  <!-- -->
+                  <i class="fas fa-times mr-2"></i>FERMER
+                </button>
+              </div>
+            </div>
+          </header>
+
+          <div class="card-body">
+            <div class="row" [ngClass]="{ hidden: hidden }">
+              <!---->
+              <!--  -->
+
+              <form [formGroup]="garageForm">
+                <div
+                  class="d-flex align-items-center justify-content-between mb-2"
+                ></div>
+                <div class="d-flex">
+                  <div class="w-50" style="margin-right: 5px">
+                    <div class="row px-3">
+                      <div class="col-12 form-group mb-0">
+                        <label>Garage <span style="color: red">*</span></label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="ID"
+                          placeholder="Ex : ID"
+                          hidden
+                        />
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="designation"
+                          placeholder="Ex : Garage RTI"
+                        />
+                      </div>
+
+                      <div class="col-12 form-group">
+                        <label
+                          >Localisation <span style="color: red">*</span></label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="localisation"
+                          placeholder="Ex: Cocody en face de la RTI"
+                        />
+                      </div>
+                      <div class="col-6 mb-3">
+                        <label>Fixe <span style="color: red">*</span></label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="fixe"
+                          placeholder="Ex: +225 27 27 27 27 27"
+                        />
+                      </div>
+                      <div class="col-6 mb-3">
+                        <label
+                          >Portable <span style="color: red">*</span></label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="portable"
+                          placeholder="Ex: +225 XX XX XX XX XX"
+                        />
+                      </div>
+
+                      <div class="col-6 mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="email"
+                          placeholder="Email : xxx@domain"
+                        />
+                      </div>
+                      <div class="col-6 mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="fax"
+                          placeholder="Fax"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w-50 ml-2 mr-3">
+                    <div class="row border rounded bg-dark x-3 py-2 mt-3">
+                      <div class="col-12">
+                        <p class="text-warning">
+                            <i class="fa fa-user mr-2"></i> {{"Saisir les informations de la personne ressources du garage ici..." | uppercase}}
+                        </p>
+                      </div>
+
+                      <div class="col-12 form-group">
+                        <label>Point Focal </label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="pf_nomprenoms"
+                          placeholder="Le point focal du garage"
+                        />
+                      </div>
+
+                      <div class="col-6 mb-3">
+                        <label>Portable </label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="pf_portable"
+                          placeholder="Tel. Portable du point focal "
+                        />
+                      </div>
+
+                      <div class="col-6 mb-3">
+                        <label>Email </label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="pf_email"
+                          placeholder="Email du point focal "
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-12 text-center">
+                  <button
+                    style="margin-right: 10px"
+                    class="submit-button btn btn-success btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                    data-loading-text="Loading..."
+                    [disabled]="garageForm.invalid"
+                    (click)="saveGarage()"
+                  >
+                    <i class="fas fa-save text-4 mr-1"></i> Enregister
+                  </button>
+
+                  <span
+                    class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                    (click)="initialisationFormulaire()"
+                  >
+                    <i class="fas fa-times text-4 mr-1"></i> Quitter
+                  </span>
+                </div>
+
+                <!--div class="col-12 center mt-2">
+                  <button
+                    type="button"
+                    class="btn btn-danger w-25"
+                    (click)="initialisationFormulaire()"
+                  >
+                    Annuler
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-success ml-3 w-25"
+                    [disabled]="garageForm.invalid"
+                    (click)="saveGarage()"
+                  >
+                    <i class="fa fa-database"></i>
+                    Enregistrer
+                  </button>
+                </div-->
+              </form>
+            </div>
+
+            <div class="row">
+              <div class="spinner4" *ngIf="ModifsLoadingResults">
+                <!---->
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+              </div>
+
+              <div class="col-md-12" style="margin-top: 20px">
+                <mat-form-field>
+                  <mat-label>Rechercher un garage</mat-label>
+                  <input
+                    matInput
+                    (keyup)="applyFilter($event)"
+                    placeholder="Immatriculation , modèle , direction ..."
+                    #input
+                  />
+                </mat-form-field>
+
+                <div>
+                  <table
+                    class="table table-responsive-md table-bordered table-striped mb-0 fontTable"
+                    mat-table
+                    [dataSource]="dataSource"
+                    matSort
+                  >
+                    <ng-container matColumnDef="number">
+                      <th
+                        *matHeaderCellDef
+                        mat-sort-header
+                        style="width: 1%"
+                        class="text-center"
+                      >
+                        #
+                      </th>
+                      <td
+                        *matCellDef="let garage; let i = index"
+                        class="text-center"
+                      >
+                        {{ i + 1 }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="designation">
+                      <th *matHeaderCellDef mat-sort-header style="width: 20%">
+                        Désignation
+                      </th>
+                      <td *matCellDef="let garage">
+                        {{ garage.designation | uppercase }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="controlle">
+                      <th *matHeaderCellDef mat-sort-header style="width: 15%">
+                        Contacts
+                      </th>
+                      <td *matCellDef="let garage">
+                        Fixe : {{ garage.fixe }} | Cel. : {{ garage.portable }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="nbjourlimite">
+                      <th *matHeaderCellDef mat-sort-header style="width: 7%">
+                        Point Focal
+                      </th>
+                      <td *matCellDef="let garage">
+                        {{ garage.pf_nomprenoms | uppercase }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="programable">
+                      <th *matHeaderCellDef mat-sort-header style="width: 5%">
+                        Tel. Point Focal
+                      </th>
+                      <td *matCellDef="let garage" class="text-center">
+                        {{ garage.pf_portable }}
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="action">
+                      <th
+                        *matHeaderCellDef
+                        mat-sort-header
+                        style="width: 8%"
+                      ></th>
+                      <td *matCellDef="let garage">
+                        <button
+                          class="btn btn-warning btn-sm mr-2"
+                          (click)="enconstruction()"
+                          title="Point des factures"
+                        >
+                          <small><i class="fas fa-list-alt"></i></small>
+                        </button>
+                        <button
+                          class="btn btn-secondary btn-sm mr-2"
+                          (click)="getOneGarage(garage.ID)"
+                          title="Modifier les informations"
+                        >
+                          <i class="nav-icon fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm"
+                          (click)="questionSuppression(garage.ID)"
+                          title="Supprimer le garage"
+                        >
+                          <i class="nav-icon fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr
+                      mat-row
+                      *matRowDef="let row; columns: displayedColumns"
+                    ></tr>
+                  </table>
+
+                  <mat-paginator
+                    [pageSizeOptions]="[10, 20, 30, 100]"
+                    showFirstLastButtons
+                    aria-label="Select page of periodic elements"
+                  >
+                  </mat-paginator>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </div>
+  </div>
+
+  <!-- /.container-fluid -->
+</section>
+
+<!------------------------------->
+
+<!--div class="pt-4">
+  <div class="bg-dark py-2 px-3 rounded">
+    <h3 class="m-0 d-flex text-warning">
+      <div class="text-muted">
+        <i class="fa fa-sitemap"></i>&nbsp;&nbsp; STRUCTURE .::.
+      </div>
+      Garages
+    </h3>
+  </div>
+  <div class="border rounded px-3 py-2 mt-3">
+    <form [formGroup]="garageForm">
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <p>
+          <i class="fa fa-plus-circle text-success"></i>&nbsp;&nbsp; Edition
+          Garage
+        </p>
+      </div>
+      <div class="d-flex">
+        <div class="w-50" style="margin-right: 5px">
+          <div class="row px-3">
+            <div class="col-12 form-group mb-0">
+              <label>Garage <span style="color: red">*</span></label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="ID"
+                placeholder="Ex : ID"
+                hidden
+              />
+              <input
+                type="text"
+                class="form-control"
+                formControlName="designation"
+                placeholder="Ex : Garage RTI"
+              />
+            </div>
+
+            <div class="col-12 form-group">
+              <label>Localisation <span style="color: red">*</span></label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="localisation"
+                placeholder="Ex: Cocody en face de la RTI"
+              />
+            </div>
+            <div class="col-6 mb-3">
+              <label>Fixe <span style="color: red">*</span></label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="fixe"
+                placeholder="Ex: +225 27 27 27 27 27"
+              />
+            </div>
+            <div class="col-6 mb-3">
+              <label>Portable <span style="color: red">*</span></label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="portable"
+                placeholder="Ex: +225 XX XX XX XX XX"
+              />
+            </div>
+
+            <div class="col-6 mb-3">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="email"
+                placeholder="Email : xxx@domain"
+              />
+            </div>
+            <div class="col-6 mb-3">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="fax"
+                placeholder="Fax"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="w-50 ml-2 mr-3">
+          <div class="row border rounded bg-secondary px-3 py-2 mt-3">
+            <div class="col-12">
+              <p class="text-warning">
+                Saisir les informations de la personne ressources du garage
+                ici...
+              </p>
+            </div>
+
+            <div class="col-12 form-group">
+              <label>Point Focal </label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="pf_nomprenoms"
+                placeholder="Le point focal du garage"
+              />
+            </div>
+
+            <div class="col-6 mb-3">
+              <label>Portable </label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="pf_portable"
+                placeholder="Tel. Portable du point focal "
+              />
+            </div>
+
+            <div class="col-6 mb-3">
+              <label>Email </label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="pf_email"
+                placeholder="Email du point focal "
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 center mt-2">
+        <button
+          type="button"
+          class="btn btn-danger w-25"
+          (click)="initialisationFormulaire()"
+        >
+          Annuler
+        </button>
+        <button
+          type="button"
+          class="btn btn-success ml-3 w-25"
+          [disabled]="garageForm.invalid"
+          (click)="saveGarage()"
+        >
+          <i class="fa fa-database"></i>
+          Enregistrer
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="border rounded px-3 py-2 mt-3">
+    <div class="d-flex mb-3 justify-content-between align-items-center">
+      <div class="w-50">
+        <input
+          type="search"
+          class="form-control w-10"
+          [(ngModel)]="searchValue"
+          placeholder="Tapez votre recherche ici..."
+        />
+      </div>
+      <div class="rounded text-muted border py-2 px-3">
+        Total :: {{ data.length }}
+      </div>
+    </div>
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th class="py-1">Désignation.</th>
+          <th class="py-1">Contacts</th>
+          <th class="py-1">Point Focal</th>
+          <th class="py-1">Tel. Point Focal</th>
+          <th class="py-1"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let garage of data
+              | searchgarfilter : searchValue
+              | paginate
+                : {
+                    itemsPerPage: tableSize,
+                    currentPage: page,
+                    totalItems: count
+                  };
+            let i = index
+          "
+        >
+          <td class="py-2">{{ garage.designation }}</td>
+          <td class="py-2 text-success">
+            Fixe : {{ garage.fixe }} | Cel. : {{ garage.portable }}
+          </td>
+          <td class="py-2">{{ garage.pf_nomprenoms }}</td>
+          <td class="py-2 text-info">
+            {{ garage.pf_portable }}
+          </td>
+          <td class="py-2" align="right">
+            <button
+              class="btn btn-sm btn-outline-primary py-1"
+              (click)="enconstruction()"
+              title="Point des factures"
+            >
+              <small><i class="fas fa-bars"></i></small>
+            </button>
+            <button
+              class="btn btn-sm btn-outline-primary py-1 ml-2"
+              (click)="getOneGarage(garage.ID)"
+              title="Modifier les informations"
+            >
+              <small><i class="fas fa-edit"></i></small>
+            </button>
+            <button
+              class="btn btn-sm btn-outline-danger py-1 ml-2"
+              (click)="questionSuppression(garage.ID)"
+              title="Supprimer le garage"
+            >
+              <small><i class="fas fa-trash"></i></small>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div
+      class="px-2 d-flex justify-content-end align-items-center"
+      style="font-size: smaller"
+      *ngIf="data.length > 0"
+    >
+      <p>Total : [ {{ data.length }} ]</p>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+      <div class="d-flex mr-3">
+        Enregistrements par page :&nbsp;&nbsp;
+        <select
+          id="items-per-page"
+          #value
+          class="mr-3 mb-3"
+          (change)="changeSize(value.value)"
+        >
+          <option *ngFor="let size of tableSizes" [value]="size">
+            {{ size }}
+          </option>
+        </select>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <pagination-controls
+          previousLabel="Précédent"
+          nextLabel="Suivant"
+          (pageChange)="onTableDataChange($event)"
+        >
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+</div-->
