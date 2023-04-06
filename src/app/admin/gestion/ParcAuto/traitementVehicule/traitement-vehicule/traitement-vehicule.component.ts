@@ -3298,6 +3298,7 @@ this.TabModifier = true;*/
   }
 
   public changeTypeEntretien(event) {
+    alert(event + ' / ' + this.id);
     this.getAllDetailsByID(event);
   }
 
