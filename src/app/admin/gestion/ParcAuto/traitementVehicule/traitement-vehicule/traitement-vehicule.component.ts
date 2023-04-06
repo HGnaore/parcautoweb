@@ -28,6 +28,7 @@ import { ConfigService } from "src/app/services/config.service";
 import { PersonnelService } from "src/app/services/trombino/personnel.service";
 import { AssureurService } from "src/app/services/assureur.service";
 import { environment } from "src/environments/environment";
+import { EntretienService } from "src/app/services/entretien.service";
 
 export interface PeriodicElement {
   name: string;
@@ -614,6 +615,7 @@ export class TraitementVehiculeComponent implements OnInit {
     "entretienDetailQuantite",
     "entretienDetailPrixUnit",
     "entretienDetailPrixTotal",
+    "entretienDetailTraveauObserve",
     "actioneEntretienDetail",
   ];
   dataSourceEntretienDetail: MatTableDataSource<any>;
@@ -781,6 +783,7 @@ export class TraitementVehiculeComponent implements OnInit {
   MediaFIlePreview: any;
   reader: any;
   listemodelebymarques: any = [];
+  listeDetailEntret: any = [];
   listeFonction: any = [];
   listemarques: any = [];
   OneCarteGrise: any = [];
@@ -887,7 +890,8 @@ export class TraitementVehiculeComponent implements OnInit {
     private router: Router,
     private assureurService: AssureurService,
     private personnelService: PersonnelService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private entretienService: EntretienService
   ) {
     this.dataSourcePanne = new MatTableDataSource(this.Pannes);
     this.dataSourceSinistreNew = new MatTableDataSource(this.Sinistre);
@@ -2041,8 +2045,9 @@ this.TabModifier = true;*/
       entretienDateDepart: ["", Validators.required],
       entretienkilometrageDepart: ["", Validators.required],
       entretienDateRetour: ["", Validators.required],
-      entretienkilometrageRetour: ["", Validators.required],
+      entretienkilometrageRetour: [""],
       entretienlibelle: ["", Validators.required],
+      entretienMontantRepar: ["", Validators.required],
       entretienDescription: [""],
       entretienFacProforma: [""],
       entretienBonCommande: [""],
@@ -2057,10 +2062,11 @@ this.TabModifier = true;*/
 
   initFormDetailEntretien() {
     this.vehiculeFormDetailEntretient = this.formBuilder.group({
-      lentretientDetailID: ["", Validators.required],
+      lentretientDetailID: [""],
       entretienDetailTraveauEffec: ["", Validators.required],
       entretienDetailTraveauQuant: ["", Validators.required],
       entretienDetailTraveauPrix: ["", Validators.required],
+      entretienDetailTraveauObserv: [""],
     });
     //Chargement des marques des vehicules
     //this.TlisteEntretienDetail(3)
@@ -2113,6 +2119,7 @@ this.TabModifier = true;*/
     FormDataVeh.append("entretienFacProformaNew", f.entretienFacProformaNew);
     FormDataVeh.append("entretienBonCommandeNew", f.entretienBonCommandeNew);
     FormDataVeh.append("entretienFactureNew", f.entretienFactureNew);
+    FormDataVeh.append("entretienMontantRepar", f.entretienMontantRepar);
 
     if (f.lentretientID != "") {
       //Modif;
@@ -2202,6 +2209,10 @@ this.TabModifier = true;*/
       this.vehiculeFormEntretien.controls["entretienlibelle"].setValue(
         this.OneEntretien.results[0].entretienlibelle
       );
+      this.vehiculeFormEntretien.controls["entretienMontantRepar"].setValue(
+        this.OneEntretien.results[0].entretienMontantRepar
+      );
+
       this.vehiculeFormEntretien.controls["entretienDescription"].setValue(
         this.OneEntretien.results[0].entretienDescription
       );
@@ -2275,6 +2286,11 @@ this.TabModifier = true;*/
       "entretienDetailTraveauPrix",
       f.entretienDetailTraveauPrix
     );
+    FormDataVeh.append(
+      "entretienDetailTraveauObserv",
+      f.entretienDetailTraveauObserv
+    );
+
     //Nouveau;
 
     this.vehiculeService.saveEntretienDetail(FormDataVeh).subscribe(
@@ -2291,6 +2307,10 @@ this.TabModifier = true;*/
           this.vehiculeFormDetailEntretient.controls[
             "entretienDetailTraveauPrix"
           ].setValue("");
+          this.vehiculeFormDetailEntretient.controls[
+            "entretienDetailTraveauObserv"
+          ].setValue("");
+
           this.TlisteEntretienDetail(f.lentretientDetailID); //
         } else {
           this.toastr.error(result.message);
@@ -3277,6 +3297,19 @@ this.TabModifier = true;*/
     });
   }
 
+  public changeTypeEntretien(event) {
+    this.getAllDetailsByID(event);
+  }
+
+  getAllDetailsByID(id) {
+    this.vehiculeFormDetailEntretient.controls[
+      "entretienDetailTraveauEffec"
+    ].setValue("");
+    this.entretienService.getAllDetailsTypeentretien(id).subscribe((ret) => {
+      this.reponse = ret;
+      this.listeDetailEntret = this.reponse.results;
+    });
+  }
   loadGaragiste() {
     this.vehiculeService.listGaragiste().subscribe((reponse) => {
       this.listeGaragiste = reponse;
@@ -3660,16 +3693,16 @@ this.hiddenListeEntretien= false;*/
     } else if (this.NameSuppression == "entretienprogramm") {
       this.supprimeEntretienProgramm();
       return;
-    }  else if (this.NameSuppression == "infraction") {
+    } else if (this.NameSuppression == "infraction") {
       this.supprimeInfraction();
       return;
-    }else if (this.NameSuppression == "entretien") {
+    } else if (this.NameSuppression == "entretien") {
       this.supprimeEntretien();
       return;
-    }  else {
+    } else {
     }
   }
-  
+
   supprimeMedia() {
     this.vehiculeService.deleteMedia(this.IDSuppression).subscribe(
       (reponse) => {
@@ -3774,4 +3807,4 @@ this.hiddenListeEntretien= false;*/
       }
     );
   }
-}
+} 

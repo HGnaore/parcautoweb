@@ -31,7 +31,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
         animate(1000, style({ opacity: 0 })))
     ])
   ]
-})
+}) 
 export class AssureurListeComponent implements OnInit {
 
    
