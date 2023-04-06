@@ -52,6 +52,10 @@ export class EntretienService {
     return this.httpClient.get<any>(this.urlG + '/vehicule/typeentretien/listedetailstypeentretien.php?id=' + id);
   }
 
+  getDateDernierTypeentretien(entretientypeID, vehicule_ID): Observable<any> {
+    return this.httpClient.get<any>(this.urlG + '/vehicule/typeentretien/datederniertypeentretien.php?entretientypeID=' + entretientypeID + '&vehicule_ID=' + vehicule_ID);
+  }
+
   getOneDetailsTypeentretien(id): Observable<any> {
     return this.httpClient.get<any>(this.urlG + '/vehicule/typeentretien/detailstypeentretienparid.php?ID=' + id);
   }
