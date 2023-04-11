@@ -503,7 +503,8 @@
                       </button>
                     </div>
                   </div>
-                  <div ><!--[ngClass]="{ hidden: hiddenEntretien }"-->
+                  <div [ngClass]="{ hidden: hiddenEntretien }">
+                    <!---->
                     <section class="card">
                       <div class="card-body border mt-2 bg-light">
                         <form
@@ -512,7 +513,8 @@
                             onSubmitFormEntretien(vehiculeFormEntretien.value)
                           "
                         >
-                          <div class="row"><!--ecommerce-form action-buttons-fixed-->
+                          <div class="row">
+                            <!--ecommerce-form action-buttons-fixed-->
                             <input
                               type="text"
                               hidden
@@ -521,9 +523,7 @@
                               id="inputPassword4"
                             />
                             <div class="col-md-3 inputSpace">
-                              <label
-                                for="inputEmail4"
-                                class="form-label"
+                              <label for="inputEmail4" class="form-label"
                                 >Véhicule <span class="Oblig">*</span></label
                               >
                               <select
@@ -540,9 +540,7 @@
                               </select>
                             </div>
                             <div class="col-md-3 inputSpace">
-                              <label
-                                for="inputEmail4"
-                                class="form-label"
+                              <label for="inputEmail4" class="form-label"
                                 >Type d'entretien
                                 <span class="Oblig">*</span></label
                               >
@@ -552,7 +550,10 @@
                                 formControlName="entretientype"
                                 name="entretientype"
                                 class="form-control form-control-modern"
-                                name="entretientype" (change)="changeTypeEntretien($event.target.value)"
+                                name="entretientype"
+                                (change)="
+                                  changeTypeEntretien($event.target.value)
+                                "
                               >
                                 <option selected value="">-- Choisir --</option>
                                 <option
@@ -562,12 +563,16 @@
                                   {{ item.designation | uppercase }}
                                 </option>
                               </select>
-                              <small class="text-danger">Dernier entretien le : 02/02/2023</small>
+                              <small
+                                class="text-danger" style="font-weight: 800;"
+                                *ngIf="DateDernierentretien"
+                                >Dernier entretien le : {{
+                                  DateDernierentretien | date : "dd/MM/yyyy"
+                                }}</small
+                              >
                             </div>
                             <div class="col-md-6 inputSpace">
-                              <label
-                                for="inputEmail4"
-                                class="form-label"
+                              <label for="inputEmail4" class="form-label"
                                 >Garage <span class="Oblig">*</span></label
                               >
                               <select
@@ -593,10 +598,9 @@
                                             <i class="fa fa-plus text-4 mr-2"></i></button>
                                       </div-->
                             <div class="col-md-3 inputSpace">
-                              <label
-                                for="inputPassword4"
-                                class="form-label"
-                                >Date d'envoi à l'entretien <span class="Oblig">*</span></label
+                              <label for="inputPassword4" class="form-label"
+                                >Date d'envoi à l'entretien
+                                <span class="Oblig">*</span></label
                               >
                               <input
                                 type="date"
@@ -607,9 +611,7 @@
                             </div>
 
                             <div class="col-md-3 inputSpace">
-                              <label
-                                for="inputPassword4"
-                                class="form-label"
+                              <label for="inputPassword4" class="form-label"
                                 >Kilométrage de depart<span class="Oblig"
                                   >*</span
                                 ></label
@@ -623,9 +625,7 @@
                             </div>
 
                             <div class="col-md-3 inputSpace">
-                              <label
-                                for="inputPassword4"
-                                class="form-label"
+                              <label for="inputPassword4" class="form-label"
                                 >Date de retour</label
                               >
                               <input
@@ -636,9 +636,7 @@
                               />
                             </div>
                             <div class="col-md-3 inputSpace">
-                              <label
-                                for="inputPassword4"
-                                class="form-label"
+                              <label for="inputPassword4" class="form-label"
                                 >Kilométrage de retour</label
                               >
                               <input
@@ -650,11 +648,8 @@
                             </div>
 
                             <div class="col-md-9 inputSpace">
-                              <label
-                                for="inputPassword4"
-                                class="form-label"
-                                >Objet
-                                <span class="Oblig">*</span></label
+                              <label for="inputPassword4" class="form-label"
+                                >Objet <span class="Oblig">*</span></label
                               >
                               <input
                                 type="text"
@@ -665,18 +660,19 @@
                             </div>
 
                             <div class="col-md-3 inputSpace">
-                              <label
-                                for="inputPassword4"
-                                class="form-label"
-                                >Montant
-                                <span class="Oblig">*</span></label
+                              <label for="inputPassword4" class="form-label"
+                                >Montant <span class="Oblig">*</span></label
                               >
                               <div class="input-group border-success">
-                              <input type="text" class="form-control" formControlName="entretienMontantRepar">
-                              <div class="input-group-append">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  formControlName="entretienMontantRepar"
+                                />
+                                <div class="input-group-append">
                                   <span class="input-group-text">F CFA</span>
+                                </div>
                               </div>
-                            </div>
                             </div>
 
                             <!--div class="col-4">
@@ -691,13 +687,8 @@
                               </div>
                             </div-->
 
-                         
-
-                        
                             <div class="col-md-12 inputSpace">
-                              <label
-                                for="inputPassword4"
-                                class="form-label"
+                              <label for="inputPassword4" class="form-label"
                                 >Description</label
                               >
                               <textarea
@@ -712,9 +703,7 @@
                             </div>
 
                             <div class="col-md-4 inputSpace">
-                              <label
-                                for="inputPassword4"
-                                class="form-label"
+                              <label for="inputPassword4" class="form-label"
                                 >Facture Proforma
                                 <span class="text-danger">(PDF)</span></label
                               >
@@ -744,9 +733,7 @@
                             </div>
 
                             <div class="col-md-4 inputSpace">
-                              <label
-                                for="inputPassword4"
-                                class="form-label"
+                              <label for="inputPassword4" class="form-label"
                                 >Bon de Commande
                                 <span class="text-danger">(PDF)</span></label
                               >
@@ -776,9 +763,7 @@
                             </div>
 
                             <div class="col-md-4 inputSpace">
-                              <label
-                                for="inputPassword4"
-                                class="form-label"
+                              <label for="inputPassword4" class="form-label"
                                 >Facture
                                 <span class="text-danger">(PDF)</span></label
                               >
@@ -806,28 +791,28 @@
                                 /><!---->
                               </div>
                             </div>
-                          
- </div>
-                            <div class="col-12 col-md-12 text-center"  *ngIf="hiddenTabEntretienSave">
-                              <button
-                                style="margin-right: 10px"
-                                type="submit"
-                                class="submit-button btn btn-success btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
-                                data-loading-text="Loading..."
-                                [disabled]="vehiculeFormEntretien.invalid"
-                              >
-                                <i class="fas fa-save text-4 mr-1"></i> Enregister
-                              </button>
-            
-                              <span
-                                class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
-                                (click)="actionCloseEntretien(0)"
-                              >
-                                <i class="fas fa-times text-4 mr-1"></i> Quitter
-                              </span>
-                            </div>
-                        
-                       
+                          </div>
+                          <div
+                            class="col-12 col-md-12 text-center"
+                            *ngIf="hiddenTabEntretienSave"
+                          >
+                            <button
+                              style="margin-right: 10px"
+                              type="submit"
+                              class="submit-button btn btn-success btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                              data-loading-text="Loading..."
+                              [disabled]="vehiculeFormEntretien.invalid"
+                            >
+                              <i class="fas fa-save text-4 mr-1"></i> Enregister
+                            </button>
+
+                            <span
+                              class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                              (click)="actionCloseEntretien(0)"
+                            >
+                              <i class="fas fa-times text-4 mr-1"></i> Quitter
+                            </span>
+                          </div>
 
                           <!--div
                             class="col-12 col-md-12 text-center mt-3"
@@ -854,233 +839,268 @@
                       </div>
                     </section>
 
-                    <div>
+                    <div *ngIf="hiddenTabEntretein">
                       <form
-                      [formGroup]="vehiculeFormDetailEntretient"
-                      (ngSubmit)="
-                      onSubmitFormDetailEntretein(vehiculeFormDetailEntretient.value)
-                      "
-                    >
-                      <div class="bg-dark py-2 px-3 rounded">
-                        <h3 class="m-0 d-flex text-warning"><div class="text-muted">
-                            <i class="fa fa-list"></i>&nbsp;&nbsp;
-                            ENTRETIEN .::. </div>Détails des travaux éffectués
-                        </h3>
-                      </div>
+                        [formGroup]="vehiculeFormDetailEntretient"
+                        (ngSubmit)="
+                          onSubmitFormDetailEntretein(
+                            vehiculeFormDetailEntretient.value
+                          )
+                        "
+                      >
+                        <div class="bg-dark py-2 px-3 rounded">
+                          <h3 class="m-0 d-flex text-warning">
+                            <div class="text-muted">
+                              <i class="fa fa-list"></i>&nbsp;&nbsp; ENTRETIEN
+                              .::.
+                            </div>
+                            Détails des travaux éffectués
+                          </h3>
+                        </div>
 
-                      <div class="my-3 border rounded p-3">
-                        <p class="text-danger">::. Cliquez sur le bouton <strong>Ajouter</strong> pour ajouter le détail de l'entretien au tableau .::</p>
-                        <table class="w-100 mb-3">
-                          <input
-                          type="text"
-                          hidden
-                          formControlName="lentretientDetailID"
-                          class="form-control form-control-modern"
-                          id="inputPassword4"
-                        />
-                          <tr>
-                            <td class="p-2">
-                              <select
-id="entretienDetailTraveauEffec"
-class="form-control"
-formControlName="entretienDetailTraveauEffec"
-name="entretienDetailTraveauEffec"
->
-<option selected value="">---- Choisir détail ----</option>
-<option
-  selected
-  *ngFor="
-    let det of listeDetailEntret
-  "
-  [value]="det.ID"
->
-  {{ det.designation | uppercase }}
-</option>
-</select>
-                            </td>
-                            <td class="p-2">
-                              <input type="number" formControlName="entretienDetailTraveauQuant" class="form-control" placeholder="Quantité">
-                            </td>
-                            <td class="p-2">
-                              <input type="text" formControlName="entretienDetailTraveauPrix" class="form-control" placeholder="Montant">
-                            </td>
-                            <td class="p-2">
-                              <textarea rows="1" class="form-control" placeholder="Observation" formControlName="entretienDetailTraveauObserv"></textarea>
-                            </td>
-                            <td align="center" class="p-2">
-                              <button class="btn btn-success w-100"  type="submit"  [disabled]="vehiculeFormDetailEntretient.invalid">
-                                <i class="fas fa-plus-square"></i>
-                                Ajouter
-                              </button>
-                            </td>
-                          </tr>
-                        </table>
-
-                        <div class="col-md-12">
-                          <table
-                            mat-table
-                            [dataSource]="dataSourceEntretienDetail"
-                            class="table-responsive-md table-striped mb-0"
-                          >
-                            <!-- Position Column -->
-                            <ng-container matColumnDef="numberDet">
-                              <th
-                                mat-header-cell
-                                *matHeaderCellDef
-                                class="bg-info"
-                              >
-                                #
-                              </th>
-                              <td
-                                mat-cell
-                                *matCellDef="let element; let i = index"
-                              >
-                                {{ i + 1 }}
+                        <div class="my-3 border rounded p-3">
+                          <p class="text-danger">
+                            ::. Cliquez sur le bouton
+                            <strong>Ajouter</strong> pour ajouter le détail de
+                            l'entretien au tableau .::
+                          </p>
+                          <table class="w-100 mb-3">
+                            <input
+                              type="text"
+                              hidden
+                              formControlName="lentretientDetailID"
+                              class="form-control form-control-modern"
+                              id="inputPassword4"
+                            />
+                            <tr>
+                              <td class="p-2">
+                                <select
+                                  id="entretienDetailTraveauEffec"
+                                  class="form-control"
+                                  formControlName="entretienDetailTraveauEffec"
+                                  name="entretienDetailTraveauEffec"
+                                >
+                                  <option selected value="">
+                                    ---- Choisir détail ----
+                                  </option>
+                                  <option
+                                    selected
+                                    *ngFor="let det of listeDetailEntret"
+                                    [value]="det.ID"
+                                  >
+                                    {{ det.designation | uppercase }}
+                                  </option>
+                                </select>
                               </td>
-                            </ng-container>
+                              <td class="p-2">
+                                <input
+                                  type="number"
+                                  formControlName="entretienDetailTraveauQuant"
+                                  class="form-control"
+                                  placeholder="Quantité"
+                                />
+                              </td>
+                              <td class="p-2">
+                                <input
+                                  type="number"
+                                  formControlName="entretienDetailTraveauPrix"
+                                  class="form-control"
+                                  placeholder="Montant"
+                                />
+                              </td>
+                              <td class="p-2">
+                                <textarea
+                                  rows="1"
+                                  class="form-control"
+                                  placeholder="Observation"
+                                  formControlName="entretienDetailTraveauObserv"
+                                ></textarea>
+                              </td>
+                              <td align="center" class="p-2">
+                                <button
+                                  class="btn btn-success w-100"
+                                  type="submit"
+                                  [disabled]="
+                                    vehiculeFormDetailEntretient.invalid
+                                  "
+                                >
+                                  <i class="fas fa-plus-square"></i>
+                                  Ajouter
+                                </button>
+                              </td>
+                            </tr>
+                          </table>
 
-                            <!-- Position Column -->
-                            <ng-container
-                              matColumnDef="entretienDetailDesignation"
+                          <div class="col-md-12">
+                            <table
+                              mat-table
+                              [dataSource]="dataSourceEntretienDetail"
+                              class="table-responsive-md table-striped mb-0"
                             >
-                              <th
-                                mat-header-cell
-                                *matHeaderCellDef
-                                class="bg-info"
+                              <!-- Position Column -->
+                              <ng-container matColumnDef="numberDet">
+                                <th
+                                  mat-header-cell
+                                  *matHeaderCellDef
+                                  class="bg-info"
+                                >
+                                  #
+                                </th>
+                                <td
+                                  mat-cell
+                                  *matCellDef="let element; let i = index"
+                                >
+                                  {{ i + 1 }}
+                                </td>
+                              </ng-container>
+
+                              <!-- Position Column -->
+                              <ng-container
+                                matColumnDef="entretienDetailDesignation"
                               >
-                                Designation
-                              </th>
-                              <td mat-cell *matCellDef="let element">
-                                {{ element.entretienDetailDesignation | uppercase }}
-                              </td>
-                            </ng-container>
+                                <th
+                                  mat-header-cell
+                                  *matHeaderCellDef
+                                  class="bg-info"
+                                >
+                                  Designation
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                  {{
+                                    element.designation
+                                      | uppercase
+                                  }}
+                                </td>
+                              </ng-container>
 
-                            <ng-container
-                              matColumnDef="entretienDetailQuantite"
-                            >
-                              <th
-                                mat-header-cell
-                                *matHeaderCellDef
-                                class="bg-info"
+                              <ng-container
+                                matColumnDef="entretienDetailQuantite"
                               >
-                                Quantité
-                              </th>
-                              <td mat-cell *matCellDef="let element">
-                                {{ element.entretienDetailQuantite }}
-                              </td>
-                            </ng-container>
+                                <th
+                                  mat-header-cell
+                                  *matHeaderCellDef
+                                  class="bg-info"
+                                >
+                                  Quantité
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                  {{ element.entretienDetailQuantite }}
+                                </td>
+                              </ng-container>
 
-                            <!-- Position Column -->
-                            <ng-container
-                              matColumnDef="entretienDetailPrixUnit"
-                            >
-                              <th
-                                mat-header-cell
-                                *matHeaderCellDef
-                                class="bg-info"
+                              <!-- Position Column -->
+                              <ng-container
+                                matColumnDef="entretienDetailPrixUnit"
                               >
-                                Prix Unitaire
-                              </th>
-                              <td mat-cell *matCellDef="let element">
-                                {{ element.entretienDetailPrixUnit }}
-                              </td>
-                            </ng-container>
+                                <th
+                                  mat-header-cell
+                                  *matHeaderCellDef
+                                  class="bg-info"
+                                >
+                                  Prix Unitaire
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                  {{ element.entretienDetailPrixUnit }}
+                                </td>
+                              </ng-container>
 
-                            <!-- Name Column -->
-                            <ng-container
-                              matColumnDef="entretienDetailPrixTotal"
-                            >
-                              <th
-                                mat-header-cell
-                                *matHeaderCellDef
-                                class="bg-info"
+                              <!-- Name Column -->
+                              <ng-container
+                                matColumnDef="entretienDetailPrixTotal"
                               >
-                                Total
-                              </th>
-                              <td mat-cell *matCellDef="let element">
-                                {{
-                                  element.entretienDetailQuantite *
-                                    element.entretienDetailPrixUnit
-                                }}
-                              </td>
-                            </ng-container>
+                                <th
+                                  mat-header-cell
+                                  *matHeaderCellDef
+                                  class="bg-info"
+                                >
+                                  Total
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                  {{
+                                    element.entretienDetailQuantite *
+                                      element.entretienDetailPrixUnit
+                                  }}
+                                </td>
+                              </ng-container>
 
-
-                             <!-- Name Column -->
-                             <ng-container
-                             matColumnDef="entretienDetailTraveauObserve"
-                           >
-                             <th
-                               mat-header-cell
-                               *matHeaderCellDef
-                               class="bg-info"
-                             >
-                               Observation
-                             </th>
-                             <td mat-cell *matCellDef="let element">
-                               {{ element.entretienDetailTraveauObserv }}
-                             </td>
-                           </ng-container>
-
-                            <!-- Symbol Column -->
-                            <ng-container matColumnDef="actioneEntretienDetail">
-                              <th
-                                mat-header-cell
-                                *matHeaderCellDef
-                                class="bg-info"
+                              <!-- Name Column -->
+                              <ng-container
+                                matColumnDef="entretienDetailTraveauObserve"
                               >
-                                Actions
-                              </th>
-                              <td mat-cell *matCellDef="let element">
-                                <!--button type="button" class="btn btn-info btn-sm mr-2">
+                                <th
+                                  mat-header-cell
+                                  *matHeaderCellDef
+                                  class="bg-info"
+                                >
+                                  Observation
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                  {{ element.entretienDetailTraveauObserv }}
+                                </td>
+                              </ng-container>
+
+                              <!-- Symbol Column -->
+                              <ng-container
+                                matColumnDef="actioneEntretienDetail"
+                              >
+                                <th
+                                  mat-header-cell
+                                  *matHeaderCellDef
+                                  class="bg-info"
+                                >
+                                  Actions
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                  <!--button type="button" class="btn btn-info btn-sm mr-2">
                                                          <i class="bx bx-money" aria-hidden="true"></i> Dépense
                                                      </button>
                                                      <button type="button" class="btn btn-secondary btn-sm mr-2">
                                                          <i class="bx bxs-edit" aria-hidden="true"></i> Modifier
                                                      </button-->
-                                <button
-                                  type="button"
-                                  data-toggle="modal"
-                                  data-target="#modal-info"
-                                  class="btn btn-danger btn-sm"
-                                  (click)="
-                                    ItemSupprimeDetailEntretien(
-                                      element.ID,
-                                      'entretienDetail',
-                                      element.entretienID
-                                    )
-                                  "
-                                >
-                                  <i class="bx bxs-trash"></i> Sup
-                                </button>
-                                <!--button type="button" class="btn btn-primary btn-sm">Small button</button>
+                                  <button
+                                    type="button"
+                                    data-toggle="modal"
+                                    data-target="#modal-info"
+                                    class="btn btn-danger btn-sm"
+                                    (click)="
+                                      ItemSupprimeDetailEntretien(
+                                        element.IDDetEntre,
+                                        'entretienDetail',
+                                        element.entretienID
+                                      )
+                                    "
+                                  >
+                                    <i class="bx bxs-trash"></i> Sup
+                                  </button>
+                                  <!--button type="button" class="btn btn-primary btn-sm">Small button</button>
                                                      <button type="button" class="btn btn-primary btn-sm">Small button</button-->
-                              </td>
-                            </ng-container>
+                                </td>
+                              </ng-container>
 
-                            <tr
-                              mat-header-row
-                              *matHeaderRowDef="displayedColumnsEntretienDetail"
-                            ></tr>
-                            <tr
-                              mat-row
-                              *matRowDef="
-                                let row;
-                                columns: displayedColumnsEntretienDetail
-                              "
-                            ></tr>
-                          </table>
+                              <tr
+                                mat-header-row
+                                *matHeaderRowDef="
+                                  displayedColumnsEntretienDetail
+                                "
+                              ></tr>
+                              <tr
+                                mat-row
+                                *matRowDef="
+                                  let row;
+                                  columns: displayedColumnsEntretienDetail
+                                "
+                              ></tr>
+                            </table>
 
-                          <mat-paginator
-                            [pageSizeOptions]="[10, 20, 30]"
-                            showFirstLastButtons
-                            aria-label="Select page of periodic elements"
-                          >
-                          </mat-paginator>
-                        </div>
+                            <mat-paginator
+                              [pageSizeOptions]="[10, 20, 30]"
+                              showFirstLastButtons
+                              aria-label="Select page of periodic elements"
+                            >
+                            </mat-paginator>
+                          </div>
 
-
-                        <!--table class="table table-striped border mt-4">
+                          <!--table class="table table-striped border mt-4">
                           <thead class="table-dark">
                               <tr>
                                   <th class="py-1">Désignation.</th>
@@ -1109,159 +1129,115 @@ name="entretienDetailTraveauEffec"
                               </tr>
                           </tbody>
                         </table-->
-                      </div>
+                        </div>
                       </form>
                     </div>
-
-                    <div>
+                    <div [ngClass]="{ hidden: hiddenListeProgramable }"><!-- *ngIf="hiddenTabEntretein"-->
+                   
                       <div class="bg-dark py-2 px-3 rounded">
-                        <h3 class="m-0 d-flex text-warning"><div class="text-muted">
-                            <i class="fa fa-list"></i>&nbsp;&nbsp;
-                            ENTRETIEN .::. </div>Programmer un entretien
+                        <h3 class="m-0 d-flex text-warning">
+                          <div class="text-muted">
+                            <i class="fa fa-list"></i>&nbsp;&nbsp; ENTRETIEN
+                            .::.
+                          </div>
+                           Programmer un entretien
                         </h3>
                       </div>
-
+                      <form 
+                      [formGroup]="vehiculeFormProgrammeEntreien"
+                      (ngSubmit)="
+                        onSubmitFormEntreteinProgramme(
+                          vehiculeFormProgrammeEntreien.value
+                        )
+                      "
+                    >
                       <div class="my-3 border rounded p-3">
+                    
+                           
+                  <input
+                  type="text" hidden
+                  
+                  formControlName="lentretientProgrammeID"
+                  class="form-control form-control-modern"
+                />
+                <input
+                type="text" hidden
+                
+                formControlName="programmeentretientype"
+                class="form-control form-control-modern"
+              /><!--hidden-->
                         <table class="w-100 mb-3">
                           <tr>
                             <td class="p-2">
                               <div class="form-group">
-                                <label class="form-label">Date de l'entretien <span class="text-danger">*</span></label>
-                                <input type="date" class="form-control">
+                                <label class="form-label"
+                                  >Date de l'entretien
+                                  <span class="text-danger">*</span></label
+                                >
+                                <input type="date"  formControlName="programmeDate" class="form-control" />
                               </div>
                             </td>
                             <td class="p-2">
                               <div class="form-group">
-                                <label class="form-label">Rappel <span class="text-danger">*</span></label>
+                                <label class="form-label"
+                                  >Rappel
+                                  <span class="text-danger">*</span></label
+                                >
                                 <div class="input-group w-100 border-success">
-                                  <input type="number" class="form-control" value="1" min="1">
+                                  <input
+                                    type="number"
+                                    class="form-control"
+                                    value="1"
+                                    min="1"
+                                    formControlName="programmeRappel"
+                                  />
                                   <div class="input-group-append">
-                                      <span class="input-group-text">Jour(s)</span>
+                                    <span class="input-group-text"
+                                      >Jour(s)</span
+                                    >
                                   </div>
                                 </div>
                               </div>
                             </td>
                             <td class="p-2">
                               <div class="form-group">
-                                <label class="form-label">Rappel Kilométrage</label>
-                                <input type="number" class="form-control" value="1" min="1">
+                                <label class="form-label"
+                                  >Rappel Kilométrage</label
+                                >
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  value="1"
+                                  min="1"
+                                  formControlName="programmeRappelKilo"
+                                />
                               </div>
                             </td>
                             <td align="center" class="p-2">
-                              <button class="btn btn-success w-100 mt-4">
+                              <button class="btn btn-success w-100 mt-4" [disabled]="
+                              vehiculeFormProgrammeEntreien.invalid
+                            "
+                            type="submit">
                                 <i class="fas fa-plus"></i>
                                 Ajouter
                               </button>
                             </td>
                           </tr>
                         </table>
-                      </div>
-                    </div>
+                       
+                    
 
-                    <section class="col-md-12 card"  *ngIf="hiddenTabEntretein" hidden><!---->
-                      <div
-                        class="bg-warning"
-                        style="
-                          padding-top: 10px;
-                          padding-left: 20px;
-                          padding-bottom: 0px;
-                        "
-                      >
-                        <h2 class="card-title">Détail des travaux effectués</h2>
-                      </div>
-                      <div class="card-body">
-                        <form
-                          class="row g-3 ecommerce-form action-buttons-fixed"
-                          [formGroup]="vehiculeFormDetailEntretient"
-                          (ngSubmit)="
-                            onSubmitFormDetailEntretein(
-                              vehiculeFormDetailEntretient.value
-                            )
-                          "
-                        >
-                          <input
-                            type="text"
-                            hidden
-                            class="form-control form-control-modern"
-                            id="inputPassword4"
-                            formControlName="lentretientDetailID"
-                          />
-                          <div class="col-md-6 inputSpace">
-                            <label
-                              for="inputEmail4"
-                              class="form-label inputSpaceText"
-                              >Désignation</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control form-control-modern"
-                              id="inputPassword4"
-                              formControlName="entretienDetailTraveauEffec"
-                            />
-                          </div>
-                          <div class="col-md-2 inputSpace">
-                            <label
-                              for="inputEmail4"
-                              class="form-label inputSpaceText"
-                              >Quantité</label
-                            >
-                            <input
-                              type="number"
-                              class="form-control form-control-modern"
-                              id="inputPassword4"
-                              formControlName="entretienDetailTraveauQuant"
-                            />
-                          </div>
-                          <div class="col-md-2 inputSpace">
-                            <label
-                              for="inputEmail4"
-                              class="form-label inputSpaceText"
-                              >Prix Unit.</label
-                            >
-                            <input
-                              type="number"
-                              class="form-control form-control-modern"
-                              id="inputPassword4"
-                              formControlName="entretienDetailTraveauPrix"
-                            />
-                          </div>
-                          <!--div class="col-md-2 inputSpace">
-                              <label
-                                for="inputEmail4"
-                                class="form-label inputSpaceText"
-                                >TOTAL</label
-                              >
-                              <input
-                                type="number"
-                                readonly
-                                class="form-control form-control-modern"
-                                id="inputPassword4"
-                              />
-                            </div-->
-                          <div class="col-md-2 inputSpace">
-                            <button
-                              [disabled]="vehiculeFormDetailEntretient.invalid"
-                              type="submit"
-                              class="btn btn-dark btn-sm btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
-                              style="margin-top: 22px"
-                            >
-                              <i class="fa fa-plus text-4 mr-2"></i>
-                              Ajouter
-                            </button>
-                          </div>
-                        </form>
                         <div class="col-md-12">
                           <table
                             mat-table
-                            [dataSource]="dataSourceEntretienDetail"
+                            [dataSource]="dataSourceEntretienProgrammeDetail"
                             class="table-responsive-md table-striped mb-0"
                           >
-                            <!-- Position Column -->
                             <ng-container matColumnDef="numberDet">
                               <th
                                 mat-header-cell
                                 *matHeaderCellDef
-                                class="bg-white"
+                                class="bg-gradient-info"
                               >
                                 #
                               </th>
@@ -1272,133 +1248,92 @@ name="entretienDetailTraveauEffec"
                                 {{ i + 1 }}
                               </td>
                             </ng-container>
-
-                            <!-- Position Column -->
-                            <ng-container
-                              matColumnDef="entretienDetailDesignation"
-                            >
+                            <ng-container matColumnDef="programmeDate">
                               <th
                                 mat-header-cell
                                 *matHeaderCellDef
-                                class="bg-white"
+                                class="bg-gradient-info"
                               >
-                                Designation
-                              </th>
-                              <td mat-cell *matCellDef="let element">
-                                {{ element.entretienDetailDesignation | uppercase }}
-                              </td>
-                            </ng-container>
-
-                            <ng-container
-                              matColumnDef="entretienDetailQuantite"
-                            >
-                              <th
-                                mat-header-cell
-                                *matHeaderCellDef
-                                class="bg-white"
-                              >
-                                Quantité
-                              </th>
-                              <td mat-cell *matCellDef="let element">
-                                {{ element.entretienDetailQuantite }}
-                              </td>
-                            </ng-container>
-
-                            <!-- Position Column -->
-                            <ng-container
-                              matColumnDef="entretienDetailPrixUnit"
-                            >
-                              <th
-                                mat-header-cell
-                                *matHeaderCellDef
-                                class="bg-white"
-                              >
-                                Prix Unitaire
-                              </th>
-                              <td mat-cell *matCellDef="let element">
-                                {{ element.entretienDetailPrixUnit }}
-                              </td>
-                            </ng-container>
-
-                            <!-- Name Column -->
-                            <ng-container
-                              matColumnDef="entretienDetailPrixTotal"
-                            >
-                              <th
-                                mat-header-cell
-                                *matHeaderCellDef
-                                class="bg-white"
-                              >
-                                Total
+                                Date
                               </th>
                               <td mat-cell *matCellDef="let element">
                                 {{
-                                  element.entretienDetailQuantite *
-                                    element.entretienDetailPrixUnit
-                                }}
+                                  element.entretiendate | date : "dd/MM/yyyy" }}
                               </td>
                             </ng-container>
-
-                            <ng-container
-                             matColumnDef="entretienDetailTraveauObserve"
-                           >
-                             <th
-                               mat-header-cell
-                               *matHeaderCellDef
-                               class="bg-dark"
-                             >
-                               Observation
-                             </th>
-                             <td mat-cell *matCellDef="let element">
-                               {{ element.entretienDetailTraveauObserv }}
-                             </td>
-                           </ng-container>
-
-                            <!-- Symbol Column -->
-                            <ng-container matColumnDef="actioneEntretienDetail">
+                            <ng-container matColumnDef="entretienParametre">
                               <th
                                 mat-header-cell
                                 *matHeaderCellDef
-                                class="bg-white"
+                                class="bg-gradient-info"
+                              >
+                                Entretiens paramétrés
+                              </th>
+                              <td mat-cell *matCellDef="let element">
+                                {{ element.designation | uppercase }}
+                              </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Repetertous">
+                              <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="bg-gradient-info"
+                              >
+                                Rappel
+                              </th>
+                              <td mat-cell *matCellDef="let element">
+                                {{ element.entretienrappel }} Jour(s)
+                              </td>
+                            </ng-container>
+                            <ng-container matColumnDef="entretienrappelKilo">
+                              <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="bg-gradient-info"
+                              >
+                                Ou Kilométrage
+                              </th>
+                              <td mat-cell *matCellDef="let element">
+                                {{ element.entretienrappelKilo }} KM
+                              </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="actioneProgram">
+                              <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                class="bg-gradient-info"
                               >
                                 Actions
                               </th>
                               <td mat-cell *matCellDef="let element">
-                                <!--button type="button" class="btn btn-info btn-sm mr-2">
-                                                         <i class="bx bx-money" aria-hidden="true"></i> Dépense
-                                                     </button>
-                                                     <button type="button" class="btn btn-secondary btn-sm mr-2">
-                                                         <i class="bx bxs-edit" aria-hidden="true"></i> Modifier
-                                                     </button-->
-                                <button
-                                  type="button"
+                                <span
                                   data-toggle="modal"
                                   data-target="#modal-info"
                                   class="btn btn-danger btn-sm"
                                   (click)="
-                                    ItemSupprimeDetailEntretien(
-                                      element.ID,
-                                      'entretienDetail',
-                                      element.entretienID
+                                    ItemSupprimeEntretienProgramm(
+                                      element.entretienProgramID,
+                                      'entretienprogramm'
                                     )
                                   "
                                 >
                                   <i class="bx bxs-trash"></i> Sup
-                                </button>
-                                <!--button type="button" class="btn btn-primary btn-sm">Small button</button>
-                                                     <button type="button" class="btn btn-primary btn-sm">Small button</button-->
+                                </span>
                               </td>
                             </ng-container>
 
                             <tr
                               mat-header-row
-                              *matHeaderRowDef="displayedColumnsEntretienDetail"
+                              *matHeaderRowDef="
+                                displayedColumnsEntretienProgrammeDetail
+                              "
                             ></tr>
                             <tr
                               mat-row
                               *matRowDef="
                                 let row;
-                                columns: displayedColumnsEntretienDetail
+                                columns: displayedColumnsEntretienProgrammeDetail
                               "
                             ></tr>
                           </table>
@@ -1410,275 +1345,22 @@ name="entretienDetailTraveauEffec"
                           >
                           </mat-paginator>
                         </div>
-                      </div>
-                    </section>
 
-                    <!-- <div *ngIf="hiddenTabEntretein">
+                        
+                     
+                        <div class="col-12 col-md-12 text-center">
 
-                      <section class="card">
-                       
-                        <div
-                          class="bg-danger"
-                          style="
-                            padding-top: 10px;
-                            padding-left: 20px;
-                            padding-bottom: 0px;
-                          "
-                        >
-                          <h2 class="card-title text-white">
-                            Programmer un entretien
-                          </h2>
-                        </div>
-                        <div class="card-body">
-                          <form
-                            class="row g-3 ecommerce-form action-buttons-fixed"
-                            [formGroup]="vehiculeFormProgrammeEntreien"
-                            (ngSubmit)="
-                              onSubmitFormEntreteinProgramme(
-                                vehiculeFormProgrammeEntreien.value
-                              )
-                            "
+                          <span
+                            class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                            (click)="actionCloseEntretien(0)"
                           >
-                           
-                            <input
-                              type="text"
-                              hidden
-                              formControlName="lentretientProgrammeID"
-                              class="form-control form-control-modern"
-                            />
-                            <div class="col-md-5 inputSpace">
-                              <label
-                                for="inputEmail4"
-                                class="form-label inputSpaceText"
-                                >Type d'entretiens
-                                <span class="Oblig">*</span></label
-                              >
-                              <select
-                                id="entretientype"
-                                class="form-control"
-                                formControlName="programmeentretientype"
-                                name="entretientype"
-                                class="form-control form-control-modern"
-                                name="programmeentretientype"
-                              >
-                                <option selected value="">-- Choisir --</option>
-                                <option
-                                  *ngFor="let item of listeTypeEntret.results"
-                                  [value]="item.ID"
-                                >
-                                  {{ item.designation | uppercase }}
-                                </option>
-                              </select>
-                            </div>
-                            <div class="col-md-2 inputSpace">
-                              <label
-                                for="inputEmail4"
-                                class="form-label inputSpaceText"
-                                >Date <span class="Oblig">*</span></label
-                              >
-                              <input
-                                type="date"
-                                placeholder="1"
-                                class="form-control form-control-modern"
-                                id="inputPassword4"
-                                formControlName="programmeDate"
-                              />
-                            </div>
-
-                            <div class="col-md-1 inputSpace">
-                              <label
-                                for="inputEmail4"
-                                class="form-label inputSpaceText"
-                                >Rappel <span class="Oblig">*</span></label
-                              >
-                              <input
-                                type="number"
-                                placeholder="1"
-                                class="form-control form-control-modern"
-                                id="inputPassword4"
-                                formControlName="programmeRappel"
-                              />
-                            </div>
-
-                            <div class="col-md-2 inputSpace" hidden>
-                              <label
-                                for="inputPassword4"
-                                class="form-label inputSpaceText"
-                                >Rappel Période
-                                <span class="Oblig">*</span></label
-                              >
-                              <select
-                                disabled
-                                id="inputState"
-                                class="form-control form-control-modern"
-                                name="programmeRappelPeriode"
-                                formControlName="programmeRappelPeriode"
-                              >
-                                <option value="1" selected>Jour(s)</option>
-                                <option value="30">Mois</option>
-                                <option value="7">Semaine(s)</option>
-                                <option value="360">An(s)</option>
-                              </select>
-                            </div>
-                            <div class="col-md-2 inputSpace">
-                              <label
-                                for="inputPassword4"
-                                class="form-label inputSpaceText"
-                                >Rappel Kilométrage</label
-                              >
-                              <input
-                                type="number"
-                                class="form-control form-control-modern"
-                                id="inputPassword4"
-                                formControlName="programmeRappelKilo"
-                              />
-                            </div>
-
-                            <div class="col-md-2 inputSpace">
-                              <button
-                                [disabled]="
-                                  vehiculeFormProgrammeEntreien.invalid
-                                "
-                                type="submit"
-                                class="btn btn-dark btn-sm btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
-                                style="margin-top: 22px"
-                              >
-                                <i class="fa fa-plus text-4 mr-2"></i> Ajouter
-                              </button>
-                            </div>
-                          </form>
-
-                          <div class="col-md-12">
-                            <table
-                              mat-table
-                              [dataSource]="dataSourceEntretienProgrammeDetail"
-                              class="table-responsive-md table-striped mb-0"
-                            >
-                              <ng-container matColumnDef="numberDet">
-                                <th
-                                  mat-header-cell
-                                  *matHeaderCellDef
-                                  class="bg-gradient-info"
-                                >
-                                  #
-                                </th>
-                                <td
-                                  mat-cell
-                                  *matCellDef="let element; let i = index"
-                                >
-                                  {{ i + 1 }}
-                                </td>
-                              </ng-container>
-                              <ng-container matColumnDef="programmeDate">
-                                <th
-                                  mat-header-cell
-                                  *matHeaderCellDef
-                                  class="bg-gradient-info"
-                                >
-                                  Date
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                  {{
-                                    element.entretiendate | date : "dd/MM/yyyy" }}
-                                </td>
-                              </ng-container>
-                              <ng-container matColumnDef="entretienParametre">
-                                <th
-                                  mat-header-cell
-                                  *matHeaderCellDef
-                                  class="bg-gradient-info"
-                                >
-                                  Entretiens paramétrés
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                  {{ element.designation | uppercase }}
-                                </td>
-                              </ng-container>
-                              <ng-container matColumnDef="Repetertous">
-                                <th
-                                  mat-header-cell
-                                  *matHeaderCellDef
-                                  class="bg-gradient-info"
-                                >
-                                  Rappel
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                  {{ element.entretienrappel }} Jour(s)
-                                </td>
-                              </ng-container>
-                              <ng-container matColumnDef="entretienrappelKilo">
-                                <th
-                                  mat-header-cell
-                                  *matHeaderCellDef
-                                  class="bg-gradient-info"
-                                >
-                                  Ou Kilométrage
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                  {{ element.entretienrappelKilo }} KM
-                                </td>
-                              </ng-container>
-
-                              <ng-container matColumnDef="actioneProgram">
-                                <th
-                                  mat-header-cell
-                                  *matHeaderCellDef
-                                  class="bg-gradient-info"
-                                >
-                                  Actions
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                  <span
-                                    data-toggle="modal"
-                                    data-target="#modal-info"
-                                    class="btn btn-danger btn-sm"
-                                    (click)="
-                                      ItemSupprimeEntretienProgramm(
-                                        element.entretienProgramID,
-                                        'entretienprogramm'
-                                      )
-                                    "
-                                  >
-                                    <i class="bx bxs-trash"></i> Sup
-                                  </span>
-                                </td>
-                              </ng-container>
-
-                              <tr
-                                mat-header-row
-                                *matHeaderRowDef="
-                                  displayedColumnsEntretienProgrammeDetail
-                                "
-                              ></tr>
-                              <tr
-                                mat-row
-                                *matRowDef="
-                                  let row;
-                                  columns: displayedColumnsEntretienProgrammeDetail
-                                "
-                              ></tr>
-                            </table>
-
-                            <mat-paginator
-                              [pageSizeOptions]="[10, 20, 30]"
-                              showFirstLastButtons
-                              aria-label="Select page of periodic elements"
-                            >
-                            </mat-paginator>
-                          </div>
+                            <i class="fa fa-times text-4 mr-1"></i> Quitter
+                          </span>
                         </div>
-                      </section>
-
-                      <div class="col-12 col-md-12 text-center">
-
-                        <span
-                          class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
-                          (click)="actionCloseEntretien(0)"
-                        >
-                          <i class="fa fa-times text-4 mr-1"></i> Quitter
-                        </span>
                       </div>
-                    </div> -->
+                    </form>
+                    </div>
+
                   </div>
                   <div
                     class="card-body"
@@ -1839,13 +1521,15 @@ name="entretienDetailTraveauEffec"
                       >
                         <i class="fa fa-plus mr-2"></i>AJOUTER UNE PANNE
                       </button>
-                      <div class="d-flex align-items-center justify-content-between"
-                      [ngClass]="{ hidden: ActionClosePanne }">
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                        [ngClass]="{ hidden: ActionClosePanne }"
+                      >
                         <h3 class="m-0 d-flex text-danger font-weight-bold">
                           <div class="text-muted">
-                              <i class="fas fa-car"></i>&nbsp;&nbsp;
-                              PANNE .::.
-                          </div>Déclaration d'une panne
+                            <i class="fas fa-car"></i>&nbsp;&nbsp; PANNE .::.
+                          </div>
+                          Déclaration d'une panne
                         </h3>
                         <button
                           type="button"
@@ -1874,9 +1558,7 @@ name="entretienDetailTraveauEffec"
                       </div>
 
                       <div class="col-md-3 inputSpace">
-                        <label
-                          for="inputEmail4"
-                          class="form-label"
+                        <label for="inputEmail4" class="form-label"
                           >Véhicule</label
                         >
                         <select
@@ -1892,9 +1574,7 @@ name="entretienDetailTraveauEffec"
                         </select>
                       </div>
                       <div class="col-md-2 inputSpace">
-                        <label
-                          for="inputEmail4"
-                          class="form-label"
+                        <label for="inputEmail4" class="form-label"
                           >Date <span class="Oblig">*</span></label
                         >
                         <input
@@ -1906,9 +1586,7 @@ name="entretienDetailTraveauEffec"
                       </div>
 
                       <div class="col-md-5 inputSpace">
-                        <label
-                          for="inputEmail4"
-                          class="form-label"
+                        <label for="inputEmail4" class="form-label"
                           >Libellé de la panne <span class="Oblig">*</span>
                         </label>
 
@@ -1921,9 +1599,7 @@ name="entretienDetailTraveauEffec"
                       </div>
 
                       <div class="col-md-2 inputSpace">
-                        <label
-                          for="inputEmail4"
-                          class="form-label"
+                        <label for="inputEmail4" class="form-label"
                           >Kilométrage <span class="Oblig">*</span></label
                         >
                         <input
@@ -1935,9 +1611,7 @@ name="entretienDetailTraveauEffec"
                       </div>
 
                       <div class="col-md-9 inputSpace">
-                        <label
-                          for="inputEmail4"
-                          class="form-label"
+                        <label for="inputEmail4" class="form-label"
                           >Description de la panne
                         </label>
                         <textarea
@@ -1950,9 +1624,7 @@ name="entretienDetailTraveauEffec"
                       </div>
 
                       <div class="col-md-3 inputSpace">
-                        <label
-                          for="inputEmail4"
-                          class="form-label"
+                        <label for="inputEmail4" class="form-label"
                           >Statut Véhicule <span class="Oblig">*</span></label
                         >
                         <div class="form-check">
@@ -2048,7 +1720,7 @@ name="entretienDetailTraveauEffec"
                             Libellé de la panne
                           </th>
                           <td mat-cell *matCellDef="let element">
-                            {{ element.panneLibelle | uppercase}}
+                            {{ element.panneLibelle | uppercase }}
                           </td>
                         </ng-container>
 
@@ -2142,15 +1814,15 @@ name="entretienDetailTraveauEffec"
                       >
                         <i class="fa fa-plus mr-2"></i>AJOUTER UNE REPARATION
                       </button>
-                        
+
                       <button
-                          type="button"
-                          class="btn btn-danger btn-sm"
-                          (click)="actionCloseReparation(0)"
-                          [ngClass]="{ hidden: ActionCloseReparation }"
-                        >
-                          <i class="fas fa-times mr-2"></i>FERMER
-                        </button>
+                        type="button"
+                        class="btn btn-danger btn-sm"
+                        (click)="actionCloseReparation(0)"
+                        [ngClass]="{ hidden: ActionCloseReparation }"
+                      >
+                        <i class="fas fa-times mr-2"></i>FERMER
+                      </button>
                     </div>
                   </div>
                   <div class="row" [ngClass]="{ hidden: hiddenReparation }">
@@ -2172,9 +1844,7 @@ name="entretienDetailTraveauEffec"
                           />
                         </div>
                         <div class="col-md-3 inputSpace">
-                          <label
-                            for="inputEmail4"
-                            class="form-label"
+                          <label for="inputEmail4" class="form-label"
                             >Véhicule</label
                           >
                           <select
@@ -2190,9 +1860,7 @@ name="entretienDetailTraveauEffec"
                           </select>
                         </div>
                         <div class="col-md-5 inputSpace">
-                          <label
-                            for="inputEmail4"
-                            class="form-label"
+                          <label for="inputEmail4" class="form-label"
                             >Panne ou Sinistre
                             <span class="Oblig">*</span></label
                           >
@@ -2223,9 +1891,7 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-4 inputSpace">
-                          <label
-                            for="inputEmail4"
-                            class="form-label"
+                          <label for="inputEmail4" class="form-label"
                             >Garagiste <span class="Oblig">*</span></label
                           >
                           <select
@@ -2253,10 +1919,9 @@ name="entretienDetailTraveauEffec"
                           </button>
                         </div-->
                         <div class="col-md-3 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
-                            >Date d'envoi en réparation. <span class="Oblig">*</span></label
+                          <label for="inputPassword4" class="form-label"
+                            >Date d'envoi en réparation.
+                            <span class="Oblig">*</span></label
                           >
                           <input
                             type="date"
@@ -2266,9 +1931,7 @@ name="entretienDetailTraveauEffec"
                           />
                         </div>
                         <div class="col-md-7 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Libellé (Object)
                             <span class="Oblig">*</span></label
                           >
@@ -2280,9 +1943,7 @@ name="entretienDetailTraveauEffec"
                           />
                         </div>
                         <div class="col-md-2 inputSpace">
-                          <label
-                            for="inputEmail4"
-                            class="form-label"
+                          <label for="inputEmail4" class="form-label"
                             >Kilométrage <span class="Oblig">*</span></label
                           >
                           <input
@@ -2293,12 +1954,10 @@ name="entretienDetailTraveauEffec"
                           />
                         </div>
                         <div class="col-12">
-                          <hr>
+                          <hr />
                         </div>
                         <div class="col-md-3 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Date de retour réparation.</label
                           >
                           <input
@@ -2310,9 +1969,7 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-3 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Kilométrage de retour.</label
                           >
                           <input
@@ -2324,9 +1981,7 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-6 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Montant.</label
                           >
                           <input
@@ -2337,12 +1992,10 @@ name="entretienDetailTraveauEffec"
                           />
                         </div>
                         <div class="col-12">
-                          <hr>
+                          <hr />
                         </div>
                         <div class="col-md-8 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Description</label
                           >
                           <textarea
@@ -2357,9 +2010,7 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-3 inputSpace">
-                          <label
-                            for="inputEmail4"
-                            class="form-label"
+                          <label for="inputEmail4" class="form-label"
                             >Statut Réparation
                             <span class="Oblig">*</span></label
                           >
@@ -2396,9 +2047,7 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-4 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Facture Proforma
                             <span class="text-danger">(PDF)</span></label
                           >
@@ -2428,9 +2077,7 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-4 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Bon de Commande
                             <span class="text-danger">(PDF)</span></label
                           >
@@ -2460,9 +2107,7 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-4 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Facture
                             <span class="text-danger">(PDF)</span></label
                           >
@@ -2514,29 +2159,50 @@ name="entretienDetailTraveauEffec"
                       <!---->
                       <div class="mt-3">
                         <div class="bg-dark py-2 px-3 rounded">
-                          <h3 class="m-0 d-flex text-warning"><div class="text-muted">
-                              <i class="fa fa-car"></i>&nbsp;&nbsp;
-                              REPARATION .::. </div>Détails des travaux éffectués
+                          <h3 class="m-0 d-flex text-warning">
+                            <div class="text-muted">
+                              <i class="fa fa-car"></i>&nbsp;&nbsp; REPARATION
+                              .::.
+                            </div>
+                            Détails des travaux éffectués
                           </h3>
                         </div>
-  
+
                         <div class="my-3 border rounded p-3">
-                          <p class="text-danger">::. Cliquez sur le bouton <strong>Ajouter</strong> pour ajouter le détail de la réparation au tableau .::</p>
+                          <p class="text-danger">
+                            ::. Cliquez sur le bouton
+                            <strong>Ajouter</strong> pour ajouter le détail de
+                            la réparation au tableau .::
+                          </p>
                           <table class="w-100 mb-3">
                             <tr>
                               <td class="p-2">
                                 <select class="form-control bg-light">
-                                  <option value="">-- Choisir la pièce --</option>
+                                  <option value="">
+                                    -- Choisir la pièce --
+                                  </option>
                                 </select>
                               </td>
                               <td class="p-2">
-                                <input type="number" class="form-control" placeholder="Quantité">
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  placeholder="Quantité"
+                                />
                               </td>
                               <td class="p-2">
-                                <input type="text" class="form-control" placeholder="Montant">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  placeholder="Montant"
+                                />
                               </td>
                               <td class="p-2">
-                                <textarea rows="1" class="form-control" placeholder="Description"></textarea>
+                                <textarea
+                                  rows="1"
+                                  class="form-control"
+                                  placeholder="Description"
+                                ></textarea>
                               </td>
                               <td align="center" class="p-2">
                                 <button class="btn btn-success w-100">
@@ -2548,36 +2214,41 @@ name="entretienDetailTraveauEffec"
                           </table>
                           <table class="table table-striped border mt-4">
                             <thead class="table-dark">
-                                <tr>
-                                    <th class="py-1">Désignation.</th>
-                                    <th class="py-1">Quantité.</th>
-                                    <th class="py-1">Montant.</th>
-                                    <th class="py-1">Description.</th>
-                                    <th class="py-1"></th>
-                                </tr>
+                              <tr>
+                                <th class="py-1">Désignation.</th>
+                                <th class="py-1">Quantité.</th>
+                                <th class="py-1">Montant.</th>
+                                <th class="py-1">Description.</th>
+                                <th class="py-1"></th>
+                              </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let n of [].constructor(5)">
-                                    <td class="py-2 font-weight-bold">Filtre à air</td>
-                                    <td class="py-2">1</td>
-                                    <td class="py-2">
-                                        15 000 F.CFA
-                                    </td>
-                                    <td class="py-2">-</td>
-                                    <td class="py-2" align="right">
-                                        <button class="btn btn-sm btn-outline-primary py-1 ml-2">
-                                            <small><i class="fas fa-edit"></i></small>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-danger py-1 ml-2">
-                                            <small><i class="fas fa-trash"></i></small>
-                                        </button>
-                                    </td>
-                                </tr>
+                              <tr *ngFor="let n of [].constructor(5)">
+                                <td class="py-2 font-weight-bold">
+                                  Filtre à air
+                                </td>
+                                <td class="py-2">1</td>
+                                <td class="py-2">15 000 F.CFA</td>
+                                <td class="py-2">-</td>
+                                <td class="py-2" align="right">
+                                  <button
+                                    class="btn btn-sm btn-outline-primary py-1 ml-2"
+                                  >
+                                    <small><i class="fas fa-edit"></i></small>
+                                  </button>
+                                  <button
+                                    class="btn btn-sm btn-outline-danger py-1 ml-2"
+                                  >
+                                    <small><i class="fas fa-trash"></i></small>
+                                  </button>
+                                </td>
+                              </tr>
                             </tbody>
                           </table>
                         </div>
                       </div>
-                      <section hidden
+                      <section
+                        hidden
                         class="col-md-12 card"
                         style="margin-top: 10px"
                         *ngIf="hiddenTabReparation"
@@ -2711,7 +2382,10 @@ name="entretienDetailTraveauEffec"
                                     Designation
                                   </th>
                                   <td mat-cell *matCellDef="let element">
-                                    {{ element.reparationDetailDesignation | uppercase}}
+                                    {{
+                                      element.reparationDetailDesignation
+                                        | uppercase
+                                    }}
                                   </td>
                                 </ng-container>
 
@@ -2887,7 +2561,7 @@ name="entretienDetailTraveauEffec"
                               Libellé de la reparation
                             </th>
                             <td mat-cell *matCellDef="let element">
-                              {{ element.reparationLibelle | uppercase}}
+                              {{ element.reparationLibelle | uppercase }}
                             </td>
                           </ng-container>
 
@@ -3008,19 +2682,21 @@ name="entretienDetailTraveauEffec"
                       >
                         <i class="fa fa-plus mr-2"></i>AJOUTER UN SINISTRE
                       </button>
-                      <div class="d-flex align-items-center justify-content-between border-bottom pb-3"
-                      [ngClass]="{ hidden: ActionCloseSinistre }">
+                      <div
+                        class="d-flex align-items-center justify-content-between border-bottom pb-3"
+                        [ngClass]="{ hidden: ActionCloseSinistre }"
+                      >
                         <h3 class="m-0 d-flex text-danger font-weight-bold">
                           <div class="text-muted">
-                              <i class="fas fa-car-crash"></i>&nbsp;&nbsp;
-                              SINISTRE .::.
-                          </div>Déclaration d'un sinistre
+                            <i class="fas fa-car-crash"></i>&nbsp;&nbsp;
+                            SINISTRE .::.
+                          </div>
+                          Déclaration d'un sinistre
                         </h3>
                         <button
                           type="button"
                           class="btn btn-danger btn-sm"
                           (click)="actionCloseSinistre(0)"
-                          
                         >
                           <i class="fas fa-times mr-2"></i>FERMER
                         </button>
@@ -3046,9 +2722,7 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-3 inputSpace">
-                          <label
-                            for="inputEmail4"
-                            class="form-label"
+                          <label for="inputEmail4" class="form-label"
                             >Véhicule</label
                           >
                           <select
@@ -3064,9 +2738,7 @@ name="entretienDetailTraveauEffec"
                           </select>
                         </div>
                         <div class="col-md-5 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Lieu du sinistre
                             <span class="Oblig">*</span></label
                           >
@@ -3078,9 +2750,7 @@ name="entretienDetailTraveauEffec"
                           />
                         </div>
                         <div class="col-md-2 inputSpace">
-                          <label
-                            for="inputEmail4"
-                            class="form-label"
+                          <label for="inputEmail4" class="form-label"
                             >Date <span class="Oblig">*</span></label
                           >
                           <input
@@ -3091,9 +2761,7 @@ name="entretienDetailTraveauEffec"
                           />
                         </div>
                         <div class="col-md-2 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Heure</label
                           >
                           <input
@@ -3105,26 +2773,35 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-3 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Nature du sinistre
                           </label>
                           <div class="input-group">
-                            <input type="text" class="form-control form-control-modern" list="sinistres">
+                            <input
+                              type="text"
+                              class="form-control form-control-modern"
+                              list="sinistres"
+                            />
                             <datalist id="sinistres">
-                              <option value="Choisir la nature du sinistre">-- Choisir la nature du sinistre --</option>
-                              <option value="">-- Choisir la nature du sinistre --</option>
+                              <option value="Choisir la nature du sinistre">
+                                -- Choisir la nature du sinistre --
+                              </option>
+                              <option value="">
+                                -- Choisir la nature du sinistre --
+                              </option>
                             </datalist>
-                            <button class="input-group-text" type="button" data-toggle="modal" data-target="#addNature">
+                            <button
+                              class="input-group-text"
+                              type="button"
+                              data-toggle="modal"
+                              data-target="#addNature"
+                            >
                               <i class="fa fa-plus-circle"></i>
                             </button>
                           </div>
                         </div>
                         <div class="col-md-2 inputSpace">
-                          <label
-                            for="inputEmail4"
-                            class="form-label"
+                          <label for="inputEmail4" class="form-label"
                             >Kilométrage <span class="Oblig">*</span></label
                           >
                           <input
@@ -3136,9 +2813,7 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-4 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Conducteur (Nom et Prénoms)
                             <span class="Oblig">*</span></label
                           >
@@ -3162,9 +2837,7 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-3 inputSpace">
-                          <label
-                            for="inputEmail4"
-                            class="form-label"
+                          <label for="inputEmail4" class="form-label"
                             >Statut Véhicule <span class="Oblig">*</span></label
                           >
                           <div class="form-check">
@@ -3200,18 +2873,19 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-12 ligne border-bottom">
-                          <h3 class="m-0 d-flex text-danger font-weight-bold py-2">
+                          <h3
+                            class="m-0 d-flex text-danger font-weight-bold py-2"
+                          >
                             <div class="text-muted">
-                                <i class="fas fa-car-crash"></i>&nbsp;&nbsp;
-                                SINISTRE .::.
-                            </div>Autre acteur du sinistre
+                              <i class="fas fa-car-crash"></i>&nbsp;&nbsp;
+                              SINISTRE .::.
+                            </div>
+                            Autre acteur du sinistre
                           </h3>
                         </div>
 
                         <div class="col-md-3 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Identification</label
                           >
                           <input
@@ -3224,9 +2898,7 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-3 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Véhicule concerné</label
                           >
                           <input
@@ -3239,9 +2911,7 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-3 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Marque</label
                           >
                           <div class="input-group">
@@ -3267,9 +2937,7 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-3 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Modèle</label
                           >
                           <div class="input-group">
@@ -3279,7 +2947,9 @@ name="entretienDetailTraveauEffec"
                               formControlName="modele_ID"
                               name="modele_ID"
                             >
-                              <option selected value="">---- Choisir ----</option>
+                              <option selected value="">
+                                ---- Choisir ----
+                              </option>
                               <option
                                 selected
                                 *ngFor="
@@ -3297,9 +2967,7 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-3 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Conducteur</label
                           >
                           <input
@@ -3312,9 +2980,7 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-3 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Contact conducteur</label
                           >
                           <input
@@ -3326,9 +2992,7 @@ name="entretienDetailTraveauEffec"
                           />
                         </div>
                         <div class="col-md-3 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >N° police assurance</label
                           >
                           <input
@@ -3340,9 +3004,7 @@ name="entretienDetailTraveauEffec"
                           />
                         </div>
                         <div class="col-md-3 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Assureur</label
                           >
                           <input
@@ -3355,9 +3017,7 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-3 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Date Début ass.</label
                           >
                           <input
@@ -3370,9 +3030,7 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-3 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Date FIn ass.</label
                           >
                           <input
@@ -3387,9 +3045,7 @@ name="entretienDetailTraveauEffec"
                         <div class="col-md-12 ligne"></div>
 
                         <div class="col-md-8 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Description du sinistre
                             <span class="text-danger"></span
                           ></label>
@@ -3403,9 +3059,7 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-4 inputSpace">
-                          <label
-                            for="inputPassword4"
-                            class="form-label"
+                          <label for="inputPassword4" class="form-label"
                             >Rapport du sinistre
                             <span class="text-danger">(PDF)</span></label
                           >
@@ -3533,7 +3187,7 @@ name="entretienDetailTraveauEffec"
                                 Lieu du sinistre
                               </th>
                               <td mat-cell *matCellDef="let element">
-                                {{ element.sinistreLieu | uppercase}}
+                                {{ element.sinistreLieu | uppercase }}
                               </td>
                             </ng-container>
 
@@ -3543,7 +3197,7 @@ name="entretienDetailTraveauEffec"
                                 Conducteur
                               </th>
                               <td mat-cell *matCellDef="let element">
-                                {{ element.sinistreConducteur | uppercase}}
+                                {{ element.sinistreConducteur | uppercase }}
                               </td>
                             </ng-container>
 
@@ -4044,9 +3698,7 @@ name="entretienDetailTraveauEffec"
                           formControlName="LkilometrageID"
                         />
                         <div class="col-md-3 inputSpace">
-                          <label
-                            for="inputEmail4"
-                            class="form-label"
+                          <label for="inputEmail4" class="form-label"
                             >Véhicule</label
                           >
                           <select
@@ -4060,13 +3712,13 @@ name="entretienDetailTraveauEffec"
                               {{ marque | uppercase }} {{ modele | uppercase }}
                             </option>
                           </select>
-                          <small class="text-danger">Dernier rélevé le : 24/02/2023</small>
+                          <small class="text-danger"
+                            >Dernier rélevé le : 24/02/2023</small
+                          >
                           <!--small class="text-danger font-weight-bold">Réservoir Total: 30L</small-->
                         </div>
                         <div class="col-md-2 inputSpace">
-                          <label
-                            for="inputEmail4"
-                            class="form-label"
+                          <label for="inputEmail4" class="form-label"
                             >Date <span class="Oblig">*</span></label
                           >
                           <input
@@ -4080,9 +3732,7 @@ name="entretienDetailTraveauEffec"
                         </div>
 
                         <div class="col-md-3 inputSpace">
-                          <label
-                            for="inputEmail4"
-                            class="form-label"
+                          <label for="inputEmail4" class="form-label"
                             >Kilométrage <span class="Oblig">*</span></label
                           >
                           <input
@@ -4091,12 +3741,12 @@ name="entretienDetailTraveauEffec"
                             id="inputPassword4"
                             formControlName="kilometrageData"
                           />
-                          <small class="text-danger">Dernier kilométrage : 24089 KM</small>
+                          <small class="text-danger"
+                            >Dernier kilométrage : 24089 KM</small
+                          >
                         </div>
                         <div class="col-md-4 inputSpace">
-                          <label
-                            for="inputEmail4"
-                            class="form-label"
+                          <label for="inputEmail4" class="form-label"
                             >Observation
                           </label>
                           <input
@@ -4295,36 +3945,50 @@ name="entretienDetailTraveauEffec"
                             <div class="col-12">
                               <div class="bg-dark py-2 px-3 rounded shadow">
                                 <h3 class="m-0 d-flex text-warning">
-                                    DESCRIPTION DE L'INFRACTION
+                                  DESCRIPTION DE L'INFRACTION
                                 </h3>
                               </div>
                             </div>
                             <div class="col-6 my-3">
-                              <label class="form-label">Date <span class="text-danger">*</span></label>
-                              <input type="date" class="form-control">
+                              <label class="form-label"
+                                >Date <span class="text-danger">*</span></label
+                              >
+                              <input type="date" class="form-control" />
                             </div>
                             <div class="col-6 my-3">
-                              <label class="form-label">Heure <span class="text-danger">*</span></label>
-                              <input type="time" class="form-control">
+                              <label class="form-label"
+                                >Heure <span class="text-danger">*</span></label
+                              >
+                              <input type="time" class="form-control" />
                             </div>
                             <div class="col-12 mb-3">
-                              <label class="form-label">Code <span class="text-danger">*</span></label>
-                              <input type="text" class="form-control">
+                              <label class="form-label"
+                                >Code <span class="text-danger">*</span></label
+                              >
+                              <input type="text" class="form-control" />
                             </div>
                             <div class="col-4">
-                              <label class="form-label">Vitesse mésurée <span class="text-danger">*</span></label>
+                              <label class="form-label"
+                                >Vitesse mésurée
+                                <span class="text-danger">*</span></label
+                              >
                               <div class="input-group">
-                                <input type="number" class="form-control">
+                                <input type="number" class="form-control" />
                                 <span class="input-group-text">Km/h</span>
                               </div>
                             </div>
                             <div class="col-8 mb-3">
-                              <label class="form-label">Matricule agent verb. <span class="text-danger">*</span></label>
-                              <input type="text" class="form-control">
+                              <label class="form-label"
+                                >Matricule agent verb.
+                                <span class="text-danger">*</span></label
+                              >
+                              <input type="text" class="form-control" />
                             </div>
                             <div class="col-12 mb-3">
-                              <label class="form-label">Lieu <span class="text-danger">*</span></label>
-                              <input type="text" class="form-control">
+                              <label class="form-label"
+                                >Lieu <span class="text-danger">*</span></label
+                              >
+                              <input type="text" class="form-control" />
                             </div>
                           </div>
                         </div>
@@ -4333,27 +3997,37 @@ name="entretienDetailTraveauEffec"
                             <div class="col-12 mb-3">
                               <div class="bg-dark py-2 px-3 rounded shadow">
                                 <h3 class="m-0 d-flex text-warning">
-                                    EFFET SUR LA CONTRAVENTION
+                                  EFFET SUR LA CONTRAVENTION
                                 </h3>
                               </div>
                             </div>
-  
+
                             <div class="col-12">
-                              <textarea rows="10" class="form-control" style="height: 232px;" placeholder="Description de l'effet"></textarea>
+                              <textarea
+                                rows="10"
+                                class="form-control"
+                                style="height: 232px"
+                                placeholder="Description de l'effet"
+                              ></textarea>
                             </div>
                             <div class="col-12 mt-3">
-                              <label class="form-label">Montant amende <span class="text-danger">*</span></label>
+                              <label class="form-label"
+                                >Montant amende
+                                <span class="text-danger">*</span></label
+                              >
                               <div class="input-group">
-                                <input type="number" class="form-control border-0" style="background-color: rgb(227, 240, 255);">
+                                <input
+                                  type="number"
+                                  class="form-control border-0"
+                                  style="background-color: rgb(227, 240, 255)"
+                                />
                                 <span class="input-group-text">F CFA</span>
                               </div>
                             </div>
                           </div>
                         </div>
                         <div class="col-12 text-right mt-3">
-                          <button class="btn btn-danger">
-                            ANNULER
-                          </button>
+                          <button class="btn btn-danger">ANNULER</button>
                           <button class="btn btn-success ml-3">
                             ENREGISTRER
                           </button>
@@ -4602,7 +4276,7 @@ name="entretienDetailTraveauEffec"
                                 Infraction
                               </th>
                               <td mat-cell *matCellDef="let element">
-                                {{ element.infractionlibelle | uppercase}}
+                                {{ element.infractionlibelle | uppercase }}
                               </td>
                             </ng-container>
 
@@ -4614,7 +4288,9 @@ name="entretienDetailTraveauEffec"
                                 Conducteur
                               </th>
                               <td mat-cell *matCellDef="let element">
-                                {{ element.infractionnomconducteur | uppercase}}
+                                {{
+                                  element.infractionnomconducteur | uppercase
+                                }}
                               </td>
                             </ng-container>
 
@@ -4841,25 +4517,42 @@ name="entretienDetailTraveauEffec"
 </div>
 <!-- /.modal -->
 
-
-<div class="modal fade" id="addNature" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="addNature"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-dialog-centered">
     <form class="modal-content">
       <div class="modal-header bg-secondary fw-bold text-white">
-        <h2 class="modal-title" id="staticBackdropLabel">Ajouter une nature de sinistre</h2>
+        <h2 class="modal-title" id="staticBackdropLabel">
+          Ajouter une nature de sinistre
+        </h2>
       </div>
       <div class="modal-body">
-          <div class="row">
-              <div class="form-group mb-3 col-12">
-                  <label class="form-label">Libellé de la nature</label>
-                  <input type="text" class="form-control w-100">
-              </div>
+        <div class="row">
+          <div class="form-group mb-3 col-12">
+            <label class="form-label">Libellé de la nature</label>
+            <input type="text" class="form-control w-100" />
           </div>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Fermer</button>
-        <button type="button" class="btn btn-sm btn-success">Enregistrer</button>
+        <button
+          type="button"
+          class="btn btn-sm btn-danger"
+          data-dismiss="modal"
+        >
+          Fermer
+        </button>
+        <button type="button" class="btn btn-sm btn-success">
+          Enregistrer
+        </button>
       </div>
-  </form>
+    </form>
   </div>
 </div>
