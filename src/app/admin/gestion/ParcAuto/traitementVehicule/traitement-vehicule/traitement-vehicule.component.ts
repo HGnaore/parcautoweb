@@ -787,6 +787,7 @@ export class TraitementVehiculeComponent implements OnInit {
   listeDetailEntret: any = [];
   listeFonction: any = [];
   listemarques: any = [];
+  listenaturesinistre: any = [];
   OneCarteGrise: any = [];
   documentForm: FormGroup;
   hidden = false;
@@ -1220,33 +1221,6 @@ export class TraitementVehiculeComponent implements OnInit {
     });
   }
 
-  initFormSinistre() {
-    this.vehiculeFormSinistre = this.formBuilder.group({
-      LsinistreID: [""],
-      sinistreLieu: ["", Validators.required],
-      sinistreDate: ["", Validators.required],
-      sinistreHeure: [""],
-      sinistreNature: [""],
-      sinistreKilometrage: ["", Validators.required],
-      sinistreConducteur: ["", Validators.required],
-      panneSinistre: ["", Validators.required],
-      sinistreAutreacteur: [""],
-      sinistreVehiculeconcerne: [""],
-      marque_ID: [""],
-      modele_ID: [""],
-      sinistreAutreacteurNomPrenoms: [""],
-      sinistreAutreacteurContact: [""],
-      sinistreAutreacteurPoliceAsurance: [""],
-      sinistreAutreacteurAsurance: [""],
-      sinistreAutreacteurDateDebutAsurance: [""],
-      sinistreAutreacteurDateFinAsurance: [""],
-      sinistreDescription: [""],
-      sinistreFileModif: [""],
-    });
-    //Chargement des marques des vehicules
-    this.loadMarques();
-  }
-
   initFormDocument() {
     //this.isLoadingResults = false;
     this.documentForm = this.formBuilder.group({
@@ -1405,6 +1379,36 @@ this.TabModifier = true;*/
 
   /////////////////////DEBUT Sinistre///////////////////////////
 
+  initFormSinistre() {
+    this.vehiculeFormSinistre = this.formBuilder.group({
+      LsinistreID: [""],
+      sinistreLieu: ["", Validators.required],
+      sinistreDate: ["", Validators.required],
+      sinistreHeure: [""],
+      sinistreNature: [""],
+      naturesinistre_ID: [""],
+      sinistreKilometrage: ["", Validators.required],
+      sinistreConducteur: ["", Validators.required],
+      panneSinistre: ["", Validators.required],
+      sinistreAutreacteur: [""],
+      sinistreVehiculeconcerne: [""],
+      marque_ID: [""],
+      modele_ID: [""],
+      sinistreAutreacteurNomPrenoms: [""],
+      sinistreAutreacteurContact: [""],
+      sinistreAutreacteurPoliceAsurance: [""],
+      sinistreAutreacteurAsurance: [""],
+      sinistreAutreacteurDateDebutAsurance: [""],
+      sinistreAutreacteurDateFinAsurance: [""],
+      sinistreDescription: [""],
+      sinistreFileModif: [""],
+    });
+    //Chargement des marques des vehicules
+    this.sinistreFile = "";
+    this.loadNatureSinistre();
+    this.loadMarques();
+  }
+
   onSubmitFormSinistre(f) {
     this.isLoadingResultsModif = true;
     const iD = JSON.parse(localStorage.getItem("currentUser"));
@@ -1426,6 +1430,8 @@ this.TabModifier = true;*/
     FormDataVeh.append("sinistreVehiculeconcerne", f.sinistreVehiculeconcerne);
     FormDataVeh.append("marque_ID", f.marque_ID);
     FormDataVeh.append("modele_ID", f.modele_ID);
+    FormDataVeh.append("naturesinistre_ID", f.naturesinistre_ID);
+
     FormDataVeh.append(
       "sinistreAutreacteurNomPrenoms",
       f.sinistreAutreacteurNomPrenoms
@@ -1501,6 +1507,12 @@ this.TabModifier = true;*/
     }
   }
 
+  loadNatureSinistre() {
+    this.vehiculeService.listeNatureSinistre().subscribe((reponse) => {
+      this.listenaturesinistre = reponse;
+    });
+  }
+
   TlisteSinistre() {
     this.vehiculeService
       .getSinistrebyIdVehicule(this.id)
@@ -1555,6 +1567,10 @@ this.TabModifier = true;*/
         this.OneSinistre.results[0].sinistreKilometrage
       );
 
+      this.vehiculeFormSinistre.controls["naturesinistre_ID"].setValue(
+        this.OneSinistre.results[0].naturesinistre_ID
+      );
+
       this.vehiculeFormSinistre.controls["sinistreConducteur"].setValue(
         this.OneSinistre.results[0].sinistreConducteur
       );
@@ -1570,10 +1586,10 @@ this.TabModifier = true;*/
       this.vehiculeFormSinistre.controls["marque_ID"].setValue(
         this.OneSinistre.results[0].marque_ID
       );
-      this.loadModelByMarques(this.OneSinistre.results[0].marque_ID);
       this.vehiculeFormSinistre.controls["modele_ID"].setValue(
         this.OneSinistre.results[0].modele_ID
       );
+      this.loadModelByMarques(this.OneSinistre.results[0].marque_ID);
 
       this.vehiculeFormSinistre.controls[
         "sinistreAutreacteurNomPrenoms"
@@ -2162,7 +2178,7 @@ this.TabModifier = true;*/
             this.hiddenTabEntretein = true;
 
             this.TlisteEntretien();
-            this.programmable(f.entretientype)
+            this.programmable(f.entretientype);
           } else {
             this.toastr.error(result.message);
             this.isLoadingResultsEntretient = false;
@@ -2204,7 +2220,6 @@ this.TabModifier = true;*/
       this.vehiculeFormEntretien.controls["entretienGarage"].setValue(
         this.OneEntretien.results[0].entretienGarageID
       );
-      
 
       this.vehiculeFormEntretien.controls["entretienDateDepart"].setValue(
         this.OneEntretien.results[0].entretienDateDepart
@@ -2267,7 +2282,7 @@ this.TabModifier = true;*/
       /*  this.vehiculeFormSinistre.controls["sinistreFileModif"].setValue(
           this.OneSinistre.results[0].sinistreFile
         );*/
-this.getAllDetailsByID(this.OneEntretien.results[0].entretientypeID);
+      this.getAllDetailsByID(this.OneEntretien.results[0].entretientypeID);
       this.TlisteEntretienDetail(this.OneEntretien.results[0].ID);
 
       //this.ModifsVisiteLoadingResults = false;
@@ -2509,7 +2524,7 @@ this.getAllDetailsByID(this.OneEntretien.results[0].entretientypeID);
     this.ActionCloseEntretien = false;
     this.ActionOpenEntretien = true;
     this.hiddenListeEntretien = true;
-    this.hiddenListeProgramable = false;
+    this.hiddenListeProgramable = true;
   }
 
   FermerFormEntretien() {
@@ -2562,7 +2577,7 @@ this.getAllDetailsByID(this.OneEntretien.results[0].entretientypeID);
         if (this.reponse.results.length > 0) {
           this.DateDernierentretien =
             this.reponse.results[0].entretienDateDepart;
-         // alert(this.DateDernierentretien);
+          // alert(this.DateDernierentretien);
         }
       });
   }
@@ -2588,7 +2603,7 @@ this.getAllDetailsByID(this.OneEntretien.results[0].entretientypeID);
             });
           }
         }
-       // alert(this.reponse.results[0].programable);
+        // alert(this.reponse.results[0].programable);
         /*if(this.reponse.results[0].programable == 1){
 this.hiddenListeProgramable=false;
           }else{
@@ -2597,24 +2612,20 @@ this.hiddenListeProgramable=false;
       });
   }
 
-
   programmable(entretientypeID) {
     this.entretienService
       .getOneTypeentretienById(entretientypeID)
       .subscribe((ret) => {
         this.reponse = ret;
         //comparaison
-  
-        if(this.reponse.results[0].programable == 1){
+        //alert(this.reponse.results[0].programable);
+        if (this.reponse.results[0].programable == 1) {
           this.hiddenListeProgramable = false;
-          }else{
-            this.hiddenListeProgramable = true;
-          }
-         
+        } else {
+          this.hiddenListeProgramable = true;
+        }
       });
-    
   }
-
 
   //////////////////////FIN  ENTRETIEN//////////////////////////////
 
@@ -3434,6 +3445,7 @@ this.hiddenListeProgramable=false;
   }
 
   OuvrirFormSinistre() {
+    this.initFormSinistre();
     this.hiddenSinistre = false;
     this.ActionCloseSinistre = false;
     this.ActionOpenSinistre = true;

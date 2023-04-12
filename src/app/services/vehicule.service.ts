@@ -603,6 +603,13 @@ export class VehiculeService {
     );
   }*/
 
+  listeNatureSinistre(): Observable<any[]> {
+    return this.httpClient.get<any[]>(
+      this.urlG + "vehicule/sinistre/listenaturesinistre.php"
+    );
+  }
+
+
   saveSinistre(data): Observable<any> {
     return this.httpClient.post(
       this.urlG + "vehicule/sinistre/creationsinistre.php",
