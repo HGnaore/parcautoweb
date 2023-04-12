@@ -1,0 +1,405 @@
+<section
+class="col-md-12 card"
+
+>
+<!-- *ngIf="hiddenTabEntretein"
+hidden-->
+<div
+  class="bg-warning"
+  style="
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-bottom: 0px;
+  "
+>
+  <h2 class="card-title">Détail des travaux effectués</h2>
+</div>
+<div class="card-body">
+  <form
+    class="row g-3 ecommerce-form action-buttons-fixed"
+    [formGroup]="vehiculeFormDetailEntretient"
+    (ngSubmit)="
+      onSubmitFormDetailEntretein(
+        vehiculeFormDetailEntretient.value
+      )
+    "
+  >
+    <input
+      type="text"
+      hidden
+      class="form-control form-control-modern"
+      id="inputPassword4"
+      formControlName="lentretientDetailID"
+    />
+    <div class="col-md-6 inputSpace">
+      <label
+        for="inputEmail4"
+        class="form-label inputSpaceText"
+        >Désignation</label
+      >
+      <input
+        type="text"
+        class="form-control form-control-modern"
+        id="inputPassword4"
+        formControlName="entretienDetailTraveauEffec"
+      />
+    </div>
+    <div class="col-md-2 inputSpace">
+      <label
+        for="inputEmail4"
+        class="form-label inputSpaceText"
+        >Quantité</label
+      >
+      <input
+        type="number"
+        class="form-control form-control-modern"
+        id="inputPassword4"
+        formControlName="entretienDetailTraveauQuant"
+      />
+    </div>
+    <div class="col-md-2 inputSpace">
+      <label
+        for="inputEmail4"
+        class="form-label inputSpaceText"
+        >Prix Unit.</label
+      >
+      <input
+        type="number"
+        class="form-control form-control-modern"
+        id="inputPassword4"
+        formControlName="entretienDetailTraveauPrix"
+      />
+    </div>
+    <!--div class="col-md-2 inputSpace">
+        <label
+          for="inputEmail4"
+          class="form-label inputSpaceText"
+          >TOTAL</label
+        >
+        <input
+          type="number"
+          readonly
+          class="form-control form-control-modern"
+          id="inputPassword4"
+        />
+      </div-->
+    <div class="col-md-2 inputSpace">
+      <button
+        [disabled]="vehiculeFormDetailEntretient.invalid"
+        type="submit"
+        class="btn btn-dark btn-sm btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+        style="margin-top: 22px"
+      >
+        <i class="fa fa-plus text-4 mr-2"></i>
+        Ajouter
+      </button>
+    </div>
+  </form>
+  <div class="col-md-12">
+    <table
+      mat-table
+      [dataSource]="dataSourceEntretienDetail"
+      class="table-responsive-md table-striped mb-0"
+    >
+      <!-- Position Column -->
+      <ng-container matColumnDef="numberDet">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="bg-white"
+        >
+          #
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element; let i = index"
+        >
+          {{ i + 1 }}
+        </td>
+      </ng-container>
+
+      <!-- Position Column -->
+      <ng-container
+        matColumnDef="entretienDetailDesignation"
+      >
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="bg-white"
+        >
+          Designation
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{
+            element.entretienDetailDesignation | uppercase
+          }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="entretienDetailQuantite"
+      >
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="bg-white"
+        >
+          Quantité
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.entretienDetailQuantite }}
+        </td>
+      </ng-container>
+
+      <!-- Position Column -->
+      <ng-container
+        matColumnDef="entretienDetailPrixUnit"
+      >
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="bg-white"
+        >
+          Prix Unitaire
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.entretienDetailPrixUnit }}
+        </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container
+        matColumnDef="entretienDetailPrixTotal"
+      >
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="bg-white"
+        >
+          Total
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{
+            element.entretienDetailQuantite *
+              element.entretienDetailPrixUnit
+          }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="entretienDetailTraveauObserve"
+      >
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="bg-dark"
+        >
+          Observation
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.entretienDetailTraveauObserv }}
+        </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="actioneEntretienDetail">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="bg-white"
+        >
+          Actions
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <!--button type="button" class="btn btn-info btn-sm mr-2">
+                                   <i class="bx bx-money" aria-hidden="true"></i> Dépense
+                               </button>
+                               <button type="button" class="btn btn-secondary btn-sm mr-2">
+                                   <i class="bx bxs-edit" aria-hidden="true"></i> Modifier
+                               </button-->
+          <button
+            type="button"
+            data-toggle="modal"
+            data-target="#modal-info"
+            class="btn btn-danger btn-sm"
+            (click)="
+              ItemSupprimeDetailEntretien(
+                element.ID,
+                'entretienDetail',
+                element.entretienID
+              )
+            "
+          >
+            <i class="bx bxs-trash"></i> Sup
+          </button>
+          <!--button type="button" class="btn btn-primary btn-sm">Small button</button>
+                               <button type="button" class="btn btn-primary btn-sm">Small button</button-->
+        </td>
+      </ng-container>
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumnsEntretienDetail"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="
+          let row;
+          columns: displayedColumnsEntretienDetail
+        "
+      ></tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[10, 20, 30]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements"
+    >
+    </mat-paginator>
+  </div>
+</div>
+</section>
+
+
+
+
+<div ><!--*ngIf="hiddenTabEntretein"-->
+
+  <section class="card">
+   
+    <div
+      class="bg-danger"
+      style="
+        padding-top: 10px;
+        padding-left: 20px;
+        padding-bottom: 0px;
+      "
+    >
+      <h2 class="card-title text-white">
+        Programmer un entretien
+      </h2>
+    </div>
+    <div class="card-body">
+      <form
+        class="row g-3 ecommerce-form action-buttons-fixed"
+        [formGroup]="vehiculeFormProgrammeEntreien"
+        (ngSubmit)="
+          onSubmitFormEntreteinProgramme(
+            vehiculeFormProgrammeEntreien.value
+          )
+        "
+      >
+       
+        <input
+          type="text"
+          hidden
+          formControlName="lentretientProgrammeID"
+          class="form-control form-control-modern"
+        />
+        <div class="col-md-5 inputSpace">
+          <label
+            for="inputEmail4"
+            class="form-label inputSpaceText"
+            >Type d'entretiens
+            <span class="Oblig">*</span></label
+          >
+          <select
+            id="entretientype"
+            class="form-control"
+            formControlName="programmeentretientype"
+            name="entretientype"
+            class="form-control form-control-modern"
+            name="programmeentretientype"
+          >
+            <option selected value="">-- Choisir --</option>
+            <option
+              *ngFor="let item of listeTypeEntret.results"
+              [value]="item.ID"
+            >
+              {{ item.designation | uppercase }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-2 inputSpace">
+          <label
+            for="inputEmail4"
+            class="form-label inputSpaceText"
+            >Date <span class="Oblig">*</span></label
+          >
+          <input
+            type="date"
+            placeholder="1"
+            class="form-control form-control-modern"
+            id="inputPassword4"
+            formControlName="programmeDate"
+          />
+        </div>
+
+        <div class="col-md-1 inputSpace">
+          <label
+            for="inputEmail4"
+            class="form-label inputSpaceText"
+            >Rappel <span class="Oblig">*</span></label
+          >
+          <input
+            type="number"
+            placeholder="1"
+            class="form-control form-control-modern"
+            id="inputPassword4"
+            formControlName="programmeRappel"
+          />
+        </div>
+
+        <div class="col-md-2 inputSpace" hidden>
+          <label
+            for="inputPassword4"
+            class="form-label inputSpaceText"
+            >Rappel Période
+            <span class="Oblig">*</span></label
+          >
+          <select
+            disabled
+            id="inputState"
+            class="form-control form-control-modern"
+            name="programmeRappelPeriode"
+            formControlName="programmeRappelPeriode"
+          >
+            <option value="1" selected>Jour(s)</option>
+            <option value="30">Mois</option>
+            <option value="7">Semaine(s)</option>
+            <option value="360">An(s)</option>
+          </select>
+        </div>
+        <div class="col-md-2 inputSpace">
+          <label
+            for="inputPassword4"
+            class="form-label inputSpaceText"
+            >Rappel Kilométrage</label
+          >
+          <input
+            type="number"
+            class="form-control form-control-modern"
+            id="inputPassword4"
+            formControlName="programmeRappelKilo"
+          />
+        </div>
+
+        <div class="col-md-2 inputSpace">
+          <button
+            [disabled]="
+              vehiculeFormProgrammeEntreien.invalid
+            "
+            type="submit"
+            class="btn btn-dark btn-sm btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+            style="margin-top: 22px"
+          >
+            <i class="fa fa-plus text-4 mr-2"></i> Ajouter
+          </button>
+        </div>
+      </form>
+
+   
+    </div>
+  </section>
+
+</div>
