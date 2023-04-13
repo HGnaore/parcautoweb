@@ -1535,6 +1535,7 @@ this.TabModifier = true;*/
   }
 
   listSinistreaReparerByID(ID) {
+
     this.vehiculeService
       .getListeSinistreAreparerbyId(ID)
       .subscribe((reponse) => {
@@ -3899,5 +3900,41 @@ this.hiddenListeEntretien= false;*/
         );
       }
     );
+  }
+
+
+  validerReparation(id, val) {
+
+    Swal.fire({
+      text: "Etes vous sûr de vouloir modifier le statut de la mise en reparation ?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui, modifier',
+      cancelButtonText: 'Annuler'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        //Code de mise à jour
+        const formDataR = new FormData();
+        formDataR.append("validerReparation", val);
+        formDataR.append('ID', id);
+        this.vehiculeService.updateSinistrePourReparation(formDataR).subscribe(ret => {
+          this.reponse = ret;
+          if (this.reponse.success == true) {
+            this.toastr.success(this.reponse.message);
+            this.TlisteSinistre();
+          } else {
+            this.toastr.error(this.reponse.message);
+          }
+        });
+
+      }
+    })
+
+
+
+
   }
 }
