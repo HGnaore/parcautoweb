@@ -1855,6 +1855,7 @@
                             name="panneAndSinistre"
                             class="form-control form-control-modern"
                             name="stockStatus"
+                            (click)="listSinistreaReparer()"
                           >
                             <option selected value="">-- Choisir --</option>
                             <option
@@ -2776,6 +2777,7 @@
                               </option>
                             </select>
                             <!--button
+                              tsinistre.ID
                               class="input-group-text"
                               type="button"
                               data-toggle="modal"
@@ -3187,7 +3189,7 @@
                                 Nature du sinistre
                               </th>
                               <td mat-cell *matCellDef="let element">
-                                {{ element.sinistreNature | uppercase }}
+                                {{ element.designation | uppercase }}
                               </td>
                             </ng-container>
 
@@ -3230,10 +3232,17 @@
                                  <button
                                   type="button"
                                   class="btn btn-secondary btn-sm mr-2"
-                                  (click)="loadOneSinistre(element.ID)"
+                                  (click)="validerReparation(element.ID, 1)"
+                                  *ngIf="element.validerReparation==0"
                                 >
                                   <i class="bx bxs-edit" aria-hidden="true"></i>
-                                  Valider la reparation
+                                  Envoyer à la reparation
+                                  </button>
+                                  
+                                  <button type="button" class="btn btn-warning btn-sm mr-2" (click)="validerReparation(element.ID, 0)"
+                                    *ngIf="element.validerReparation==1">
+                                    <i class="bx bxs-remove" aria-hidden="true"></i>
+                                    Annuler l'envoi en reparation
                                 </button>
 
                                 <button

@@ -623,6 +623,13 @@ export class VehiculeService {
     );
   }
 
+  updateSinistrePourReparation(data): Observable<any> {
+    return this.httpClient.post(
+      this.urlG + "vehicule/sinistre/modificationsinistrePourReparation.php",
+      data
+    );
+  }
+
   getSinistrebyIdVehicule(code): Observable<any> {
     return this.httpClient.get<any>(
       this.urlG +
