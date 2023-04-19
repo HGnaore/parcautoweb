@@ -483,42 +483,13 @@
                   role="tabpanel"
                   aria-labelledby="usage-limits-tab"
                 >
-                  <!--div class="row">
-                  <div class="col-md-12 text-right ">
-                    <button
-                      type="button"
-                      class="btn btn-success btn-sm"
-                      (click)="actionCloseEntretien(1)"
-                      [ngClass]="{ hidden: ActionOpenEntretien }"
-                    >
-                      <i class="fa fa-plus mr-2"></i>AJOUTER UN ENTRETIEN
-                    </button>
-                    <div 
-                      class="d-flex align-items-center justify-content-between border-bottom pb-3"
-                      [ngClass]="{ hidden: ActionCloseEntretien }"
-                    >
-                      <h3 class="m-0 d-flex text-danger font-weight-bold">
-                        <div class="text-muted">
-                          <i class="fas fa-car"></i>&nbsp;&nbsp; PANNE .::.
-                        </div>
-                        Déclaration d'un sinistre
-                      </h3>
-                      <button
-                        type="button"
-                        class="btn btn-danger btn-sm"
-                        (click)="actionCloseEntretien(0)"
-                      >
-                        <i class="fas fa-times mr-2"></i>FERMER
-                      </button>
-                    </div>
-                  </div>
-                </div-->
-
+             
                   <div class="row">
                     <div class="col-md-12 text-right">
+                      
                       <button
                         type="button"
-                        class="btn btn-success btn-sm"
+                        class="btn btn-success"
                         (click)="actionCloseEntretien(1)"
                         [ngClass]="{ hidden: ActionOpenEntretien }"
                       >
@@ -537,7 +508,7 @@
                         </h3>
                         <button
                           type="button"
-                          class="btn btn-danger btn-sm"
+                          class="btn btn-danger"
                           (click)="actionCloseEntretien(0)"
                         >
                           <i class="fas fa-times mr-2"></i>FERMER
@@ -546,17 +517,17 @@
                     </div>
                   </div>
 
-                  <div [ngClass]="{ hidden: hiddenEntretien }">
+                  <div class="card-body" [ngClass]="{ hidden: hiddenEntretien }">
                     <!---->
-                    <div class="card">
-                      <div class="my-3 border rounded p-3">
+                    <div>
+                      <div>
                         <form
                           [formGroup]="vehiculeFormEntretien"
                           (ngSubmit)="
                             onSubmitFormEntretien(vehiculeFormEntretien.value)
                           "
                         >
-                          <div class="row">
+                          <div class="row my-3 border rounded p-3 bg-light">
                             <!--ecommerce-form action-buttons-fixed-->
                             <input
                               type="text"
@@ -850,7 +821,7 @@
                       </div>
                     </div>
 
-                    <div *ngIf="hiddenTabEntretein">
+                    <div class="card-body" *ngIf="hiddenTabEntretein">
                       <form
                         [formGroup]="vehiculeFormDetailEntretient"
                         (ngSubmit)="
@@ -1342,15 +1313,9 @@
                       </form>
                     </div>
                   </div>
-                  <div
-                    class="card-body"
+                  <section class="card"
                     [ngClass]="{ hidden: hiddenListeEntretien }"
                   >
-                    <!--div class="text-left mb-2">
-      <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-      data-target="#modal-AddDocument"><i class="fa fa-plus"></i> Ajouter un média (Document, Photo....) </button>
-      
-  </div-->
 
                     <div class="spinner4" *ngIf="isLoadingResultsEntretient">
                       <div class="bounce1"></div>
@@ -1480,7 +1445,7 @@
                       aria-label="Select page of periodic elements"
                     >
                     </mat-paginator>
-                  </div>
+                  </section>
                   <!------FIN-------->
                 </div>
 
@@ -1495,7 +1460,7 @@
                     <div class="col-md-12 text-right">
                       <button
                         type="button"
-                        class="btn btn-success btn-sm"
+                        class="btn btn-success"
                         (click)="actionClosePanne(1)"
                         [ngClass]="{ hidden: ActionOpenPanne }"
                       >
@@ -1513,7 +1478,7 @@
                         </h3>
                         <button
                           type="button"
-                          class="btn btn-danger btn-sm"
+                          class="btn btn-danger"
                           (click)="actionClosePanne(0)"
                         >
                           <i class="fas fa-times mr-2"></i>FERMER
@@ -1521,13 +1486,12 @@
                       </div>
                     </div>
                   </div>
-                  <div class="card-body">
+                  <div class="card-body" [ngClass]="{ hidden: hiddenPanne }">
                     
                     <form
                       [formGroup]="vehiculeFormPanne"
-                      (ngSubmit)="onSubmitFormPanne(vehiculeFormPanne.value)" [ngClass]="{ hidden: hiddenPanne }"
-                    >
-                    <div class="row my-3 border rounded p-3">
+                      (ngSubmit)="onSubmitFormPanne(vehiculeFormPanne.value)">
+                    <div class="row my-3 border rounded p-3 bg-light">
                       <div class="col-md-2 inputSpace" hidden>
                         <input
                           type="text"
@@ -1656,8 +1620,8 @@
                       </div>
                     </div>
                     </form>
-               
-                   <div>
+                 </div>
+                   <section class="card" [ngClass]="{ hidden: hiddenListePanne }">
                     <mat-form-field class="mt-1">
                       <mat-label>Rechercher</mat-label>
                       <input
@@ -1777,8 +1741,8 @@
                       >
                       </mat-paginator>
                      
-                    </div>
-                  </div>
+                    </section>
+                
                 </div>
 
                 <div
@@ -1787,36 +1751,48 @@
                   role="tabpanel"
                   aria-labelledby="ReparationVehicule-tab"
                 >
+
+               
+
                   <div class="row">
                     <div class="col-md-12 text-right">
                       <button
                         type="button"
-                        class="btn btn-success btn-sm"
+                        class="btn btn-success"
                         (click)="actionCloseReparation(1)"
                         [ngClass]="{ hidden: ActionOpenReparation }"
                       >
                         <i class="fa fa-plus mr-2"></i>AJOUTER UNE REPARATION
                       </button>
 
+                      <div
+                      class="d-flex align-items-center justify-content-between border-bottom pb-3"
+                     [ngClass]="{ hidden: ActionCloseReparation }"
+                    >
+                    <h3 class="m-0 d-flex text-danger font-weight-bold">
+                      <div class="text-muted mr-2">
+                        <i class="fas fa-car"></i>&nbsp;&nbsp; REPARATION .::.
+                      </div>
+                      Informations sur la répartition
+                    </h3>
                       <button
                         type="button"
-                        class="btn btn-danger btn-sm"
+                        class="btn btn-danger"
                         (click)="actionCloseReparation(0)"
                         [ngClass]="{ hidden: ActionCloseReparation }"
                       >
                         <i class="fas fa-times mr-2"></i>FERMER
                       </button>
                     </div>
+                  </div> 
                   </div>
-                  <div class="row" [ngClass]="{ hidden: hiddenReparation }">
-                    <div class="card-body">
-                      <form
-                        class="row g-3 ecommerce-form action-buttons-fixed"
-                        [formGroup]="vehiculeFormReparation"
+                
+             
+                    <div class="card-body" [ngClass]="{ hidden: hiddenReparation }">
+                      <form  [formGroup]="vehiculeFormReparation" 
                         (ngSubmit)="
-                          onSubmitFormReparation(vehiculeFormReparation.value)
-                        "
-                      >
+                          onSubmitFormReparation(vehiculeFormReparation.value)">
+                          <div class="row my-3 border rounded p-3 bg-light">
                         <div hidden class="col-md-2 inputSpace">
                           <!---->
                           <input
@@ -1833,7 +1809,7 @@
                           <select
                             disabled
                             id="inputState"
-                            class="form-control form-control-modern"
+                            class="form-control form-control-modern border-success"
                             name="stockStatus"
                           >
                             <option selected>
@@ -1855,8 +1831,8 @@
                             name="panneAndSinistre"
                             class="form-control form-control-modern"
                             name="stockStatus"
-                            (click)="listSinistreaReparer()"
-                          >
+                           
+                          ><!-- (click)="listSinistreaReparer()"-->
                             <option selected value="">-- Choisir --</option>
                             <option
                               *ngFor="let pan of listePannesareparer"
@@ -1957,7 +1933,7 @@
                             >Kilométrage de retour.</label
                           >
                           <input
-                            type="text"
+                            type="number"
                             class="form-control form-control-modern bg-light border-info"
                             id="reparationKmRetour"
                             formControlName="reparationKmRetour"
@@ -1969,7 +1945,7 @@
                             >Montant.</label
                           >
                           <input
-                            type="text"
+                            type="number"
                             class="form-control form-control-modern bg-light border-info"
                             id="reparationMontant"
                             formControlName="reparationMontant"
@@ -2139,9 +2115,10 @@
                             <i class="fa fa-times text-4 mr-1"></i> Quitter
                           </span>
                         </div>
+                      </div>
                       </form>
                       <!---->
-                      <div class="mt-3">
+                      <div class="mt-3" *ngIf="hiddenTabReparation">
                         <div class="bg-dark py-2 px-3 rounded">
                           <h3 class="m-0 d-flex text-warning">
                             <div class="text-muted">
@@ -2158,7 +2135,302 @@
                             <strong>Ajouter</strong> pour ajouter le détail de
                             la réparation au tableau .::
                           </p>
-                          <table class="w-100 mb-3">
+
+                          <div class="card-body">
+                            <form
+                              class="row g-3 ecommerce-form action-buttons-fixed"
+                              [formGroup]="vehiculeFormDetailReparation"
+                              (ngSubmit)="
+                                onSubmitFormDetailReparation(
+                                  vehiculeFormDetailReparation.value
+                                )
+                              "
+                            >
+                              <input
+                                type="text"
+                                hidden
+                                class="form-control form-control-modern"
+                                id="inputPassword4"
+                                formControlName="LreparationDetailID"
+                              /><!--hidden-->
+
+                              
+                            <div class="col-md-4 inputSpace">
+                              <label
+                                for="inputEmail4"
+                                class="form-label inputSpaceText"
+                                >Pièce <span class="Oblig">*</span></label
+                              >
+                              <select
+                              id="inputState"
+                              class="form-control form-control-modern"
+                              name="stockStatus"
+                              formControlName="reparationDetailPieceID"
+                            >
+                              <option selected value="">-- Choisir --</option>
+                              <option
+                                *ngFor="let pie of listePiece.results"
+                                [value]="pie.ID"
+                              >
+                                {{ pie.designation | uppercase }}
+                              </option>
+                            </select>
+
+                            </div>
+
+                            <div class="col-md-2 inputSpace">
+                              <label
+                                for="inputEmail4"
+                                class="form-label inputSpaceText"
+                                >Quantité <span class="Oblig">*</span></label
+                              >
+                              <input
+                                type="number"
+                                class="form-control form-control-modern"
+                                id="inputPassword4"
+                                formControlName="reparationDetailQuantite"
+                              />
+                            </div>
+
+                             
+                            <div class="col-md-2 inputSpace">
+                              <label
+                                for="inputEmail4"
+                                class="form-label inputSpaceText"
+                                >Prix Unit. <span class="Oblig">*</span></label
+                              >
+                              <input
+                                type="number"
+                                class="form-control form-control-modern"
+                                id="inputPassword4"
+                                formControlName="reparationDetailPrixUnit"
+                              />
+                            </div>
+                            
+                              <div class="col-md-2 inputSpace">
+                                <label
+                                  for="inputEmail4"
+                                  class="form-label inputSpaceText"
+                                  >Description <span class="Oblig">*</span></label
+                                >
+                                <input
+                                  type="text"
+                                  class="form-control form-control-modern"
+                                  id="inputPassword4"
+                                  formControlName="reparationDetailDesignation"
+                                />
+                              </div>
+                            
+                              <!--div class="col-md-2 inputSpace">
+                                <label
+                                  for="inputEmail4"
+                                  class="form-label inputSpaceText"
+                                  >TOTAL</label
+                                >
+                                <input
+                                  type="number"
+                                  readonly
+                                  class="form-control form-control-modern"
+                                  id="inputPassword4"
+                                />
+                              </div-->
+                              <div class="col-md-2 inputSpace">
+                                <button
+                                  [disabled]="
+                                    vehiculeFormDetailReparation.invalid
+                                  "
+                                  type="submit"
+                                  class="btn btn-success btn-sm btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                                  style="margin-top: 22px"
+                                >
+                                  <i class="fa fa-plus text-4 mr-2"></i> Ajouter
+                                </button>
+                              </div>
+  
+                              <div class="col-md-12">
+                                <table
+                                  mat-table
+                                  [dataSource]="dataSourceReparationDetail"
+                                  class="table-responsive-md table-striped mb-0"
+                                >
+                                  <!-- Position Column -->
+                                  <ng-container matColumnDef="numberDet">
+                                    <th
+                                      mat-header-cell
+                                      *matHeaderCellDef
+                                      class="bg-dark"
+                                    >
+                                      #
+                                    </th>
+                                    <td
+                                      mat-cell
+                                      *matCellDef="let element; let i = index"
+                                    >
+                                      {{ i + 1 }}
+                                    </td>
+                                  </ng-container>
+
+                                   <!-- Position Column -->
+                                   <ng-container
+                                   matColumnDef="PieceDesignation"
+                                 >
+                                   <th
+                                     mat-header-cell
+                                     *matHeaderCellDef
+                                     class="bg-dark"
+                                   >
+                                   Description
+                                   </th>
+                                   <td mat-cell *matCellDef="let element">
+                                     {{
+                                       element.designation
+                                         | uppercase
+                                     }}
+                                   </td>
+                                 </ng-container>
+  
+                                  <!-- Position Column -->
+                                  <ng-container
+                                    matColumnDef="reparationDetailDesignation"
+                                  >
+                                    <th
+                                      mat-header-cell
+                                      *matHeaderCellDef
+                                      class="bg-dark"
+                                    >
+                                    Description
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                      {{
+                                        element.reparationDetailDesignation
+                                          | uppercase
+                                      }}
+                                    </td>
+                                  </ng-container>
+  
+                                  <ng-container
+                                    matColumnDef="reparationDetailQuantite"
+                                  >
+                                    <th
+                                      mat-header-cell
+                                      *matHeaderCellDef
+                                      class="bg-dark"
+                                    >
+                                      Quantité
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                      {{ element.reparationDetailQuantite }}
+                                    </td>
+                                  </ng-container>
+  
+                                  <!-- Position Column -->
+                                  <ng-container
+                                    matColumnDef="reparationDetailPrixUnit"
+                                  >
+                                    <th
+                                      mat-header-cell
+                                      *matHeaderCellDef
+                                      class="bg-dark"
+                                    >
+                                      Prix Unitaire
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                      {{ element.reparationDetailPrixUnit }}
+                                    </td>
+                                  </ng-container>
+  
+                                  <!-- Name Column -->
+                                  <ng-container
+                                    matColumnDef="reparationDetailPrixTotal"
+                                  >
+                                    <th
+                                      mat-header-cell
+                                      *matHeaderCellDef
+                                      class="bg-dark"
+                                    >
+                                      Total
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                      {{
+                                        element.reparationDetailQuantite *
+                                          element.reparationDetailPrixUnit
+                                      }}
+                                    </td>
+                                  </ng-container>
+  
+                                  <!-- Symbol Column -->
+                                  <ng-container matColumnDef="actionRepareDetail">
+                                    <th
+                                      mat-header-cell
+                                      *matHeaderCellDef
+                                      class="bg-dark"
+                                    >
+                                      Actions
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                      <!--button type="button" class="btn btn-info btn-sm mr-2">
+                                                             <i class="bx bx-money" aria-hidden="true"></i> Dépense
+                                                         </button>
+                                                         <button type="button" class="btn btn-secondary btn-sm mr-2">
+                                                             <i class="bx bxs-edit" aria-hidden="true"></i> Modifier
+                                                         </button-->
+                                      <button
+                                        type="button"
+                                        data-toggle="modal"
+                                        data-target="#modal-info"
+                                        class="btn btn-danger btn-sm"
+                                        (click)="
+                                          ItemSupprimeDetailReparation(
+                                            element.ID,
+                                            'reparationDetail',
+                                            element.reparationID
+                                          )
+                                        "
+                                      >
+                                        <i class="bx bxs-trash"></i> Sup
+                                      </button>
+                                      <!--button type="button" class="btn btn-primary btn-sm">Small button</button>
+                                                         <button type="button" class="btn btn-primary btn-sm">Small button</button-->
+                                    </td>
+                                  </ng-container>
+  
+                                  <tr
+                                    mat-header-row
+                                    *matHeaderRowDef="
+                                      displayedColumnsReparationDetail
+                                    "
+                                  ></tr>
+                                  <tr
+                                    mat-row
+                                    *matRowDef="
+                                      let row;
+                                      columns: displayedColumnsReparationDetail
+                                    "
+                                  ></tr>
+                                </table>
+  
+                                <mat-paginator
+                                  [pageSizeOptions]="[10, 20, 30]"
+                                  showFirstLastButtons
+                                  aria-label="Select page of periodic elements"
+                                >
+                                </mat-paginator>
+                              </div>
+                            </form>
+
+                            <div class="col-12 col-md-12 text-center">
+                              <span
+                                class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                                (click)="actionCloseReparation(0)"
+                              >
+                                <i class="fa fa-times text-4 mr-1"></i> Quitter
+                              </span>
+                            </div>
+                          </div>
+  
+                     
+                          
+                          <!--table class="w-100 mb-3">
                             <tr>
                               <td class="p-2">
                                 <select class="form-control bg-light">
@@ -2228,14 +2500,14 @@
                                 </td>
                               </tr>
                             </tbody>
-                          </table>
+                          </table-->
                         </div>
                       </div>
-                      <section
-                        hidden
+                      <!--section
+                        
                         class="col-md-12 card"
                         style="margin-top: 10px"
-                        *ngIf="hiddenTabReparation"
+                        
                       >
                         <div
                           class="bg-warning"
@@ -2249,254 +2521,15 @@
                             Détail des travaux effectués
                           </h2>
                         </div>
-                        <div class="card-body">
-                          <form
-                            class="row g-3 ecommerce-form action-buttons-fixed"
-                            [formGroup]="vehiculeFormDetailReparation"
-                            (ngSubmit)="
-                              onSubmitFormDetailReparation(
-                                vehiculeFormDetailReparation.value
-                              )
-                            "
-                          >
-                            <input
-                              type="text"
-                              hidden
-                              class="form-control form-control-modern"
-                              id="inputPassword4"
-                              formControlName="LreparationDetailID"
-                            /><!--hidden-->
-                            <div class="col-md-6 inputSpace">
-                              <label
-                                for="inputEmail4"
-                                class="form-label inputSpaceText"
-                                >Désignation <span class="Oblig">*</span></label
-                              >
-                              <input
-                                type="text"
-                                class="form-control form-control-modern"
-                                id="inputPassword4"
-                                formControlName="reparationDetailDesignation"
-                              />
-                            </div>
-                            <div class="col-md-2 inputSpace">
-                              <label
-                                for="inputEmail4"
-                                class="form-label inputSpaceText"
-                                >Quantité <span class="Oblig">*</span></label
-                              >
-                              <input
-                                type="number"
-                                class="form-control form-control-modern"
-                                id="inputPassword4"
-                                formControlName="reparationDetailQuantite"
-                              />
-                            </div>
-                            <div class="col-md-2 inputSpace">
-                              <label
-                                for="inputEmail4"
-                                class="form-label inputSpaceText"
-                                >Prix Unit. <span class="Oblig">*</span></label
-                              >
-                              <input
-                                type="number"
-                                class="form-control form-control-modern"
-                                id="inputPassword4"
-                                formControlName="reparationDetailPrixUnit"
-                              />
-                            </div>
-                            <!--div class="col-md-2 inputSpace">
-                              <label
-                                for="inputEmail4"
-                                class="form-label inputSpaceText"
-                                >TOTAL</label
-                              >
-                              <input
-                                type="number"
-                                readonly
-                                class="form-control form-control-modern"
-                                id="inputPassword4"
-                              />
-                            </div-->
-                            <div class="col-md-2 inputSpace">
-                              <button
-                                [disabled]="
-                                  vehiculeFormDetailReparation.invalid
-                                "
-                                type="submit"
-                                class="btn btn-dark btn-sm btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
-                                style="margin-top: 22px"
-                              >
-                                <i class="fa fa-plus text-4 mr-2"></i> Ajouter
-                              </button>
-                            </div>
-
-                            <div class="col-md-12">
-                              <table
-                                mat-table
-                                [dataSource]="dataSourceReparationDetail"
-                                class="table-responsive-md table-striped mb-0"
-                              >
-                                <!-- Position Column -->
-                                <ng-container matColumnDef="numberDet">
-                                  <th
-                                    mat-header-cell
-                                    *matHeaderCellDef
-                                    class="bg-white"
-                                  >
-                                    #
-                                  </th>
-                                  <td
-                                    mat-cell
-                                    *matCellDef="let element; let i = index"
-                                  >
-                                    {{ i + 1 }}
-                                  </td>
-                                </ng-container>
-
-                                <!-- Position Column -->
-                                <ng-container
-                                  matColumnDef="reparationDetailDesignation"
-                                >
-                                  <th
-                                    mat-header-cell
-                                    *matHeaderCellDef
-                                    class="bg-white"
-                                  >
-                                    Designation
-                                  </th>
-                                  <td mat-cell *matCellDef="let element">
-                                    {{
-                                      element.reparationDetailDesignation
-                                        | uppercase
-                                    }}
-                                  </td>
-                                </ng-container>
-
-                                <ng-container
-                                  matColumnDef="reparationDetailQuantite"
-                                >
-                                  <th
-                                    mat-header-cell
-                                    *matHeaderCellDef
-                                    class="bg-white"
-                                  >
-                                    Quantité
-                                  </th>
-                                  <td mat-cell *matCellDef="let element">
-                                    {{ element.reparationDetailQuantite }}
-                                  </td>
-                                </ng-container>
-
-                                <!-- Position Column -->
-                                <ng-container
-                                  matColumnDef="reparationDetailPrixUnit"
-                                >
-                                  <th
-                                    mat-header-cell
-                                    *matHeaderCellDef
-                                    class="bg-white"
-                                  >
-                                    Prix Unitaire
-                                  </th>
-                                  <td mat-cell *matCellDef="let element">
-                                    {{ element.reparationDetailPrixUnit }}
-                                  </td>
-                                </ng-container>
-
-                                <!-- Name Column -->
-                                <ng-container
-                                  matColumnDef="reparationDetailPrixTotal"
-                                >
-                                  <th
-                                    mat-header-cell
-                                    *matHeaderCellDef
-                                    class="bg-white"
-                                  >
-                                    Total
-                                  </th>
-                                  <td mat-cell *matCellDef="let element">
-                                    {{
-                                      element.reparationDetailQuantite *
-                                        element.reparationDetailPrixUnit
-                                    }}
-                                  </td>
-                                </ng-container>
-
-                                <!-- Symbol Column -->
-                                <ng-container matColumnDef="actionRepareDetail">
-                                  <th
-                                    mat-header-cell
-                                    *matHeaderCellDef
-                                    class="bg-white"
-                                  >
-                                    Actions
-                                  </th>
-                                  <td mat-cell *matCellDef="let element">
-                                    <!--button type="button" class="btn btn-info btn-sm mr-2">
-                                                           <i class="bx bx-money" aria-hidden="true"></i> Dépense
-                                                       </button>
-                                                       <button type="button" class="btn btn-secondary btn-sm mr-2">
-                                                           <i class="bx bxs-edit" aria-hidden="true"></i> Modifier
-                                                       </button-->
-                                    <button
-                                      type="button"
-                                      data-toggle="modal"
-                                      data-target="#modal-info"
-                                      class="btn btn-danger btn-sm"
-                                      (click)="
-                                        ItemSupprimeDetailReparation(
-                                          element.ID,
-                                          'reparationDetail',
-                                          element.reparationID
-                                        )
-                                      "
-                                    >
-                                      <i class="bx bxs-trash"></i> Sup
-                                    </button>
-                                    <!--button type="button" class="btn btn-primary btn-sm">Small button</button>
-                                                       <button type="button" class="btn btn-primary btn-sm">Small button</button-->
-                                  </td>
-                                </ng-container>
-
-                                <tr
-                                  mat-header-row
-                                  *matHeaderRowDef="
-                                    displayedColumnsReparationDetail
-                                  "
-                                ></tr>
-                                <tr
-                                  mat-row
-                                  *matRowDef="
-                                    let row;
-                                    columns: displayedColumnsReparationDetail
-                                  "
-                                ></tr>
-                              </table>
-
-                              <mat-paginator
-                                [pageSizeOptions]="[10, 20, 30]"
-                                showFirstLastButtons
-                                aria-label="Select page of periodic elements"
-                              >
-                              </mat-paginator>
-                            </div>
-                          </form>
-                        </div>
-
-                        <div class="col-12 col-md-12 text-center">
-                          <span
-                            class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
-                            (click)="actionCloseReparation(0)"
-                          >
-                            <i class="fa fa-times text-4 mr-1"></i> Quitter
-                          </span>
-                        </div>
-                      </section>
+                     ddd
+                      </section-->
                     </div>
-                  </div>
+               
 
-                  <section class="card" style="margin-top: 20px">
+                    <section
+                    class="card" [ngClass]="{ hidden: hiddenListeReparation }"
+                  >
+               
                     <!--header class="card-header" style="margin: 0px; padding: 5px;">
                               <h3 class="card-title" style="margin: 2px; padding: 4px;">Liste des véhicules réparés</h3>
                             </header-->
@@ -2648,6 +2681,7 @@
                       </div>
                     </div>
                   </section>
+             
                 </div>
 
                 <div
@@ -2660,7 +2694,7 @@
                     <div class="col-md-12 text-right">
                       <button
                         type="button"
-                        class="btn btn-success btn-sm"
+                        class="btn btn-success"
                         (click)="actionCloseSinistre(1)"
                         [ngClass]="{ hidden: ActionOpenSinistre }"
                       >
@@ -2679,7 +2713,7 @@
                         </h3>
                         <button
                           type="button"
-                          class="btn btn-danger btn-sm"
+                          class="btn btn-danger"
                           (click)="actionCloseSinistre(0)"
                         >
                           <i class="fas fa-times mr-2"></i>FERMER
@@ -2687,15 +2721,14 @@
                       </div>
                     </div>
                   </div>
-                  <div class="row" [ngClass]="{ hidden: hiddenSinistre }">
-                    <div class="card-body">
-                      <form
-                        class="row g-3"
+                  <div class="card-body">
+                      <form [ngClass]="{ hidden: hiddenSinistre }"
                         [formGroup]="vehiculeFormSinistre"
                         (ngSubmit)="
                           onSubmitFormSinistre(vehiculeFormSinistre.value)
                         "
                       >
+                      <div class="row my-3 border rounded p-3 bg-light">
                         <div class="col-md-2 inputSpace" hidden>
                           <input
                             type="text"
@@ -2711,7 +2744,7 @@
                           >
                           <select
                             id="inputState"
-                            class="form-control form-control-modern"
+                            class="form-control form-control-modern border-success"
                             name="sinistrestockStatus"
                             disabled
                           >
@@ -3135,17 +3168,13 @@
                             <i class="fa fa-times text-4 mr-1"></i> Quitter
                           </span>
                         </div>
+                      </div>
                       </form>
-                    </div>
+                   
                   </div>
 
-                  <section class="card">
-                    <!--header class="card-header" style="margin: 0px; padding: 5px;">
-          <h3 class="card-title" style="margin: 2px; padding: 4px;">Liste des véhicules réparés</h3>
-        </header-->
-
-                    <div>
-                      <div>
+                  <section class="card" [ngClass]="{ hidden: hiddenListeSinistre }">
+                
                         <mat-form-field>
                           <mat-label>Rechercher</mat-label>
                           <input
@@ -3156,7 +3185,7 @@
                           />
                         </mat-form-field>
 
-                        <div>
+                    
                           <table
                             mat-table
                             [dataSource]="dataSourceSinistreNew"
@@ -3231,7 +3260,7 @@
 
                                  <button
                                   type="button"
-                                  class="btn btn-secondary btn-sm mr-2"
+                                  class="btn btn-info btn-sm mr-2"
                                   (click)="validerReparation(element.ID, 1)"
                                   *ngIf="element.validerReparation==0"
                                 >
@@ -3301,9 +3330,8 @@
                             aria-label="Select page of periodic elements"
                           >
                           </mat-paginator>
-                        </div>
-                      </div>
-                    </div>
+                     
+                  
                   </section>
                 </div>
 
@@ -3697,25 +3725,38 @@
                       >
                         <i class="fa fa-plus mr-2"></i>AJOUTER UN KILOMETRAGE
                       </button>
+
+                      <div
+                      class="d-flex align-items-center justify-content-between border-bottom pb-3"
+                      [ngClass]="{ hidden: ActionCloseKilometrage }"
+                    >
+                      <h3 class="m-0 d-flex text-danger font-weight-bold">
+                        <div class="text-muted mr-2">
+                          <i class="fas fa-car"></i>&nbsp;&nbsp; KILOMETRAGE .::.
+                        </div>
+                        Enregistrement du kilométrage
+                      </h3>
                       <button
                         type="button"
-                        class="btn btn-danger btn-sm"
+                        class="btn btn-danger"
                         (click)="actionCloseKilometrage(0)"
                         [ngClass]="{ hidden: ActionCloseKilometrage }"
                       >
                         <i class="fas fa-times mr-2"></i>FERMER
                       </button>
                     </div>
+                    </div>
                   </div>
-                  <div class="row" [ngClass]="{ hidden: hiddenKilometrage }">
+                  <div [ngClass]="{ hidden: hiddenKilometrage }">
                     <div class="card-body">
                       <form
                         [formGroup]="vehiculeFormKilometage"
                         (ngSubmit)="
                           onSubmitFormKilometrage(vehiculeFormKilometage.value)
                         "
-                        class="row g-3"
+                       
                       >
+                      <div class="row my-3 border rounded p-3 bg-light">
                         <input
                           type="text"
                           value="1"
@@ -3732,7 +3773,7 @@
                           <select
                             disabled
                             id="inputState"
-                            class="form-control form-control-modern"
+                            class="form-control form-control-modern border-success"
                             name="stockStatus"
                           >
                             <option selected>
@@ -3803,6 +3844,7 @@
                             <i class="fa fa-times text-4 mr-1"></i> Quitter
                           </span>
                         </div>
+                        </div>
                       </form>
                     </div>
                   </div>
@@ -3812,7 +3854,7 @@
                                                   <h3 class="card-title" style="margin: 2px; padding: 4px;">Liste des véhicules réparés</h3>
                                                 </header-->
 
-                    <div>
+                    <div [ngClass]="{ hidden: hiddenListeKilometre }">
                       <div>
                         <mat-form-field>
                           <mat-label>Rechercher</mat-label>
@@ -3949,23 +3991,54 @@
                     <div class="col-md-12 text-right">
                       <button
                         type="button"
-                        class="btn btn-success btn-sm"
+                        class="btn btn-success"
                         (click)="actionCloseInfraction(1)"
                         [ngClass]="{ hidden: ActionOpenInfraction }"
                       >
                         <i class="fa fa-plus mr-2"></i>AJOUTER UNE INFRACTION
                       </button>
+
+                      <div
+                      class="d-flex align-items-center justify-content-between border-bottom pb-3"
+                      [ngClass]="{ hidden: ActionCloseInfraction }"
+                    >
+                      <h3 class="m-0 d-flex text-danger font-weight-bold">
+                        <div class="text-muted mr-2">
+                          <i class="fas fa-car"></i>&nbsp;&nbsp; INFRACTION .::.
+                        </div>
+                        Déclaration d'une infraction
+                      </h3>
+
                       <button
                         type="button"
-                        class="btn btn-danger btn-sm"
+                        class="btn btn-danger"
                         (click)="actionCloseInfraction(0)"
                         [ngClass]="{ hidden: ActionCloseInfraction }"
                       >
                         <i class="fas fa-times mr-2"></i>FERMER
                       </button>
+                      </div>
                     </div>
                   </div>
-                  <div class="my-3" [ngClass]="{ hidden: hiddenInfraction }">
+                  <div class="card-body" [ngClass]="{ hidden: hiddenInfraction }">
+                    <div class="spinner4" *ngIf="isLoadingResultsModif">
+                      <div class="bounce1"></div>
+                      <div class="bounce2"></div>
+                      <div class="bounce3"></div>
+                    </div>
+                    <form
+                    [formGroup]="vehiculeFormInfraction"
+                    (ngSubmit)="
+                      onSubmitFormInfraction(vehiculeFormInfraction.value)
+                    "
+                  >
+                  <div class="row my-3 border rounded p-3 bg-light">
+                  <input
+                  type="text"
+                  formControlName="LinfractionID"
+                  hidden
+                  class="form-control form-control-modern"
+                />
                     <div class="rounded border p-3 mt-3 bg-light">
                       <div class="row">
                         <div class="col-6">
@@ -3981,19 +4054,19 @@
                               <label class="form-label"
                                 >Date <span class="text-danger">*</span></label
                               >
-                              <input type="date" class="form-control" />
+                              <input type="date" formControlName="infractiondate" class="form-control" />
                             </div>
                             <div class="col-6 my-3">
                               <label class="form-label"
                                 >Heure <span class="text-danger">*</span></label
                               >
-                              <input type="time" class="form-control" />
+                              <input type="time" formControlName="infractionheure" class="form-control" />
                             </div>
                             <div class="col-12 mb-3">
                               <label class="form-label"
                                 >Code <span class="text-danger">*</span></label
                               >
-                              <input type="text" class="form-control" />
+                              <input type="text" formControlName="infractioncode" class="form-control" />
                             </div>
                             <div class="col-4">
                               <label class="form-label"
@@ -4001,7 +4074,7 @@
                                 <span class="text-danger">*</span></label
                               >
                               <div class="input-group">
-                                <input type="number" class="form-control" />
+                                <input type="number" formControlName="infractionvitesse" class="form-control" />
                                 <span class="input-group-text">Km/h</span>
                               </div>
                             </div>
@@ -4010,13 +4083,13 @@
                                 >Matricule agent verb.
                                 <span class="text-danger">*</span></label
                               >
-                              <input type="text" class="form-control" />
+                              <input type="text" formControlName="infractionmatriclueagent" class="form-control" />
                             </div>
                             <div class="col-12 mb-3">
                               <label class="form-label"
                                 >Lieu <span class="text-danger">*</span></label
                               >
-                              <input type="text" class="form-control" />
+                              <input type="text" formControlName="infractionadresse" class="form-control" />
                             </div>
                           </div>
                         </div>
@@ -4036,6 +4109,7 @@
                                 class="form-control"
                                 style="height: 232px"
                                 placeholder="Description de l'effet"
+                                formControlName="infractioneffet"
                               ></textarea>
                             </div>
                             <div class="col-12 mt-3">
@@ -4047,6 +4121,7 @@
                                 <input
                                   type="number"
                                   class="form-control border-0"
+                                  formControlName="infractionnmontantamende"
                                   style="background-color: rgb(227, 240, 255)"
                                 />
                                 <span class="input-group-text">F CFA</span>
@@ -4054,16 +4129,33 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col-12 text-right mt-3">
-                          <button class="btn btn-danger">ANNULER</button>
-                          <button class="btn btn-success ml-3">
-                            ENREGISTRER
+                      
+                        <div class="col-12 col-md-12 text-center">
+                          <button
+                            [disabled]="vehiculeFormInfraction.invalid"
+                            style="margin-right: 10px"
+                            type="submit"
+                            class="submit-button btn btn-success btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                            data-loading-text="Loading..."
+                          >
+                            <i class="bx bx-save text-4 mr-1"></i> Enregister
                           </button>
+
+                          <span
+                            class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                            (click)="actionCloseInfraction(0)"
+                          >
+                            <i class="fa fa-times text-4 mr-1"></i> Quitter
+                          </span>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <!-- <div class="row" [ngClass]="{ hidden: hiddenInfraction }">
+                    </form>
+                  </div>
+
+
+                  <!--div class="row" [ngClass]="{ hidden: hiddenInfraction }">
                     <div class="spinner4" *ngIf="isLoadingResultsModif">
                       <div class="bounce1"></div>
                       <div class="bounce2"></div>
@@ -4251,13 +4343,9 @@
                         </div>
                       </form>
                     </div>
-                  </div> -->
+                  </div-->
 
-                  <section class="card">
-                    <!--header class="card-header" style="margin: 0px; padding: 5px;">
-                                                  <h3 class="card-title" style="margin: 2px; padding: 4px;">Liste des véhicules réparés</h3>
-                                                </header-->
-
+                  <section class="card" [ngClass]="{ hidden: hiddenListeInfraction }">
                     <div>
                       <div>
                         <mat-form-field>
@@ -4289,11 +4377,14 @@
                             <!-- Name Column -->
                             <ng-container matColumnDef="infractiondate">
                               <th mat-header-cell *matHeaderCellDef>
-                                Date Infraction
+                                Date & heure Infraction
                               </th>
                               <td mat-cell *matCellDef="let element">
                                 {{
                                   element.infractiondate | date : "dd/MM/yyyy"
+                                }}
+                                {{
+                                  element.infractionheure.slice(0,5) 
                                 }}
                               </td>
                             </ng-container>
@@ -4301,10 +4392,10 @@
                             <!-- Weight Column -->
                             <ng-container matColumnDef="infractionlibelle">
                               <th mat-header-cell *matHeaderCellDef>
-                                Infraction
+                                Code
                               </th>
                               <td mat-cell *matCellDef="let element">
-                                {{ element.infractionlibelle | uppercase }}
+                                {{ element.infractioncode | uppercase }}
                               </td>
                             </ng-container>
 
@@ -4313,11 +4404,11 @@
                               matColumnDef="infractionnomconducteur"
                             >
                               <th mat-header-cell *matHeaderCellDef>
-                                Conducteur
+                                Matricule Agent
                               </th>
                               <td mat-cell *matCellDef="let element">
                                 {{
-                                  element.infractionnomconducteur | uppercase
+                                  element.infractionmatriclueagent | uppercase
                                 }}
                               </td>
                             </ng-container>
@@ -4342,7 +4433,7 @@
                                 *matCellDef="let element"
                                 style="text-align: center"
                               >
-                                {{ element.infractionvitesse }}
+                                {{ element.infractionvitesse }} Km/h
                               </td>
                             </ng-container>
 

@@ -21,6 +21,7 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { VehiculeService } from "src/app/services/vehicule.service";
+import { PiecesService } from "src/app/services/pieces.service";
 import { DirectionService } from "src/app/services/trombino/direction.service";
 import { FournisseurService } from "src/app/services/fournisseur.service";
 import { HttpClient } from "@angular/common/http";
@@ -409,6 +410,7 @@ export class TraitementVehiculeComponent implements OnInit {
   marque: any;
   listeTypeEntret: any = [];
   listeGaragiste: any = [];
+  listePiece: any = [];
   ///resultatCarteGrise
   numeroCarteGrise: any;
   datemiseenserviceCarteGrise: any;
@@ -573,11 +575,13 @@ export class TraitementVehiculeComponent implements OnInit {
 
   displayedColumnsReparationDetail: string[] = [
     "numberDet",
-    "reparationDetailDesignation",
+    "PieceDesignation",
     "reparationDetailQuantite",
     "reparationDetailPrixUnit",
     "reparationDetailPrixTotal",
+    "reparationDetailDesignation",
     "actionRepareDetail",
+   
   ];
   dataSourceReparationDetail: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginatorReparationDetail: MatPaginator;
@@ -670,9 +674,9 @@ export class TraitementVehiculeComponent implements OnInit {
     "number",
     "infractiondate",
     "infractionlibelle",
+    "infractionvitesse",
     "infractionnomconducteur",
     "infractionnmontantamende",
-    "infractionvitesse",
     "actioninfraction",
   ];
   dataSourceInfraction: MatTableDataSource<any>;
@@ -825,7 +829,11 @@ export class TraitementVehiculeComponent implements OnInit {
   hiddenSaveButtom = false;
   hiddenListeEntretien = false;
   hiddenListeProgramable = true;
-
+  hiddenListeReparation = false;
+  hiddenListeKilometre= false;
+  hiddenListePanne = false;
+  hiddenListeSinistre= false;
+  hiddenListeInfraction= false;
   ActionCloseEntretien = true;
   ActionOpenEntretien = false;
   hiddenEntretien = true;
@@ -895,7 +903,8 @@ export class TraitementVehiculeComponent implements OnInit {
     private assureurService: AssureurService,
     private personnelService: PersonnelService,
     private cdr: ChangeDetectorRef,
-    private entretienService: EntretienService
+    private entretienService: EntretienService,
+    private piecesService: PiecesService
   ) {
     this.dataSourcePanne = new MatTableDataSource(this.Pannes);
     this.dataSourceSinistreNew = new MatTableDataSource(this.Sinistre);
@@ -1535,7 +1544,6 @@ this.TabModifier = true;*/
   }
 
   listSinistreaReparerByID(ID) {
-
     this.vehiculeService
       .getListeSinistreAreparerbyId(ID)
       .subscribe((reponse) => {
@@ -1661,11 +1669,15 @@ this.TabModifier = true;*/
       reparationFactureProformaModifNew: [""],
       reparationBondeCommandeModifNew: [""],
       reparationFactureModifNew: [""],
+      reparationDateRetour: [""],
+      reparationKmRetour: [""],
+      reparationMontant: [""],
     });
     //Chargement des marques des vehicules
     this.listPanneaReparer();
     this.listSinistreaReparer();
     this.TlisteReparation();
+    this.loadListePiece();
   }
 
   initFormDetailReparation() {
@@ -1674,6 +1686,7 @@ this.TabModifier = true;*/
       reparationDetailDesignation: ["", Validators.required],
       reparationDetailQuantite: ["", Validators.required],
       reparationDetailPrixUnit: ["", Validators.required],
+      reparationDetailPieceID: ["", Validators.required],
     });
     //Chargement des marques des vehicules
   }
@@ -1720,6 +1733,11 @@ this.TabModifier = true;*/
       "reparationFactureModifNew",
       f.reparationFactureModifNew
     );
+
+    FormDataVeh.append("reparationDateRetour", f.reparationDateRetour);
+    FormDataVeh.append("reparationKmRetour", f.reparationKmRetour);
+    FormDataVeh.append("reparationMontant", f.reparationMontant);
+
     if (f.LreparationID != "") {
       //Modif;
       this.vehiculeService.updateReparation(FormDataVeh).subscribe(
@@ -1728,6 +1746,8 @@ this.TabModifier = true;*/
             this.reponse = result;
             this.toastr.success(result.message);
             this.TlisteReparation();
+            this.TlisteSinistre();
+            this.loadListePiece();
           } else {
             this.toastr.error(result.message);
             this.isLoadingResultsModif = false;
@@ -1757,6 +1777,8 @@ this.TabModifier = true;*/
             this.hiddenTabReparation = true;
 
             this.TlisteReparation();
+            this.TlisteSinistre();
+            this.loadListePiece();
           } else {
             this.toastr.error(result.message);
             this.isLoadingResultsModif = false;
@@ -1782,6 +1804,7 @@ this.TabModifier = true;*/
     );
     FormDataVeh.append("reparationDetailQuantite", f.reparationDetailQuantite);
     FormDataVeh.append("reparationDetailPrixUnit", f.reparationDetailPrixUnit);
+    FormDataVeh.append("reparationDetailPieceID", f.reparationDetailPieceID);
     //Nouveau;
 
     this.vehiculeService.saveReparationDetail(FormDataVeh).subscribe(
@@ -1797,6 +1820,9 @@ this.TabModifier = true;*/
           ].setValue("");
           this.vehiculeFormDetailReparation.controls[
             "reparationDetailPrixUnit"
+          ].setValue("");
+          this.vehiculeFormDetailReparation.controls[
+            "reparationDetailPieceID"
           ].setValue("");
           this.TlisteReparationDetail(f.LreparationDetailID); //
         } else {
@@ -1822,6 +1848,14 @@ this.TabModifier = true;*/
         /* this.isLoadingResults = false;
         this.urlPhoto = this.configService.urlgRTI;*/
       });
+  }
+
+
+  loadListePiece() {
+    this.piecesService.getAllPiece().subscribe((reponse) => {
+      this.listePiece = reponse;
+      //this.isLoadingResults = false;
+    });
   }
 
   TlisteReparation() {
@@ -1873,6 +1907,19 @@ this.TabModifier = true;*/
         this.vehiculeFormReparation.controls["reparationKilometrage"].setValue(
           this.OneReparation.results[0].reparationKilometrage
         );
+
+        this.vehiculeFormReparation.controls["reparationDateRetour"].setValue(
+          this.OneReparation.results[0].reparationDateRetour
+        );
+
+        this.vehiculeFormReparation.controls["reparationKmRetour"].setValue(
+          this.OneReparation.results[0].reparationKmRetour
+        );
+
+        this.vehiculeFormReparation.controls["reparationMontant"].setValue(
+          this.OneReparation.results[0].reparationMontant
+        );
+
         this.vehiculeFormReparation.controls["reparationDescription"].setValue(
           this.OneReparation.results[0].reparationDescription
         );
@@ -2009,6 +2056,7 @@ this.TabModifier = true;*/
     this.myInputVariableFacture.nativeElement.value = "";
     this.myInputVariableFactureProforma.nativeElement.value = "";
     this.myInputVariableBondeCommande.nativeElement.value = "";
+    this.TlisteReparationDetail(0);
   }
 
   updatePanneOrSinistreToZERO() {
@@ -2756,13 +2804,22 @@ this.hiddenListeProgramable=false;
       LinfractionID: [""],
       infractiondate: ["", Validators.required],
       infractionadresse: ["", Validators.required],
-      infractioncitation: ["", Validators.required],
-      infractionlibelle: ["", Validators.required],
+  
       infractionvitesse: ["", Validators.required],
-      infractionidentification: ["", Validators.required],
-      infractionnomconducteur: ["", Validators.required],
-      infractionnmontantamende: ["", Validators.required],
+      infractionheure: ["", Validators.required],
+      infractioncode: ["", Validators.required],
+      infractionmatriclueagent: ["", Validators.required],
+      infractioneffet: [""],
+    
+      infractionidentification: [""],
+      infractionnomconducteur: [""],
+      infractionnmontantamende: [""],
       InfractionFileModif: [""],
+      infractioncitation: [""],
+      infractionlibelle: [""],
+
+   
+
     });
     //Chargement des marques des vehicules
     this.TlisteInfraction();
@@ -2778,17 +2835,27 @@ this.hiddenListeProgramable=false;
         this.hiddenListeEntretien = true;*/
 
     FormDataVeh.append("LinfractionID", f.LinfractionID);
-    FormDataVeh.append("infractiondate", f.infractiondate);
-    FormDataVeh.append("infractionadresse", f.infractionadresse);
+   
     FormDataVeh.append("infractioncitation", f.infractioncitation);
     FormDataVeh.append("infractionlibelle", f.infractionlibelle);
-    FormDataVeh.append("infractionvitesse", f.infractionvitesse);
     FormDataVeh.append("infractionidentification", f.infractionidentification);
     FormDataVeh.append("infractionnomconducteur", f.infractionnomconducteur);
-    FormDataVeh.append("infractionnmontantamende", f.infractionnmontantamende);
     FormDataVeh.append("InfractionFile", this.selecetdFileInfraction);
     FormDataVeh.append("InfractionFileModif", f.InfractionFileModif);
     FormDataVeh.append("vehicule_ID", this.id);
+
+    /******************** */
+    FormDataVeh.append("infractionheure", f.infractionheure);
+    FormDataVeh.append("infractioncode", f.infractioncode);
+    FormDataVeh.append("infractionmatriclueagent", f.infractionmatriclueagent);
+    FormDataVeh.append("infractioneffet", f.infractioneffet);
+    
+
+    FormDataVeh.append("infractiondate", f.infractiondate);
+    FormDataVeh.append("infractionvitesse", f.infractionvitesse);
+    FormDataVeh.append("infractionadresse", f.infractionadresse);
+    FormDataVeh.append("infractionnmontantamende", f.infractionnmontantamende);
+
 
     if (f.LinfractionID != "") {
       //Modif;
@@ -2868,6 +2935,19 @@ this.hiddenListeProgramable=false;
         );
         this.vehiculeFormInfraction.controls["infractionvitesse"].setValue(
           this.OneInfraction.results[0].infractionvitesse
+        );
+
+        this.vehiculeFormInfraction.controls["infractionheure"].setValue(
+          this.OneInfraction.results[0].infractionheure
+        );
+        this.vehiculeFormInfraction.controls["infractioncode"].setValue(
+          this.OneInfraction.results[0].infractioncode
+        );
+        this.vehiculeFormInfraction.controls["infractionmatriclueagent"].setValue(
+          this.OneInfraction.results[0].infractionmatriclueagent
+        );
+        this.vehiculeFormInfraction.controls["infractioneffet"].setValue(
+          this.OneInfraction.results[0].infractioneffet
         );
 
         this.vehiculeFormInfraction.controls[
@@ -3424,6 +3504,7 @@ this.hiddenListeProgramable=false;
     this.hiddenPanne = false;
     this.ActionClosePanne = false;
     this.ActionOpenPanne = true;
+    this.hiddenListePanne = true;
   }
 
   FermerFormPanne() {
@@ -3433,7 +3514,7 @@ this.hiddenListeProgramable=false;
     //this.initFormVisiteTech();
     //this.addOrUpdate= true;
     this.imagePreviewVisiteTech = "";
-    this.hiddenListeEntretien = false;
+    this.hiddenListePanne = false;
   }
   ////////////////////////
   actionCloseSinistre(f) {
@@ -3450,6 +3531,7 @@ this.hiddenListeProgramable=false;
     this.hiddenSinistre = false;
     this.ActionCloseSinistre = false;
     this.ActionOpenSinistre = true;
+    this.hiddenListeSinistre = true;
   }
 
   FermerFormSinistre() {
@@ -3459,7 +3541,7 @@ this.hiddenListeProgramable=false;
     //this.initFormVisiteTech();
     //this.addOrUpdate= true;
     this.imagePreviewVisiteTech = "";
-    this.hiddenListeEntretien = false;
+    this.hiddenListeSinistre = false;
   }
   /////////////////////
 
@@ -3476,6 +3558,11 @@ this.hiddenListeProgramable=false;
     this.hiddenReparation = false;
     this.ActionCloseReparation = false;
     this.ActionOpenReparation = true;
+    this.reparationFactureProforma = "";
+    this.reparationLeBondeCommande = "";
+    this.reparationFacture = "";
+    this.TlisteReparationDetail(0);
+    this.hiddenListeReparation = true;
   }
 
   FermerFormReparation() {
@@ -3486,6 +3573,11 @@ this.hiddenListeProgramable=false;
     //this.addOrUpdate= true;
     this.imagePreviewVisiteTech = "";
     this.hiddenListeEntretien = false;
+    this.reparationFactureProforma = "";
+    this.reparationLeBondeCommande = "";
+    this.reparationFacture = "";
+    this.TlisteReparationDetail(0);
+    this.hiddenListeReparation = false;
   }
 
   ///////////////
@@ -3526,6 +3618,7 @@ this.hiddenListeEntretien= false;*/
     this.hiddenInfraction = false;
     this.ActionCloseInfraction = false;
     this.ActionOpenInfraction = true;
+    this.hiddenListeInfraction= true;
   }
 
   FermerFormInfraction() {
@@ -3533,6 +3626,7 @@ this.hiddenListeEntretien= false;*/
     this.ActionCloseInfraction = true;
     this.ActionOpenInfraction = false;
     this.initFormInfraction();
+    this.hiddenListeInfraction= false;
     //this.initFormVisiteTech();
     //this.addOrUpdate= true;
     /*this.imagePreviewVisiteTech='';
@@ -3552,6 +3646,7 @@ this.hiddenListeEntretien= false;*/
     this.hiddenKilometrage = false;
     this.ActionCloseKilometrage = false;
     this.ActionOpenKilometrage = true;
+    this.hiddenListeKilometre= true;
   }
 
   FermerFormKilometrage() {
@@ -3561,8 +3656,8 @@ this.hiddenListeEntretien= false;*/
     this.initFormKilometrage();
     //this.initFormVisiteTech();
     //this.addOrUpdate= true;
-    /*this.imagePreviewVisiteTech='';
-this.hiddenListeEntretien= false;*/
+    /*this.imagePreviewVisiteTech='';*/
+this.hiddenListeKilometre= false;
   }
 
   ///////////////ASSURENCE////////////////////
@@ -3902,39 +3997,34 @@ this.hiddenListeEntretien= false;*/
     );
   }
 
-
   validerReparation(id, val) {
-
     Swal.fire({
       text: "Etes vous sûr de vouloir modifier le statut de la mise en reparation ?",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Oui, modifier',
-      cancelButtonText: 'Annuler'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Oui, modifier",
+      cancelButtonText: "Annuler",
     }).then((result) => {
       if (result.isConfirmed) {
-
         //Code de mise à jour
         const formDataR = new FormData();
         formDataR.append("validerReparation", val);
-        formDataR.append('ID', id);
-        this.vehiculeService.updateSinistrePourReparation(formDataR).subscribe(ret => {
-          this.reponse = ret;
-          if (this.reponse.success == true) {
-            this.toastr.success(this.reponse.message);
-            this.TlisteSinistre();
-          } else {
-            this.toastr.error(this.reponse.message);
-          }
-        });
-
+        formDataR.append("ID", id);
+        this.vehiculeService
+          .updateSinistrePourReparation(formDataR)
+          .subscribe((ret) => {
+            this.reponse = ret;
+            if (this.reponse.success == true) {
+              this.toastr.success(this.reponse.message);
+              this.TlisteSinistre();
+              this.listSinistreaReparer();
+            } else {
+              this.toastr.error(this.reponse.message);
+            }
+          });
       }
-    })
-
-
-
-
+    });
   }
 }
