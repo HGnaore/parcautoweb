@@ -19,67 +19,156 @@
     </ul>
 
     <!-- Right navbar links -->
+
     <ul class="navbar-nav ml-auto">
+  
+
       <!-- Messages Dropdown Menu -->
       <!--li class="nav-item dropdown">
-                <a class="nav-link" data-toggle="dropdown">
-                    <i class="far fa-comments"></i>
-                    <span class="badge badge-danger navbar-badge">3</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                    <a class="dropdown-item">
-                     
-                        <div class="media">
-                            <img src="assets/dist/img/user1-128x128.jpg" alt="User Avatar"
-                                class="img-size-50 mr-3 img-circle">
-                            <div class="media-body">
-                                <h3 class="dropdown-item-title">
-                                    Brad Diesel
-                                    <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                                </h3>
-                                <p class="text-sm">Call me whenever you can...</p>
-                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                            </div>
-                        </div>
-                       
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item dropdown-footer">See All Messages</a>
-                </div>
-
-
-
-            </li-->
+        <a class="nav-link" data-toggle="dropdown">
+          <span class="badge badge-danger">
+            <i class="far fa-bell fa-lg fa-2x"></i> 
+          </span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <a class="dropdown-item">
+            <div class="media">
+              <img
+                src="assets/dist/img/user1-128x128.jpg"
+                alt="User Avatar"
+                class="img-size-50 mr-3 img-circle"
+              />
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  Brad Diesel
+                  <span class="float-right text-sm text-danger"
+                    ><i class="fas fa-star"></i
+                  ></span>
+                </h3>
+                <p class="text-sm">Call me whenever you can...</p>
+                <p class="text-sm text-muted">
+                  <i class="far fa-clock mr-1"></i> 4 Hours Ago
+                </p>
+              </div>
+            </div>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item dropdown-footer">See All Messages</a>
+        </div>
+      </li-->
       <!-- Notifications Dropdown Menu -->
+
+      <li class="nav-item dropdown" title="ENTRETIEN PROGRAMME">
+        <a class="nav-link" data-toggle="dropdown" style="cursor: pointer;">
+          <i class="fas fa-car fa-2x"></i>
+          <span class="badge badge-danger navbar-badge">
+            {{ totalEntretienprogramme }}</span
+          >
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="width: 500px;">
+          <span class="dropdown-item dropdown-header" style="font-weight: 500;">{{ totalEntretienprogramme }} Notification(s)</span>
+          <div class="dropdown-divider"></div>
+          <span class="dropdown-item text-center bg-danger">
+            ENTRETIEN PROGRAMME
+          </span>
+       <span *ngFor="let ent of listEntretienprogramme;">
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-danger" href="niveauValide+tcinqret.bp_num">
+            <i class="fas fa-car mr-1"></i> [{{ent.imatriculation | uppercase}}]
+            <span class="float-right text-dark text-sm">EXPIRE: {{ent.entretiendate| date: 'dd/MM/yyyy'}}</span>
+          </a>
+        </span>
+
+     
+        <div class="dropdown-divider"></div>
+          <a class="dropdown-item dropdown-footer">Toutes les notifications -></a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown" title="VISITE TECHNIQUE & VIGNETTE">
+        <a class="nav-link" data-toggle="dropdown" style="cursor: pointer;">
+          <i class="fas fa-car fa-2x"></i>
+          <span class="badge badge-danger navbar-badge">
+            {{ totalVisite }}</span
+          >
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="width: 500px;">
+          <span class="dropdown-item dropdown-header" style="font-weight: 500;">{{ totalVisite }} Notification(s)</span>
+          <div class="dropdown-divider"></div>
+          <span class="dropdown-item text-center bg-danger">
+            VISITE TECHNIQUE & VIGNETTE
+          </span>
+       <span *ngFor="let tcinqret of listopVisite;">
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-danger" href="niveauValide+tcinqret.bp_num">
+            <i class="fas fa-car mr-1"></i> [{{tcinqret.imatriculation | uppercase}}]
+            <span class="float-right text-dark text-sm">EXPIRE: {{tcinqret.dateexpiration| date: 'dd/MM/yyyy'}}</span>
+          </a>
+        </span>
+
+     
+        <div class="dropdown-divider"></div>
+          <a class="dropdown-item dropdown-footer">Toutes les notifications -></a>
+        </div>
+      </li>
+
+
+      <li class="nav-item dropdown" title="ASSURANCE">
+        <a class="nav-link" data-toggle="dropdown" style="cursor: pointer;">
+          <i class="fa fa-id-card fa-2x"></i>
+          <span class="badge badge-danger navbar-badge">
+            {{ totalAssurance }}</span
+          >
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="width: 500px;">
+          <span class="dropdown-item dropdown-header" style="font-weight: 500;">{{ totalAssurance }} Notification(s)</span>
+          <div class="dropdown-divider"></div>
+          <span class="dropdown-item text-center bg-danger">
+           ASSURANCE
+          </span>
+       <span *ngFor="let tcinqret of listopAsurance;">
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-danger" href="niveauValide+tcinqret.bp_num">
+            <i class="fas fa-car mr-1"></i> [{{tcinqret.imatriculation | uppercase}}]
+            <span class="float-right text-dark text-sm">EXPIRE: {{tcinqret.datefin| date: 'dd/MM/yyyy'}}</span>
+          </a>
+        </span>
+
+     
+        <div class="dropdown-divider"></div>
+          <a class="dropdown-item dropdown-footer">Toutes les notifications -></a>
+        </div>
+      </li>
+
+
       <!--li class="nav-item dropdown">
-                <a class="nav-link" data-toggle="dropdown">
-                    <i class="far fa-bell"></i>
-                    <span class="badge badge-warning navbar-badge">15</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                    <span class="dropdown-item dropdown-header">15 Notifications</span>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item">
-                        <i class="fas fa-envelope mr-2"></i> 4 new messages
-                        <span class="float-right text-muted text-sm">3 mins</span>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item">
-                        <i class="fas fa-users mr-2"></i> 8 friend requests
-                        <span class="float-right text-muted text-sm">12 hours</span>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item">
-                        <i class="fas fa-file mr-2"></i> 3 new reports
-                        <span class="float-right text-muted text-sm">2 days</span>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item dropdown-footer">See All Notifications--</a>
-                </div>
-
-
-
-            </li-->
+        <a class="nav-link" data-toggle="dropdown">
+          <i class="far fa-bell fa-2x"></i>
+          <span class="badge badge-warning navbar-badge">
+            {{ totalAssurance }}</span
+          >
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <span class="dropdown-item dropdown-header">15 Notifications</span>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item">
+            <i class="fas fa-envelope mr-2"></i> 4 new messages
+            <span class="float-right text-muted text-sm">3 mins</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item">
+            <i class="fas fa-users mr-2"></i> 8 friend requests
+            <span class="float-right text-muted text-sm">12 hours</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item">
+            <i class="fas fa-file mr-2"></i> 3 new reports
+            <span class="float-right text-muted text-sm">2 days</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item dropdown-footer">See All Notifications--</a>
+        </div>
+      </li-->
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -266,7 +355,7 @@
                 </a>
               </li>
 
-              <!--li class="nav-item">
+              <li class="nav-item">
                 <a
                   routerLink="/admin/admin/parcauto/cuvreDotationCarburant/{{
                     this.Myprofil
@@ -290,7 +379,7 @@
                   <i class="nav-icon fa fa-caret-right" aria-hidden="true"></i>
                   <p>Demande de Carburant</p>
                 </a>
-              </li-->
+              </li>
             </ul>
           </li>
 
@@ -322,39 +411,50 @@
 
                           
                         </ul>
-                    </li>
-                   
-                    <li class="nav-item has-treeview">
-                        
-                        <a class="nav-link" style="cursor: pointer;" routerLinkActive="active">
-                           
-                            <i class="nav-icon bx bxs-gas-pump"></i>
-                            <p class="text-white">
-                                CARTE CARBURANT
-                                <i class="fas fa-angle-left right"></i> 
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-             
-                            <li class="nav-item">
-                                <a routerLink='/admin/admin/parcauto/carteCarburant/{{this.Myprofil}}' routerLinkActive="active" class="nav-link">
-                                    <i class="nav-icon fa fa-caret-right" aria-hidden="true"></i>
-                                    <p>Gestion de carte</p>
-                                </a>
-                            </li>
+                    </li-->
 
-                            <li class="nav-item">
-                                <a routerLink='/admin/admin/parcauto/approvionnercartecaburant/{{this.Myprofil}}' routerLinkActive="active" class="nav-link">
-                                    <i class="nav-icon fa fa-caret-right" aria-hidden="true"></i>
-                                    <p>Approvisionner carte</p>
-                                </a>
-                            </li>
+          <li class="nav-item has-treeview">
+            <a
+              class="nav-link"
+              style="cursor: pointer"
+              routerLinkActive="active"
+            >
+              <i class="nav-icon bx bxs-gas-pump"></i>
+              <p class="text-white">
+                CARTE CARBURANT
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a
+                  routerLink="/admin/admin/parcauto/carteCarburant/{{
+                    this.Myprofil
+                  }}"
+                  routerLinkActive="active"
+                  class="nav-link"
+                >
+                  <i class="nav-icon fa fa-caret-right" aria-hidden="true"></i>
+                  <p>Gestion de carte</p>
+                </a>
+              </li>
 
-                          
-                        </ul>
-                    </li>
+              <li class="nav-item">
+                <a
+                  routerLink="/admin/admin/parcauto/approvionnercartecaburant/{{
+                    this.Myprofil
+                  }}"
+                  routerLinkActive="active"
+                  class="nav-link"
+                >
+                  <i class="nav-icon fa fa-caret-right" aria-hidden="true"></i>
+                  <p>Approvisionner carte</p>
+                </a>
+              </li>
+            </ul>
+          </li>
 
-                    <li class="nav-item">
+          <!--li class="nav-item">
                         <a routerLink='/admin/admin/parcauto/carteFer/{{this.Myprofil}}' routerLinkActive="active" class="nav-link">
                             <i class="nav-icon bx bxs-credit-card"></i>
                             <p class="text-white"> CARTE PEAGE

@@ -612,7 +612,7 @@ export class TraitementVehiculeComponent implements OnInit {
   Entretien: any = [];
   listeEntretien: any = [];
 
-  hiddenTabEntretienSave = true;
+  hiddenTabEntretienSave = true; 
   hiddenTabEntretein = false;
   displayedColumnsEntretienDetail: string[] = [
     "numberDet",
@@ -1276,7 +1276,7 @@ this.TabModifier = true;*/
   onSubmitFormPanne(f) {
     this.isLoadingResultsModif = true;
     const iD = JSON.parse(localStorage.getItem("currentUser"));
-    const varID = iD.ID;
+    const varID = iD.Id_Utilisateur;
     const FormDataVeh = new FormData();
     /* this.hiddenDetailProgramme = false;
     this.hiddenSaveButtom = true;
@@ -1694,7 +1694,7 @@ this.TabModifier = true;*/
   onSubmitFormReparation(f) {
     this.isLoadingResultsModif = true;
     const iD = JSON.parse(localStorage.getItem("currentUser"));
-    const varID = iD.ID;
+    const varID = iD.Id_Utilisateur;
     const FormDataVeh = new FormData();
     /* this.hiddenDetailProgramme = false;
       this.hiddenSaveButtom = true;
@@ -1795,7 +1795,7 @@ this.TabModifier = true;*/
   onSubmitFormDetailReparation(f) {
     this.isLoadingResultsModif = true;
     const iD = JSON.parse(localStorage.getItem("currentUser"));
-    const varID = iD.ID;
+    const varID = iD.Id_Utilisateur;
     const FormDataVeh = new FormData();
     FormDataVeh.append("LreparationDetailID", f.LreparationDetailID);
     FormDataVeh.append(
@@ -2156,7 +2156,7 @@ this.TabModifier = true;*/
   onSubmitFormEntretien(f) {
     this.isLoadingResultsEntretient = true;
     const iD = JSON.parse(localStorage.getItem("currentUser"));
-    const varID = iD.ID;
+    const varID = iD.Id_Utilisateur;
     const FormDataVeh = new FormData();
     /* this.hiddenDetailProgramme = false;
     this.hiddenSaveButtom = true;
@@ -2216,9 +2216,7 @@ this.TabModifier = true;*/
             this.reponse = result;
             this.toastr.success(result.message);
             this.vehiculeFormEntretien.disable();
-            this.vehiculeFormDetailEntretient.controls[
-              "lentretientDetailID"
-            ].setValue(result.results.lastInsertId);
+            this.vehiculeFormDetailEntretient.controls["lentretientDetailID"].setValue(result.results.lastInsertId);
             this.vehiculeFormProgrammeEntreien.controls[
               "lentretientProgrammeID"
             ].setValue(result.results.lastInsertId);
@@ -2347,7 +2345,7 @@ this.TabModifier = true;*/
   onSubmitFormDetailEntretein(f) {
     this.isLoadingResultsEntretient = true;
     const iD = JSON.parse(localStorage.getItem("currentUser"));
-    const varID = iD.ID;
+    const varID = iD.Id_Utilisateur;
     const FormDataVeh = new FormData();
     FormDataVeh.append("lentretientDetailID", f.lentretientDetailID);
     FormDataVeh.append(
@@ -2403,7 +2401,7 @@ this.TabModifier = true;*/
   onSubmitFormEntreteinProgramme(f) {
     this.isLoadingResultsEntretient = true;
     const iD = JSON.parse(localStorage.getItem("currentUser"));
-    const varID = iD.ID;
+    const varID = iD.Id_Utilisateur;
     const FormDataVeh = new FormData();
     FormDataVeh.append("lentretientProgrammeID", f.lentretientProgrammeID);
     FormDataVeh.append("programmeentretientype", f.programmeentretientype);
@@ -2694,7 +2692,7 @@ this.hiddenListeProgramable=false;
   onSubmitFormKilometrage(f) {
     this.isLoadingResultsModif = true;
     const iD = JSON.parse(localStorage.getItem("currentUser"));
-    const varID = iD.ID;
+    const varID = iD.Id_Utilisateur;
     const FormDataVeh = new FormData();
     FormDataVeh.append("LkilometrageID", f.LkilometrageID);
     FormDataVeh.append("kilometrageDate", f.kilometrageDate);
@@ -2828,7 +2826,7 @@ this.hiddenListeProgramable=false;
   onSubmitFormInfraction(f) {
     this.isLoadingResultsModif = true;
     const iD = JSON.parse(localStorage.getItem("currentUser"));
-    const varID = iD.ID;
+    const varID = iD.Id_Utilisateur;
     const FormDataVeh = new FormData();
     /* this.hiddenDetailProgramme = false;
         this.hiddenSaveButtom = true;
@@ -3008,7 +3006,7 @@ this.hiddenListeProgramable=false;
   onSubmitFormDocument(f) {
     this.isLoadingResults = true;
     const iD = JSON.parse(localStorage.getItem("currentUser"));
-    const varID = iD.ID;
+    const varID = iD.Id_Utilisateur;
     const FormDataDoc = new FormData();
     FormDataDoc.append("description", f.Description);
     FormDataDoc.append("lienPhoto", this.selecetdFileDoc);
@@ -3225,7 +3223,7 @@ this.hiddenListeProgramable=false;
   onSubmitFormCarteGrise(f) {
     this.isLoadingResults = true;
     const iD = JSON.parse(localStorage.getItem("currentUser"));
-    const varID = iD.ID;
+    const varID = iD.Id_Utilisateur;
     const FormDataVeh = new FormData();
     FormDataVeh.append("numero", f.numero);
     FormDataVeh.append("datemiseenservice", f.datemiseenservice);
@@ -3343,7 +3341,7 @@ this.hiddenListeProgramable=false;
   onSubmitFormVisiteTech(f) {
     this.isLoadingResults = true;
     const iD = JSON.parse(localStorage.getItem("currentUser"));
-    const varID = iD.ID;
+    const varID = iD.Id_Utilisateur;
     const FormDataVeh = new FormData();
     FormDataVeh.append("montantvisite", f.montantvisite);
     FormDataVeh.append("cat", f.cat);
@@ -3738,7 +3736,7 @@ this.hiddenListeKilometre= false;
   onSubmitFormAssurance(f) {
     this.isLoadingResults = true;
     const iD = JSON.parse(localStorage.getItem("currentUser"));
-    const varID = iD.ID;
+    const varID = iD.Id_Utilisateur;
     const FormDataVeh = new FormData();
     FormDataVeh.append("ID", f.assure_ID);
     FormDataVeh.append("assure", f.assure);

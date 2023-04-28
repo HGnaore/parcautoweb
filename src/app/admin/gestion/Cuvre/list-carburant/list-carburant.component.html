@@ -68,6 +68,7 @@
                     id="approcuvreID"
                   />
 
+
                   <div class="row">
                     <div class="col-md-2 inputSpace">
                       <label for="inputEmail4" class="form-label inputSpaceText"
@@ -82,7 +83,7 @@
                         id="inputPassword4"
                       />
                     </div>
-                    <div class="col-md-2 inputSpace">
+                    <div class="col-md-3 inputSpace">
                       <label for="inputEmail4" class="form-label inputSpaceText"
                         >Cuve <span class="Oblig">*</span></label
                       >
@@ -90,47 +91,32 @@
                         formControlName="approcuvre"
                         id="inputState"
                         class="form-control form-control-modern"
-                        name="stockStatus"
+                        name="stockStatus" (change)="Onchange($event.target.value)"
                       >
                         <option selected value="">-- Choisir --</option>
                         <option
                           selected
                           *ngFor="let cu of listecuve.results"
-                          [value]="cu.ID"
+                          [value]="cu.ID" 
                         >
                           [{{ cu.cuve_nom | uppercase }}] -
                           {{ cu.designation | uppercase }}
                         </option>
                       </select>
-                    </div>
+                    </div> 
 
-                    <div class="col-md-2 inputSpace">
+                    <div class="col-md-3 inputSpace">
                       <label for="inputEmail4" class="form-label inputSpaceText"
-                        >Nb. Litre Initial <span class="Oblig">*</span></label
+                        >Nb. Litre avant Appro </label
                       >
-                      <input
+                      <input readonly
                         formControlName="approlitreinitial"
-                        type="number"
-                        value="300"
-                        placeholder="1"
+                        type="text"
                         class="form-control form-control-modern"
                         id="inputPassword4"
                       />
                     </div>
 
-                    <div class="col-md-2 inputSpace">
-                      <label for="inputEmail4" class="form-label inputSpaceText"
-                        >Coût/Litre <span class="Oblig">*</span></label
-                      >
-                      <input
-                        formControlName="approlitrecout"
-                        type="number"
-                        value="650"
-                        placeholder="1"
-                        class="form-control form-control-modern"
-                        id="inputPassword4"
-                      />
-                    </div>
                     <div class="col-md-2 inputSpace">
                       <label for="inputEmail4" class="form-label inputSpaceText"
                         >Nb. Litre Appro.<span class="Oblig">*</span></label
@@ -138,12 +124,23 @@
                       <input
                         formControlName="approlitreappro"
                         type="number"
-                        value="1"
-                        placeholder="1"
                         class="form-control form-control-modern"
                         id="inputPassword4"
                       />
                     </div>
+
+                    <div class="col-md-2 inputSpace">
+                      <label for="inputEmail4" class="form-label inputSpaceText"
+                        >Coût/Litre </label
+                      >
+                      <input readonly
+                        formControlName="approlitrecout"
+                        type="text"
+                        class="form-control form-control-modern"
+                        id="inputPassword4"
+                      />
+                    </div>
+                  
                     <!--div class="col-md-2 inputSpace">
                                 <label for="inputEmail4" class="form-label inputSpaceText">Prix Total</label>
                                 <input readonly type="number" value="" placeholder="1" class="form-control form-control-modern" id="inputPassword4">
@@ -252,7 +249,7 @@
                     </ng-container>
 
                     <ng-container matColumnDef="initial">
-                      <th *matHeaderCellDef mat-sort-header style="width: 10%">
+                      <th *matHeaderCellDef mat-sort-header style="width: 8%">
                         Nb. Litre Initial
                       </th>
                       <td *matCellDef="let vehicule">
@@ -261,7 +258,7 @@
                     </ng-container>
 
                     <ng-container matColumnDef="activité">
-                      <th *matHeaderCellDef mat-sort-header style="width: 10%">
+                      <th *matHeaderCellDef mat-sort-header style="width: 8%">
                         Nb. Litre Appro
                       </th>
                       <td *matCellDef="let vehicule">
@@ -274,38 +271,50 @@
                         Coût/Litre
                       </th>
                       <td *matCellDef="let vehicule">
-                        {{ vehicule.approlitrecout }}
+                        {{ vehicule.prix }}
                       </td>
                     </ng-container>
 
                     <ng-container matColumnDef="Datedebut">
-                      <th *matHeaderCellDef mat-sort-header style="width: 3%">
+                      <th *matHeaderCellDef mat-sort-header style="width: 10%">
                         Prix Total
+                      </th>
+                      <td *matCellDef="let vehicule">
+                        <span class="text-success" style="font-weight: 500" >
+                          {{vehicule.approlitreappro * vehicule.prix | number}}</span
+                        >
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="nblitrereel">
+                      <th *matHeaderCellDef mat-sort-header style="width: 8%">
+                        Litre Total
                       </th>
                       <td *matCellDef="let vehicule">
                         <span class="text-success" style="font-weight: 500">
                           {{
-                            vehicule.approlitreappro * vehicule.approlitrecout
-                          }}</span
+                            vehicule.nblitrereel}}</span
                         >
                       </td>
                     </ng-container>
+
+                    
 
                     <!-- Color Column -->
                     <ng-container matColumnDef="action">
                       <th
                         *matHeaderCellDef
                         mat-sort-header
-                        style="width: 5%"
+                        style="width: 6%"
                       ></th>
                       <td *matCellDef="let vehicule">
-                        <button
+                        <!--button
                           type="button"
                           class="btn btn-secondary btn-sm mr-2"
                           (click)="loadOne(vehicule.approID)"
                         >
                           <i class="nav-icon fas fa-edit"></i>
-                        </button>
+                        </button-->
                         <button
                           type="button"
                           class="btn btn-danger btn-sm"
@@ -361,7 +370,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Voulez-vous supprimer une energie ?</p>
+        <p>Voulez-vous supprimer l'approvisionnement ?</p>
       </div>
       <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-outline-dark" data-dismiss="modal">

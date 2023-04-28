@@ -65,7 +65,7 @@ export class ListCarburantComponent implements OnInit {
   hidden = true;
   ActionClose = true;
   ActionOpen = false;
-  listeCuve: any = [];
+  DerniereCuve: any = [];
   listeModele: any = [];
   displayedColumns: string[] = [
     "number",
@@ -75,6 +75,7 @@ export class ListCarburantComponent implements OnInit {
     "activité",
     "objet",
     "Datedebut",
+    "nblitrereel",
     "action",
   ];
   dataSource: MatTableDataSource<any>;
@@ -88,9 +89,11 @@ export class ListCarburantComponent implements OnInit {
   @ViewChild(MatSort) sortModele: MatSort;
 
   Energie: any = [];
+  denierecuve: any = [];
   Modele: any = [];
   IDSuppression: any;
   addMarqueName: any;
+  listeData: any = [];
 
   constructor(
     private configService: ConfigService,
@@ -108,7 +111,9 @@ export class ListCarburantComponent implements OnInit {
     this.dataSourceModele = new MatTableDataSource(this.Modele);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadCuve();
+  }
 
   ngAfterViewInit() {
     this.TlisteAppro();
@@ -140,6 +145,16 @@ export class ListCarburantComponent implements OnInit {
     });
   }
 
+  DerniereAppro() {
+    this.cuveService.DerniereCuveAppro().subscribe((reponse) => {
+      this.denierecuve = reponse;
+      this.DerniereCuve = this.denierecuve.results;
+      this.vehiculeForm.controls["approlitreinitial"].setValue(
+        this.denierecuve.results[0].nblitrereel
+      );
+    });
+  }
+
   loadCuve() {
     this.cuveService.listCuve().subscribe((reponse) => {
       this.listecuve = reponse;
@@ -153,11 +168,20 @@ export class ListCarburantComponent implements OnInit {
       approcuvreID: [""],
       approdate: ["", Validators.required],
       approcuvre: ["", Validators.required],
-      approlitreinitial: ["", Validators.required],
-      approlitrecout: ["", Validators.required],
+      approlitreinitial: [""],
+      approlitrecout: [""],
       approlitreappro: ["", Validators.required],
       approdescription: [""],
     });
+  }
+
+  initFormSave() {
+    this.vehiculeForm.controls["approcuvreID"].setValue('');
+    this.vehiculeForm.controls["approdate"].setValue('');
+    this.vehiculeForm.controls["approlitreinitial"].setValue('');
+    this.vehiculeForm.controls["approlitrecout"].setValue('');
+    this.vehiculeForm.controls["approlitreappro"].setValue('');
+    this.vehiculeForm.controls["approdescription"].setValue('');
     this.loadCuve();
   }
 
@@ -182,7 +206,7 @@ export class ListCarburantComponent implements OnInit {
             this.reponse = result;
             this.toastr.success(result.message);
             this.imagePreview = "";
-            this.initForm();
+            this.initFormSave();
             this.loadCuve();
             this.TlisteAppro();
             //  this.getNavigation('admin/admin/vehiculeList','');
@@ -203,7 +227,7 @@ export class ListCarburantComponent implements OnInit {
             this.reponse = result;
             this.toastr.success(result.message);
             this.imagePreview = "";
-            this.initForm();
+            this.initFormSave();
             this.loadCuve();
             this.TlisteAppro();
             //  this.getNavigation('admin/admin/vehiculeList','');
@@ -235,11 +259,11 @@ export class ListCarburantComponent implements OnInit {
         this.OneItem.results[0].approcuvreID
       );
       this.vehiculeForm.controls["approlitreinitial"].setValue(
-        this.OneItem.results[0].approlitreinitial
+        this.OneItem.results[0].nblitrereel
       );
 
       this.vehiculeForm.controls["approlitrecout"].setValue(
-        this.OneItem.results[0].approlitrecout
+        this.OneItem.results[0].prix
       );
       this.vehiculeForm.controls["approlitreappro"].setValue(
         this.OneItem.results[0].approlitreappro
@@ -250,6 +274,23 @@ export class ListCarburantComponent implements OnInit {
       this.ModifsLoadingResults = false;
     });
   }
+
+  loadMCuveByIdDernierAppro(ID) {
+    this.cuveService.DerniereCuveApproByCuveID(ID).subscribe((reponse) => {
+      this.listeData = reponse;
+      this.vehiculeForm.controls["approlitreinitial"].setValue(
+        this.listeData.results[0].nblitrereel
+      );
+      this.vehiculeForm.controls["approlitrecout"].setValue(
+        this.listeData.results[0].prix
+      );
+    });
+  }
+
+  public Onchange(event) {
+    this.loadMCuveByIdDernierAppro(event);
+  }
+
   // reccuper l'id à supprimer lors de l'ouverture du modal de question
   ItemSupprime(id) {
     this.IDSuppression = id;
@@ -295,31 +336,17 @@ export class ListCarburantComponent implements OnInit {
     }
   }
 
-  // reccuper l'id à supprimer lors de l'ouverture du modal de questio
-
-  // Supprime l'enregistrement
-  /* supprimeModele(IDmodel,marqueID) {
-this.vehiculeService.deleteModeleMarque(IDmodel).subscribe(reponse => {
-  this.toastr.success("Suppression terminée avec succès ! ");
-  this.TlisteMarqueModele(marqueID);
-}, (ret) => {
-  this.toastr.error(ret.error.message + ' : ' + ret.error.description + '[' + ret.message + ']', "Erreur Code : " + ret.error.code);
-});
-}*/
-
   OuvrirForm() {
-    this.initForm();
+    this.initFormSave();
     this.hidden = false;
     this.ActionClose = false;
     this.ActionOpen = true;
   }
 
   FermerForm() {
-    this.initForm();
+    this.initFormSave();
     this.hidden = true;
     this.ActionClose = true;
     this.ActionOpen = false;
   }
-
-  
 }

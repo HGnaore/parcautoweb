@@ -28,10 +28,10 @@
             </div-->
 
         <section class="card card-primary">
-          <header class="card-header bg-dark" style="padding: 10px">
+          <header class="card-header bg-secondary" style="padding: 10px">
             <div class="row">
               <div class="col-md-9 text-center">
-                <h2
+                <h1
                   class="card-title text-white"
                   style="padding: 0px; margin: 0px"
                 >
@@ -40,16 +40,16 @@
                   >[{{ imatriculation | uppercase }}] -
                   {{ marque | uppercase }} {{ modele | uppercase }}
                   <span> - {{ fonctionVehicule | uppercase }}</span>
-                </h2>
+                </h1>
               </div>
 
               <div class="col-md-3 text-right">
                 <button
                   type="button"
-                  class="btn btn-warning"
+                  class="btn btn-danger"
                   routerLink="/admin/admin/vehiculeList"
                 >
-                  PARC AUTOMOBILE <i class="fa fa-arrow-right"></i>
+                Quitter <i class="fa fa-arrow-right"></i>
                 </button>
               </div>
             </div>
@@ -604,7 +604,9 @@
                                   *ngFor="let gar of listeGaragiste.results"
                                   [value]="gar.ID"
                                 >
-                                  {{ gar.designation | uppercase }}
+                                  [{{ gar.designation | uppercase }}] ---
+                                  Point Focal: {{ gar.pf_nomprenoms | uppercase }} / Contact: {{ gar.pf_portable | uppercase }} 
+                                  
                                 </option>
                               </select>
                             </div>
@@ -642,7 +644,7 @@
 
                             <div class="col-md-3 inputSpace">
                               <label for="inputPassword4" class="form-label"
-                                >Date de retour</label
+                                >Date de retour prévue</label
                               >
                               <input
                                 type="date"
@@ -665,7 +667,7 @@
 
                             <div class="col-md-9 inputSpace">
                               <label for="inputPassword4" class="form-label"
-                                >Objet <span class="Oblig">*</span></label
+                                >Raison d'entretien <span class="Oblig">*</span></label
                               >
                               <input
                                 type="text"
@@ -693,7 +695,7 @@
 
                             <div class="col-md-12 inputSpace">
                               <label for="inputPassword4" class="form-label"
-                                >Description</label
+                                >Description du type d'entretien</label
                               >
                               <textarea
                                 id="story"
@@ -1120,7 +1122,7 @@
                               <td class="p-2">
                                 <div class="form-group">
                                   <label class="form-label"
-                                    >Date de l'entretien
+                                    >Date de programmation l'entretien
                                     <span class="text-danger">*</span></label
                                   >
                                   <input
@@ -1133,7 +1135,7 @@
                               <td class="p-2">
                                 <div class="form-group">
                                   <label class="form-label"
-                                    >Rappel
+                                    >Rappel nombre de jour(s)
                                     <span class="text-danger">*</span></label
                                   >
                                   <div class="input-group w-100 border-success">
@@ -1324,7 +1326,7 @@
                     </div>
 
                     <mat-form-field>
-                      <mat-label>Rechercher</mat-label>
+                      <mat-label>Rechercher un entretien</mat-label>
                       <input
                         matInput
                         (keyup)="applyFilter($event)"
@@ -1818,7 +1820,7 @@
                             </option>
                           </select>
                         </div>
-                        <div class="col-md-5 inputSpace">
+                        <div class="col-md-4 inputSpace">
                           <label for="inputEmail4" class="form-label"
                             >Panne ou Sinistre
                             <span class="Oblig">*</span></label
@@ -1840,7 +1842,7 @@
                             >
                               [PANNE] - {{ pan.panneLibelle | uppercase }}
                             </option>
-                            <option>--------------</option>
+                            <option value="">--------------</option>
                             <option
                               *ngFor="let sin of listeSinistreareparer"
                               [value]="sin.ID"
@@ -1850,7 +1852,7 @@
                           </select>
                         </div>
 
-                        <div class="col-md-4 inputSpace">
+                        <div class="col-md-5 inputSpace">
                           <label for="inputEmail4" class="form-label"
                             >Garagiste <span class="Oblig">*</span></label
                           >
@@ -1865,7 +1867,8 @@
                               *ngFor="let gar of listeGaragiste.results"
                               [value]="gar.ID"
                             >
-                              {{ gar.designation | uppercase }}
+                            [{{ gar.designation | uppercase }}] ---
+                            Point Focal: {{ gar.pf_nomprenoms | uppercase }} / Contact: {{ gar.pf_portable | uppercase }} 
                             </option>
                           </select>
                         </div>
@@ -3710,11 +3713,11 @@
                   role="tabpanel"
                   aria-labelledby="Kilometrage-tab"
                 >
-                  <div class="spinner4" *ngIf="isLoadingResultsModif">
+                  <!--div class="spinner4" *ngIf="isLoadingResultsModif">
                     <div class="bounce1"></div>
                     <div class="bounce2"></div>
                     <div class="bounce3"></div>
-                  </div>
+                  </div-->
                   <div class="row">
                     <div class="col-md-12 text-right">
                       <button

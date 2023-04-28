@@ -3,6 +3,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ConfigService } from 'src/app/services/config.service';
+import { VehiculeService } from 'src/app/services/vehicule.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -61,10 +62,21 @@ export class AdminComponent implements OnInit {
   IDvehicule: string;
 
 
+  totalVisite: any;
+  notifTitle: string;
+  tableData$: any = [];
+  public listopVisite: any = [];
+  niveauValide: any;
+  totalAssurance: any;
+  listopAsurance: any;
+  totalEntretienprogramme: any;
+  listEntretienprogramme: any;
+
   constructor(
     public configService: ConfigService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private vehiculeService: VehiculeService
   ) { }
 
 
@@ -75,6 +87,7 @@ export class AdminComponent implements OnInit {
    this.image = this.ProfilID.Util_photo;
    
     this.MenuReferentiel();
+    this.loadTopBonpourNotification();
 
     //this.configService.ListMenuVehicule=true;
    /* this.idUtilisateur = localStorage.getItem('id');
@@ -124,4 +137,30 @@ export class AdminComponent implements OnInit {
    this.Myprofil = environment.SelectUserProfil = this.UserProfilID;
  
   }
+
+
+  loadTopBonpourNotification() {
+   this.vehiculeService.listenotification().subscribe(
+      topcinqret => {
+        this.tableData$ = topcinqret;
+        this.totalVisite = this.tableData$.results.notifvisitevignette.length;
+        this.totalAssurance = this.tableData$.results.notifassurance.length;
+        this.totalEntretienprogramme = this.tableData$.results.entretienprogramme.length;
+        
+
+        this.listopVisite = this.tableData$.results.notifvisitevignette.slice(0, 10);
+        this.listopAsurance = this.tableData$.results.notifassurance.slice(0, 10);
+        this.listEntretienprogramme = this.tableData$.results.entretienprogramme.slice(0, 10);
+       /* if (this.listopVisite[0]['NiveauVal'] == 1) {
+          this.niveauValide = 'bonpour/valider/update/';
+          this.notifTitle = 'En attente de validation';
+        } else {
+          this.niveauValide = 'bonpour/update/';
+          this.notifTitle = 'Enregistré(s)';
+        }*/
+
+      }
+    );
+  }
+
 }
