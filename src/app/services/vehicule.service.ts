@@ -18,8 +18,26 @@ export class VehiculeService {
 
   // VOITURE
 
+  TotalTableaudeBord(): Observable<any[]> {
+    return this.httpClient.get<any[]>(
+      this.urlG + "vehicule/tableaudebord/infotableaudebord.php"
+    );
+  }
+
+  listenotification(): Observable<any[]> {
+    return this.httpClient.get<any[]>(
+      this.urlG + "vehicule/notification/notificationvehicule.php"
+    );
+  }
+
   listeVehicule(): Observable<any[]> {
     return this.httpClient.get<any[]>(this.urlG + "vehicule/listevehicule.php");
+  }
+
+  listeVehiculeValider(): Observable<any[]> {
+    return this.httpClient.get<any[]>(
+      this.urlG + "vehicule/listevehiculevalider.php"
+    );
   }
 
   listeVehiculeByCodeEtape(codeEtapeID): Observable<any[]> {
@@ -82,6 +100,14 @@ export class VehiculeService {
     );
   }
 
+  /************CARTE GRISE*********** */
+
+  /*listeCarteGrise(): Observable<any[]> {
+    return this.httpClient.get<any[]>(
+      this.urlG + "vehicule/cartegrise/listeusage.php"
+    );
+  }*/
+
   saveCartegrise(data): Observable<any> {
     return this.httpClient.post(
       this.urlG + "vehicule/cartegrise/creationcartegrise.php",
@@ -103,6 +129,20 @@ export class VehiculeService {
         code
     );
   }
+
+  getCartegrisebyId(code): Observable<any> {
+    return this.httpClient.get<any>(
+      this.urlG + "vehicule/cartegrise/cartegriseparid.php?ID=" + code
+    );
+  }
+
+  deleteCartegrise(id) {
+    return this.httpClient.get(
+      this.urlG + "vehicule/cartegrise/suppressioncartegriseparid.php?ID=" + id
+    );
+  }
+
+  /************CARTE GRISE*********** */
 
   saveVisiteTechVignette(data): Observable<any> {
     return this.httpClient.post(
@@ -246,6 +286,20 @@ export class VehiculeService {
       data
     );
   }
+
+  saveDetailEnergie(data): Observable<any> {
+    return this.httpClient.post(
+      this.urlG + "vehicule/energie/creationdetailenergie.php",
+      data
+    );
+  }
+
+  getDetailTypeEnergiebyId(code): Observable<any> {
+    return this.httpClient.get<any>(
+      this.urlG + "vehicule/energie/detailenergietypeparid.php?ID=" + code
+    );
+  }
+
   updateEnergie(data): Observable<any> {
     return this.httpClient.post(
       this.urlG + "vehicule/energie/modificationenergie.php",
@@ -268,6 +322,12 @@ export class VehiculeService {
   deleteEnergie(id) {
     return this.httpClient.get(
       this.urlG + "vehicule/energie/suppressionenergie.php?ID=" + id
+    );
+  }
+
+  deleteDetailEnergie(id) {
+    return this.httpClient.get(
+      this.urlG + "vehicule/energie/suppressiondetailenergie.php?ID=" + id
     );
   }
 
@@ -608,7 +668,6 @@ export class VehiculeService {
       this.urlG + "vehicule/sinistre/listenaturesinistre.php"
     );
   }
-
 
   saveSinistre(data): Observable<any> {
     return this.httpClient.post(

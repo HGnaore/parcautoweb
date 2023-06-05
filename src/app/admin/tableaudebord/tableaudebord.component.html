@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 <div class="content-header" [@simpleFadeAnimation]="'in'">
 
     <div class="container-fluid">
@@ -21,6 +28,474 @@
 <div class="row" [@simpleFadeAnimation]="'in'">
 
 
+    <div class="col-lg-12 col-xl-3">
+
+        <div class="row">
+            <div class="col-12">
+                <section class="card mb-4">
+                    <div class="card-body bg-primary">
+                        <div class="widget-summary">
+                            <div class="widget-summary-col widget-summary-col-icon">
+                                <div class="summary-icon">
+                                    <i class="bx bxs-car" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="widget-summary-col">
+                                <div class="summary">
+                                    <h4 class="title text-4">VEHICULES</h4>
+                                    <div class="info">
+                                        <strong class="amount">{{totalVehicule}}</strong>
+                                    </div>
+                                </div>
+                                <div class="summary-footer">
+                                    <a class="text-uppercase">(Voir plus)</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-12 col-xl-3">
+        <div class="row">
+            <div class="col-12">
+                <section class="card mb-4">
+                    <div class="card-body bg-info">
+                        <div class="widget-summary">
+                            <div class="widget-summary-col widget-summary-col-icon">
+                                <div class="summary-icon">
+                                    <i class="bx bxs-car-garage" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="widget-summary-col">
+                                <div class="summary">
+                                    <h4 class="title text-4">ENTRETIENS</h4>
+                                    <div class="info">
+                                        <strong class="amount">{{totalEntretien}}</strong>
+                                    </div>
+                                </div>
+                                <div class="summary-footer">
+                                    <a class="text-uppercase">(Voir plus)</a>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-xl-3">
+        <div class="row">
+            <div class="col-12">
+                <section class="card mb-4">
+                    <div class="card-body bg-danger">
+                        <div class="widget-summary">
+                            <div class="widget-summary-col widget-summary-col-icon">
+                                <div class="summary-icon">
+                                    <i class="bx bxs-car-mechanic" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="widget-summary-col">
+                                <div class="summary">
+                                    <div class="row">
+                                        <div class="col-md-6 pl-2 ">
+                                    <h4 class="title text-4">PANNES </h4>
+                                    <div class="info">
+                                        <strong class="amount">{{totalPanne}}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 pl-2">
+                                    <h4 class="title text-3">SINISTRES </h4>
+                                    <div class="info">
+                                        <strong class="amount">{{totalSinistre}}</strong>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 pr-0 ">
+                                <div class="summary-footer text-right">
+                                    <a class="text-uppercase text-2">(Voir plus)</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 pr-0 ">
+                                <div class="summary-footer text-right">
+                                    <a class="text-uppercase text-2">(Voir plus)</a>
+                                </div>
+                            </div>
+                            </div>
+                            </div>
+
+                             
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-xl-3">
+        <div class="row">
+            <div class="col-12">
+                <section class="card mb-4">
+                    <div class="card-body bg-success">
+                        <div class="widget-summary">
+                            <div class="widget-summary-col widget-summary-col-icon">
+                                <div class="summary-icon">
+                                    <i class="bx bxs-car-mechanic" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="widget-summary-col">
+                                <div class="summary">
+                                    <h4 class="title text-4">REPARATIONS</h4>
+                                    <div class="info">
+                                        <strong class="amount">{{totalReparation}}</strong>
+                                    </div>
+                                </div>
+                                <div class="summary-footer">
+                                    <a class="text-uppercase">(Voir plus)</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<div class="row">
+    <div class="col-lg-12 col-xl-4">
+
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-modern">
+                    <div class="card-body p-0">
+                        <div class="widget-user-info">
+                            <div class="widget-user-info-header bg-warning">
+                                <h2 class="font-weight-bold text-light text-5">CARBURANT</h2>
+                                <p class="mb-0 text-light">Cuve</p>
+
+                                <div class="widget-user-acrostic bg-warning">
+                                    <i class="bx bxs-gas-pump" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="widget-user-info-body">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <strong class="text-color-danger text-5">{{totalCuveMontant | number}} Fcfa</strong>
+                                        <h3 class="text-4-1">Montant</h3>
+                                    </div>
+                                    <div class="col-auto">
+                                        <strong class="text-color-danger text-5">{{totalCuve}} L</strong>
+                                        <h3 class="text-4-1">Disponible</h3>
+                                        <!--span class="text-3">24/11/2021</span-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <a href="pages-user-profile.html"
+                                            class="btn btn-light btn-sm border font-weight-semibold text-color-dark text-3 mt-1">Plus
+                                            d'info</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-modern">
+                    <div class="card-body p-0">
+                        <div class="widget-user-info">
+                            <div class="widget-user-info-header bg-dark">
+                                <h2 class="font-weight-bold text-light text-5">FOND DE RECHARGEMENT</h2>
+                                <p class="mb-0 text-light">Carte FER</p>
+
+                                <div class="widget-user-acrostic bg-dark">
+                                    <i class="bx bxs-credit-card" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="widget-user-info-body">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <strong class="text-color-danger text-5">8.676 102 Fcfa</strong>
+                                        <h3 class="text-4-1">Montant</h3>
+                                    </div>
+                                    <div class="col-auto">
+                                        <strong class="text-color-danger text-4">30/09/2022</strong>
+                                        <h3 class="text-4-1">Date Approvisionnement</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <a href="pages-user-profile.html"
+                                            class="btn btn-light btn-sm border font-weight-semibold text-color-dark text-3 mt-1">Plus
+                                            d'info</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-xl-12 pb-2 pb-lg-0 mb-4 mb-lg-0">
+                <div class="card card-modern">
+                    <div class="card-body py-4">
+                        <div class="row align-items-center">
+                            <div class="col-6 col-md-8">
+                                <h3 class="text-4-1 my-0">{{'Total Carte carburant' | uppercase}}</h3>
+                                <strong class="text-6 text-color-dark">{{totalcartecarburant | number}}</strong>
+                            </div>
+
+                            <div class="col-md-4 text-left text-md-right pr-md-4 mt-4 mt-md-0">
+                                <i
+                                    class="bx bxs-credit-card-front icon icon-inline icon-xl bg-primary rounded-circle text-light"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xl-12 pt-xl-2 mt-xl-4">
+                <div class="card card-modern">
+                    <div class="card-body py-4">
+                        <div class="row align-items-center">
+                            <div class="col-6 col-md-8">
+                                <h3 class="text-4-1 my-0">{{'Total carte péage' | uppercase}}</h3>
+                                <strong class="text-6 text-color-dark">225</strong>
+                            </div>
+
+                            <div class="col-md-4 text-left text-md-right pr-md-4 mt-4 mt-md-0">
+                                <i
+                                    class="bx bxs-credit-card-front icon icon-inline icon-xl bg-primary rounded-circle text-light pr-0"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-xl-8 pt-2 pt-xl-0 mt-4 mt-xl-0">
+
+        <div class="row">
+            <div class="col">
+                <div class="card card-modern">
+                    <div class="card-header">
+                        <div class="card-actions">
+                            <a href="#" class="card-action text-3 text-danger">Voir Plus >></a>
+                        </div>
+
+                        <h2 class="card-title">
+                            <i class="bx bxs-error text-danger" data-width="32" data-height="32"></i>
+                            TOUTES LES ALERTES
+                        </h2>
+                    </div>
+                    <div class="card-body">
+<div class="row">
+
+    <div class="col-md-4">
+        <table class="table table-responsive-md table-striped mb-0">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th title="ENTRETIEN">{{"Entretien" | uppercase}}</th>
+                    <th>DATE</th>
+                 
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let ent of listEntretienprogramme; let i = index">
+                    <td>  {{ i + 1 }}</td>
+                    <td>[{{ent.imatriculation | uppercase}}] {{ent.designation | uppercase}}</td>
+                    <td><span class="badge badge-danger">{{ent.entretiendate| date: 'dd/MM/yyyy'}}</span></td>
+                  </tr>
+            </tbody>
+        </table>
+    </div>
+
+    
+<div class="col-md-4">
+     <table class="table table-responsive-md table-striped mb-0">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th title="Visite Technique">{{"V.Technique" | uppercase}}</th>
+            <th>DATE</th>
+         
+        </tr>
+    </thead>
+    <tbody>
+    
+        <tr *ngFor="let tcinqret of listopVisite; let i = index">
+            <td>  {{ i + 1 }}</td>
+            <td>[{{tcinqret.imatriculation | uppercase}}] {{tcinqret.designation | uppercase}}</td>
+            <td><span class="badge badge-danger">{{tcinqret.dateexpiration| date: 'dd/MM/yyyy'}}</span></td>
+          </tr>
+    </tbody>
+</table></div>
+
+
+<div class="col-md-4">
+    <table class="table table-responsive-md table-striped mb-0">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>{{"Assurance" | uppercase}}</th>
+                <th>DATE</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            
+        <tr *ngFor="let ass of listopAsurance; let i = index">
+            <td>  {{ i + 1 }}</td>
+            <td>[{{ass.imatriculation | uppercase}}] {{ass.designation | uppercase}}</td>
+            <td><span class="badge badge-danger">{{ass.datefin| date: 'dd/MM/yyyy'}}</span></td>
+          </tr>
+   
+        </tbody>
+    </table>
+</div>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--div class="row">
+            <div class="col">
+                <div class="card card-modern">
+                    <div class="card-header">
+                        <div class="card-actions">
+                            <a href="#" class="card-action text-3 text-danger">Voir Plus >></a>
+                        </div>
+
+                        <h2 class="card-title">
+                            <i class="bx bxs-car text-info" data-width="32" data-height="32"></i>
+                            DEMANDE DE VEHICULES
+                        </h2>
+                    </div>
+                    <div class="card-body">
+
+                        <table class="table table-responsive-md table-striped mb-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Objet</th>
+                                    <th>Date</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Présidence retransmission du nouveau gouvernement</td>
+                                    <td><span>12/12/2021</span></td>
+                       
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td> Liaison production dans le cardre de Africa Web Festival</td>
+                                    <td><span>12/12/2021</span></td>
+                      
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Liaison production dans le cardre de Africa Web Festival</td>
+                                    <td><span>02/12/2021</span></td>
+                     
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Liaison production dans le cardre de Africa Web Festival</td>
+                                    <td><span>05/12/2021</span></td>
+                   
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Liaison production dans le cardre de Africa Web Festival</td>
+                                    <td><span>09/12/2021</span></td>
+                  
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div-->
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--div class="content-header" [@simpleFadeAnimation]="'in'">
+
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h2 class="m-0">TABLEAU DE BORD</h2>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Accueil</a></li>
+
+                </ol>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="row" [@simpleFadeAnimation]="'in'">
+
+
     <div class="col-lg-12 col-xl-12 text-center">
 
        <img src="../../../assets/logiciel-de-gestion-de-flotte-automobile-1.png">
@@ -29,6 +504,6 @@
 
 
 
-</div>
+</div-->
 
 

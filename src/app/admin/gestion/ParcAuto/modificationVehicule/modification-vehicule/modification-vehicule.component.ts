@@ -143,7 +143,11 @@ Vehicules: any = [];
 displayedColumnsVisiteTech: string[] = ['number','datevisite','lieu', 'montantvisite','numerovignette','montantvignette','dateexpiration','rappel', 'action'];
 dataSourceVisiteTech: MatTableDataSource<any>;
 
-displayedColumnsCarteGrise: string[] = ['number','datevisite','lieu', 'montantvisite','numerovignette','montantvignette','dateexpiration','rappel', 'action'];
+
+@ViewChild(MatPaginator) paginatorCarteGrise: MatPaginator;
+@ViewChild(MatSort) sortCarteGrise: MatSort;
+
+displayedColumnsCarteGrise: string[] = ['number','dateedition','numero','numchassis', 'datemiseenservice','codeproprietaire','nbreplace','genre', 'action'];
 dataSourceCarteGrise: MatTableDataSource<any>;
 
 displayedColumnsAssur: string[] = ['number','assure','assueur','numpolice', 'datedebut', 'datefin','rappel', 'action'];
@@ -261,7 +265,8 @@ imagePreviewAssurance: any;
       this.loadFonction();
       this.loadDirections();
       this.TlisteAddDocument(this.id);
-      this.loadOneCarteGrise(this.id);
+      /*this.loadOneCarteGrise(this.id);*/
+      this.TlisteCarteGrise();
       this.loadEnergies();
       this.loadUsages();
       this.TlisteVisteVehicule();
@@ -277,6 +282,10 @@ imagePreviewAssurance: any;
       this.dataSourceVisiteTech.paginator = this.paginatorVisiteTech;
       this.dataSourceVisiteTech.sort = this.sortVisiteTech;
 
+      this.dataSourceCarteGrise.paginator = this.paginatorCarteGrise;
+      this.dataSourceCarteGrise.sort = this.sortCarteGrise;
+      
+      
       this.dataSourceAssur.paginator = this.paginatorAssur;
       this.dataSourceAssur.sort = this.sortAssur;
     }
@@ -648,7 +657,7 @@ initFormCarteGrise() {
     date_creation: [''],
     date_modification: [''],
     autentification_ID: [''],
-
+    IDFomcarteGrise: [''],
    
   });
 }
@@ -688,10 +697,46 @@ loadOneCarteGrise(VehiculeID) {
 
 } 
 
+
+loadOneCarteGriseByID(CartID) {
+  this.OuvrirFormCarteGrise();
+  this.isLoadingResults = true;
+    this.vehiculeService.getCartegrisebyId(CartID).subscribe(reponse => {
+      this.OneCarteGrise = reponse; 
+      this.VerifCarteGrise= this.OneCarteGrise.results.total;
+      
+      this.vehiculeFormCarteGrise.controls['IDFomcarteGrise'].setValue(this.OneCarteGrise.results.resultat[0].ID);
+      this.vehiculeFormCarteGrise.controls['numero'].setValue(this.OneCarteGrise.results.resultat[0].numero);
+      this.vehiculeFormCarteGrise.controls['numchassis'].setValue(this.OneCarteGrise.results.resultat[0].numchassis);
+      this.vehiculeFormCarteGrise.controls['datemiseenservice'].setValue(this.OneCarteGrise.results.resultat[0].datemiseenservice);
+      this.vehiculeFormCarteGrise.controls['dateedition'].setValue(this.OneCarteGrise.results.resultat[0].dateedition);
+      this.vehiculeFormCarteGrise.controls['codeproprietaire'].setValue(this.OneCarteGrise.results.resultat[0].codeproprietaire);
+      this.vehiculeFormCarteGrise.controls['genre'].setValue(this.OneCarteGrise.results.resultat[0].genre);
+      this.vehiculeFormCarteGrise.controls['couleur'].setValue(this.OneCarteGrise.results.resultat[0].couleur);
+      this.vehiculeFormCarteGrise.controls['energie_ID'].setValue(this.OneCarteGrise.results.resultat[0].energie_ID);
+      this.vehiculeFormCarteGrise.controls['usage_ID'].setValue(this.OneCarteGrise.results.resultat[0].usage_ID);
+      this.vehiculeFormCarteGrise.controls['carrosserie'].setValue(this.OneCarteGrise.results.resultat[0].carrosserie);
+      this.vehiculeFormCarteGrise.controls['nbreplace'].setValue(this.OneCarteGrise.results.resultat[0].nbreplace);
+      this.vehiculeFormCarteGrise.controls['typetechnique'].setValue(this.OneCarteGrise.results.resultat[0].typetechnique);
+      this.vehiculeFormCarteGrise.controls['ptac'].setValue(this.OneCarteGrise.results.resultat[0].ptac);
+      this.vehiculeFormCarteGrise.controls['puissance'].setValue(this.OneCarteGrise.results.resultat[0].puissance);
+      this.vehiculeFormCarteGrise.controls['poidsvide'].setValue(this.OneCarteGrise.results.resultat[0].poidsvide);
+      this.vehiculeFormCarteGrise.controls['nbreessieux'].setValue(this.OneCarteGrise.results.resultat[0].nbreessieux);
+      this.vehiculeFormCarteGrise.controls['cylindre'].setValue(this.OneCarteGrise.results.resultat[0].cylindre);
+      this.vehiculeFormCarteGrise.controls['chargeutile'].setValue(this.OneCarteGrise.results.resultat[0].chargeutile);
+      this.IDcarteGrise = this.OneCarteGrise.results.resultat[0].ID;
+      this.imagePreviewCarteGrise = this.configService.urlgRTI+this.OneCarteGrise.results.resultat[0].lienPhoto;
+      this.isLoadingResults = false;
+     // this.TabCarteGrise= true;
+    
+    });
+
+} 
+
 onSubmitFormCarteGrise(f) {
   this.isLoadingResults = true;
   const iD = JSON.parse(localStorage.getItem('currentUser'));
-  const varID = iD.ID;
+  const varID = iD.Id_Utilisateur;
   const FormDataVeh = new FormData();
   FormDataVeh.append('numero', f.numero);
   FormDataVeh.append('datemiseenservice', f.datemiseenservice);
@@ -717,16 +762,21 @@ onSubmitFormCarteGrise(f) {
   FormDataVeh.append('vehicule_ID', this.id);
   FormDataVeh.append('date_creation', f.date_creation);
   FormDataVeh.append('date_modification', f.date_modification);
-  FormDataVeh.append('ID', this.IDcarteGrise);
-
+ /* FormDataVeh.append('ID', this.IDcarteGrise);*/
+ FormDataVeh.append('ID', f.IDFomcarteGrise);
+  FormDataVeh.append('IDFomcarteGrise', f.IDFomcarteGrise);
+  
     //Update;
-    if (this.VerifCarteGrise != '0') {
+    //if (this.VerifCarteGrise != '0')
+   
+    if (f.IDFomcarteGrise != "") {
     this.vehiculeService.updateCartegrise(FormDataVeh).subscribe(result => {
       if (result.success==true) { 
         this.reponse = result;
       this.toastr.success(result.message);
       this.loadOneVehiculeHeaderInfo();
-      //this.initForm();
+      this.TlisteCarteGrise();
+      this.initFormCarteGrise();
     //  this.getNavigation('admin/admin/vehiculeList','');
      
       }
@@ -748,8 +798,9 @@ onSubmitFormCarteGrise(f) {
         this.reponse = result;
       this.toastr.success(result.message);
       this.imagePreviewCarteGrise='';
-      this.initForm();
+      this.initFormCarteGrise();
       this.loadOneVehiculeHeaderInfo();
+      this.TlisteCarteGrise();
     //  this.getNavigation('admin/admin/vehiculeList','');
      
       }
@@ -776,6 +827,17 @@ onFileUploadCarteGrise(event){
   };
   reader.readAsDataURL(this.selecetdFile);
   }
+
+  TlisteCarteGrise() {
+    this.vehiculeService.getCartegrisebyvehiculeId(this.id).subscribe(reponse => {
+      this.Vehicules = reponse;
+      this.listeVehicules = this.Vehicules.results.resultat;
+      this.dataSourceCarteGrise.data = this.listeVehicules;
+      this.isLoadingResults = false;
+     // this.TabVisiteTech = true;
+    });
+  }
+
 
   ////////////////VISITE TECHNIQUE//////////////////////
 
@@ -845,6 +907,7 @@ onFileUploadCarteGrise(event){
         this.imagePreview='';
         this.initForm();
         this.TlisteVisteVehicule();
+        this.loadOneVehiculeHeaderInfo();
       //  this.getNavigation('admin/admin/vehiculeList','');
        
         }
@@ -1155,30 +1218,50 @@ onFileUploadAssurnace(event){
       }
 
       supprime(){
-        if (this.NameSuppression='media') {
+        if (this.NameSuppression=='carteGrise') {
+          this.supprimecarteGrise();
+          return;
+        }
+        else if (this.NameSuppression=='media') {
           this.supprimeMedia();
+          return;
         }
-        if (this.NameSuppression='assurance') {
+        else if (this.NameSuppression=='assurance') {
           this.supprimeAssurance();
+          return;
         }
-        if (this.NameSuppression='visite') {
+        else if (this.NameSuppression=='visite') {
           this.supprimeVisiteTech();
+          return;
         }
+        else{ }
       }
       
       supprimeMedia() {
       this.vehiculeService.deleteMedia(this.IDSuppression).subscribe(reponse => {
       this.toastr.success("Suppression terminée avec succès ! ");
       this.TlisteAddDocument(this.id);
+      
       }, (ret) => {
       this.toastr.error(ret.error.message + ' : ' + ret.error.description + '[' + ret.message + ']', "Erreur Code : " + ret.error.code);
       });
       }
 
+      supprimecarteGrise() {
+        this.vehiculeService.deleteCartegrise(this.IDSuppression).subscribe(reponse => {
+        this.toastr.success("Suppression terminée avec succès ! ");
+        this.TlisteCarteGrise();
+        this.loadOneVehiculeHeaderInfo();
+        }, (ret) => {
+        this.toastr.error(ret.error.message + ' : ' + ret.error.description + '[' + ret.message + ']', "Erreur Code : " + ret.error.code);
+        });
+        }
+
       supprimeVisiteTech() {
         this.vehiculeService.deleteVisiteTechnique(this.IDSuppression).subscribe(reponse => {
         this.toastr.success("Suppression terminée avec succès ! ");
         this.TlisteVisteVehicule();
+        this.loadOneVehiculeHeaderInfo();
         }, (ret) => {
         this.toastr.error(ret.error.message + ' : ' + ret.error.description + '[' + ret.message + ']', "Erreur Code : " + ret.error.code);
         });
@@ -1188,6 +1271,7 @@ onFileUploadAssurnace(event){
           this.vehiculeService.deleteAssurance(this.IDSuppression).subscribe(reponse => {
           this.toastr.success("Suppression terminée avec succès ! ");
           this.TlisteAssuranceVehicule();
+          this.loadOneVehiculeHeaderInfo();
           }, (ret) => {
           this.toastr.error(ret.error.message + ' : ' + ret.error.description + '[' + ret.message + ']', "Erreur Code : " + ret.error.code);
           });

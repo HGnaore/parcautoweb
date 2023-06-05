@@ -59,6 +59,18 @@ export class CuveService {
     );
   }
 
+  DerniereCuveAppro(): Observable<any> {
+    return this.httpClient.get<any>(
+      this.urlG + "cuve/approvisionnement/derniereappro.php"
+    );
+  }
+
+  DerniereCuveApproByCuveID(ID): Observable<any> {
+    return this.httpClient.get<any>(
+      this.urlG + "cuve/approvisionnement/derniereapprobycuveid.php?ID="+ID
+    );
+  }
+
   saveCuveAppro(data): Observable<any> {
     return this.httpClient.post(
       this.urlG + "cuve/approvisionnement/creationcuveappro.php",

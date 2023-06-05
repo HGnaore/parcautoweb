@@ -24,12 +24,38 @@
 
         <section class="card card-primary">
           <header class="card-header bg-secondary" style="padding: 10px">
-            <h3 class="card-title text-white" style="padding: 0px; margin: 0px">
+            <div class="row">
+            <div class="col-md-9 text-left">
+            <h2 class="card-title text-white" style="padding: 0px; margin: 0px">
               LISTE DES VEHICULES
-            </h3>
+            </h2>
+          </div>
+            <div class="col-md-3 text-right">
+              <button
+                  type="button"
+                  class="btn btn-success"
+                  (click)="actionClose(1)"
+                  [ngClass]="{ hidden: ActionOpen }"
+                >
+                  <i class="fa fa-plus"></i> AJOUTER UN VEHICULE
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  (click)="actionClose(0)"
+                  [ngClass]="{ hidden: ActionClose }"
+                >
+                  <i class="fas fa-times"></i> FERMER
+                </button>
+
+              <!--button type="button" class="btn btn-warning" routerLink="/admin/admin/vehiculeList">
+                <i class="fa fa-plus"></i>  </button-->
+              
+          </div>
+        </div>
           </header>
 
-          <div class="card-body" *ngIf="MyUserProfilID == 2">
+          <div class="card-body" *ngIf="MyUserProfilID == 2" [ngClass]="{ hidden: hidden }">
             <div class="row">
               <div
                 class="col-lg-1-4 col-xl-1-5 text-center"

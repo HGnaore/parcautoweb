@@ -1,25 +1,23 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ConfigService {
-
   //**en dev mac
-  urlg = 'https://apiparcauto.afinov.com';
-  urlTrombino = 'http://backtrombino.rti.ci';
+  urlg = "https://apiparcauto.afinov.com";
+  urlTrombino = "http://backtrombino.rti.ci";
   // urlgRTI = 'http://apiparcauto.rti.ci/';
-  urlWorflowapi = 'http://apiworkflow.rti.ci/';
-  urlApplication = 'http://parcauto.rti.ci/';
-  urlgRTI = 'http://10.102.0.25:8094/';
+  urlWorflowapi = "http://apiworkflow.rti.ci/";
+  urlApplication = "http://parcauto.rti.ci/";
+  urlgRTI = "http://10.102.0.25:8094/";
 
-
-   //*sur server RTI
+  //*sur server RTI
   // urlg = 'http://172.16.2.16:8034'; //API
   // urlTrombino = 'http://172.16.2.16:8060';
   // urlgestock = 'http://172.16.2.16:8020';
 
-  idUser = localStorage.getItem('id');
+  idUser = localStorage.getItem("id");
   var_Reattribution;
   MesTickets: boolean = false;
   MesAttributions: boolean = false;
@@ -28,14 +26,11 @@ export class ConfigService {
   Administration: boolean = false;
 
   ListMenuVehicule: boolean = false;
- 
-
-
 
   OngletParcAuto: boolean = true;
   OngletConsultation: boolean = false;
   OngletModification: boolean = false;
   OngletTraitement: boolean = false;
 
-  constructor() { }
+  constructor() {}
 }

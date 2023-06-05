@@ -62,10 +62,10 @@
               <div class="col-md-2 text-right">
                 <button
                   type="button"
-                  class="btn btn-warning"
+                  class="btn btn-danger"
                   routerLink="/admin/admin/vehiculeList"
                 >
-                  PARC AUTOMOBILE <i class="fa fa-arrow-right"></i>
+                QUITTER <i class="fa fa-arrow-right"></i>
                 </button>
               </div>
             </div>
@@ -178,6 +178,8 @@
                     </div>
                   </div>
                 </section>
+
+                
               </div>
 
               <div class="col-md-3">
@@ -571,7 +573,7 @@
                             <label
                               for="Kmachat"
                               class="form-label inputSpaceText"
-                              >Km. achat<span class="Oblig">*</span></label
+                              >Km. achat<!--span class="Oblig">*</span!--></label
                             >
                             <input
                               type="number"
@@ -585,7 +587,7 @@
                             <label
                               for="capReservoir"
                               class="form-label inputSpaceText"
-                              >Cap. Réservoir<span class="Oblig">*</span></label
+                              >Cap. Réservoir<!--span class="Oblig">*</span--></label
                             >
                             <input
                               type="number"
@@ -599,7 +601,7 @@
                             <label
                               for="L100km"
                               class="form-label inputSpaceText"
-                              >Consommation<span class="Oblig">*</span></label
+                              >Consommation<!--span class="Oblig">*</span--></label
                             >
                             <input
                               type="number"
@@ -786,7 +788,6 @@
                             </button>
 
                             <button
-                              type="submit"
                               class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
                               routerLink="/admin/admin/vehiculeList"
                             >
@@ -943,15 +944,15 @@
                 >
                   <!--*ngIf="TabCarteGrise"-->
                   <div class="row">
-                    <!--div class="col-md-12 text-right" *ngIf="MyUserProfilID==2">
+                    <div class="col-md-12 text-right" *ngIf="MyUserProfilID==2">
                               <button type="button" class="btn btn-success" (click)="actionCloseCarteGrise(1)" [ngClass]="{'hidden': ActionOpenCarteGrise}">
                                 <i class="fa fa-plus mr-2"></i>AJOUTER UNE CARTE GRISE</button>
                                 <button type="button" class="btn btn-danger" (click)="actionCloseCarteGrise(0)" [ngClass]="{'hidden': ActionCloseCarteGrise}">
                                   <i class="fas fa-times mr-2"></i>FERMER</button>
-                        </div-->
+                        </div>
                   </div>
-                  <div class="row">
-                    <!-- [ngClass]="{'hidden': hiddenCarteGrise}"-->
+                  <div class="row" [ngClass]="{'hidden': hiddenCarteGrise}">
+                    <!-- -->
                     <div class="col-lg-2-5 col-xl-1-5 text-center">
                       <div class="thumb-info mb-3">
                         <a href="{{ imagePreviewCarteGrise }}" target="_blank"
@@ -981,6 +982,13 @@
                         action="#"
                         method="post"
                       >
+                      <input
+                    type="text"
+                    hidden
+                    class="form-control"
+                    formControlName="IDFomcarteGrise"
+                    id="IDFomcarteGrise"
+                  />
                         <div class="row">
                           <div class="col-md-3 inputSpace">
                             <label
@@ -1266,10 +1274,13 @@
                             />
                           </div>
 
-                          <div
+                          
+                        </div>
+                      </form>
+                      <div
                             class="col-12 col-md-12 text-center"
-                            *ngIf="this.valideVehicule == 0"
-                          >
+                            
+                          ><!--*ngIf="this.valideVehicule == 0"-->
                             <button
                               style="margin-right: 10px"
                               type="submit"
@@ -1281,19 +1292,16 @@
                             </button>
 
                             <button
-                              type="submit"
                               class="submit-button btn btn-danger btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
-                              routerLink="/admin/admin/vehiculeList"
+                              (click)="actionCloseCarteGrise(0)"
                             >
                               <i class="fas fa-times text-4 mr-1"></i> Quitter
                             </button>
                           </div>
-                        </div>
-                      </form>
                     </div>
                   </div>
 
-                  <!--div class="row">
+                  <div class="row">
                             <div class="spinner4" *ngIf="ModifsVisiteLoadingResults">
                               <div class="bounce1"></div>
                               <div class="bounce2"></div>
@@ -1309,53 +1317,62 @@
                             <div>
                              
                                 <table class="table table-responsive-md  table-bordered table-striped mb-0 fontTable"
-                                mat-table [dataSource]="dataSourceVisiteTech" matSort>
+                                mat-table [dataSource]="dataSourceCarteGrise" matSort>
                                 <ng-container matColumnDef="number">
                                     <th *matHeaderCellDef mat-sort-header style="width: 1%;" class="text-center"> # </th>
                                     <td *matCellDef="let vehicule; let i = index" class="text-center"> {{i + 1}} </td>
                                 </ng-container>
                                 
-                                <ng-container matColumnDef="lieu">
+                                <ng-container matColumnDef="dateedition">
+                                  <th *matHeaderCellDef mat-sort-header style="width: 10%;">Date saisie </th>
+                                  <td *matCellDef="let vehicule">
+                                    {{vehicule.dateedition | date : "dd/MM/yyyy"}}
+                                  </td>
+                              </ng-container> 
+
+                                <ng-container matColumnDef="numero">
                                   <th *matHeaderCellDef mat-sort-header style="width: 10%;">N° Carte Grise </th>
                                   <td *matCellDef="let vehicule">
-                                    CG10260065 ee
+                                    {{vehicule.numero}}
                                   </td>
                               </ng-container> 
                                
-                               <ng-container matColumnDef="datevisite">
+                               <ng-container matColumnDef="numchassis">
                                 <th *matHeaderCellDef mat-sort-header style="width: 8%;">N° Chassis</th>
                                 <td *matCellDef="let vehicule">
-                                  JTMZD9EV50J124411
+                                  {{vehicule.numchassis}}
                                 </td>
                             </ng-container>
             
                                
-                                <ng-container matColumnDef="montantvisite">
+                                <ng-container matColumnDef="datemiseenservice">
                                     <th *matHeaderCellDef mat-sort-header style="width: 9%;">Mise en circulation</th>
-                                    <td *matCellDef="let vehicule">  19/01/2018</td>
+                                    <td *matCellDef="let vehicule"> {{vehicule.datemiseenservice | date : "dd/MM/yyyy"}}</td>
                                 </ng-container> 
             
                                
-                                <ng-container matColumnDef="montantvignette">
-                                  <th *matHeaderCellDef mat-sort-header style="width: 10%;" class="text-center">Place assises</th>
-                                  <td *matCellDef="let vehicule">
-                                   5
-                                  </td>
-                              </ng-container> 
+                               
       
                               
-                               <ng-container matColumnDef="numerovignette">
+                               <ng-container matColumnDef="codeproprietaire">
                                 <th *matHeaderCellDef mat-sort-header style="width: 15%;" class="text-center">Propriétaire</th>
                                 <td *matCellDef="let vehicule">
-                                  RTI RDC 770495
+                                  {{vehicule.codeproprietaire | uppercase}}
                                 </td>
                             </ng-container> 
             
                                
-                                <ng-container matColumnDef="dateexpiration">
-                                    <th *matHeaderCellDef mat-sort-header style="width: 10%;">usage</th>
+                            <ng-container matColumnDef="nbreplace">
+                              <th *matHeaderCellDef mat-sort-header style="width: 10%;" class="text-center">Place assises</th>
+                              <td *matCellDef="let vehicule">
+                                {{vehicule.nbreplace}}
+                              </td>
+                          </ng-container> 
+
+                                <ng-container matColumnDef="genre">
+                                    <th *matHeaderCellDef mat-sort-header style="width: 10%;">Genre</th>
                                     <td *matCellDef="let vehicule">
-                                        PRIVE
+                                      {{vehicule.genre}}
                                     </td>
                                 </ng-container> 
       
@@ -1373,11 +1390,11 @@
                                 <ng-container matColumnDef="action">
                                     <th *matHeaderCellDef mat-sort-header style="width: 8%;"> </th>
                                     <td *matCellDef="let vehicule">
-                                        <button type="button" class="btn btn-secondary btn-sm mr-2" (click)="loadOneVisiteVignette(vehicule.ID)">
+                                        <button type="button" class="btn btn-secondary btn-sm mr-2" (click)="loadOneCarteGriseByID(vehicule.ID)">
                                             <i class="nav-icon fas fa-edit"></i>
                                         </button>
                                         <button type="button" class="btn btn-danger btn-sm"
-                                            (click)="ItemSupprime(vehicule.ID,'visite')" data-toggle="modal"
+                                            (click)="ItemSupprime(vehicule.ID,'carteGrise')" data-toggle="modal"
                                             data-target="#modal-info">
                                             <i class="nav-icon fas fa-trash"></i>
                                         </button>
@@ -1387,8 +1404,8 @@
                                 
             
             
-                                <tr mat-header-row *matHeaderRowDef="displayedColumnsVisiteTech"></tr>
-                                <tr mat-row *matRowDef="let row; columns: displayedColumnsVisiteTech;"></tr>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumnsCarteGrise"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumnsCarteGrise;"></tr>
                             </table>
             
                             <mat-paginator [pageSizeOptions]="[10, 20, 30, 100]" showFirstLastButtons
@@ -1398,7 +1415,7 @@
             
                               </div>
                         </div>
-                           </div-->
+                           </div>
                 </div>
 
                 <div
@@ -1660,7 +1677,7 @@
                               <div class="col-md-2 inputSpace">
                                 <button
                                   type="button"
-                                  class="btn btn-dark btn-sm btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                                  class="btn btn-success btn-sm btn-px-2 py-3 align-items-center font-weight-semibold line-height-1"
                                   style="margin-top: 25px"
                                   type="submit"
                                   [disabled]="vehiculeFormVisiteTech.invalid"
@@ -1674,11 +1691,11 @@
                                   ></div>
                                   <ng-template #Ajouter
                                     ><i class="fa fa-plus text-4 mr-2"></i>
-                                    Ajouter</ng-template
+                                    ENREGISTRE</ng-template
                                   >
                                   <ng-template #Modifier
                                     ><i class="fa fa-plus text-4 mr-2"></i>
-                                    Modifier
+                                    ENREGISTRE
                                   </ng-template>
                                 </button>
                               </div>
@@ -2012,7 +2029,7 @@
                                 *ngFor="let assureur of listeassureur.results"
                                 value="{{ assureur.ID }}"
                               >
-                                {{ assureur.assueur | uppercase }}
+                                [{{ assureur.assueur | uppercase }}] - Contact: {{ assureur.contact}} 
                               </option>
                             </select>
                           </div>
@@ -2087,7 +2104,7 @@
                           <div class="col-md-2 inputSpace">
                             <button
                               type="button"
-                              class="btn btn-dark btn-sm btn-px-4 py-3 align-items-center font-weight-semibold line-height-1"
+                              class="btn btn-success btn-sm btn-px-2 py-3 align-items-center font-weight-semibold line-height-1"
                               style="margin-top: 25px"
                               type="submit"
                               [disabled]="vehiculeFormAssurance.invalid"
@@ -2101,10 +2118,10 @@
                               ></div>
                               <ng-template #Ajouter
                                 ><i class="fa fa-plus text-4 mr-2"></i>
-                                Ajouter</ng-template
+                                ENREGISTRE</ng-template
                               >
                               <ng-template #Modifier
-                                ><i class="fa fa-plus text-4 mr-2"></i> Modifier
+                                ><i class="fa fa-plus text-4 mr-2"></i> ENREGISTRE
                               </ng-template>
                             </button>
                           </div>
@@ -2399,7 +2416,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Voulez-vous supprimer le véhichule ?</p>
+        <p>Voulez-vous vraiment supprimer ?</p>
       </div>
       <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-outline-dark" data-dismiss="modal">
